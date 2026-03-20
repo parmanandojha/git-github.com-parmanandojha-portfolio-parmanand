@@ -49,6 +49,7 @@ function GalleryLayer() {
 
   const updateActiveFromScroll = useCallback(() => {
     let best = 0
+    
     let bestDist = Infinity
     if (isDesktop) {
       const my = getStripCenterY()
