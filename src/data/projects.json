@@ -1,0 +1,83 @@
+[
+  {
+    "id": 1,
+    "title": "Jump Factory",
+    "description": "A bold brand refresh for a performance-driven studio.",
+    "year": 2026,
+    "tags": ["Branding", "Identity", "Web"],
+    "image": "https://picsum.photos/id/1015/900/600"
+  },
+  {
+    "id": 2,
+    "title": "Adoker",
+    "description": "Minimal landing system with modular sections and variants.",
+    "year": 2025,
+    "tags": ["UI", "Design System", "Landing"],
+    "image": "https://picsum.photos/id/1025/900/600"
+  },
+  {
+    "id": 3,
+    "title": "Jochilabs",
+    "description": "Product storytelling layout optimized for clarity and speed.",
+    "year": 2025,
+    "tags": ["Content", "Layout", "UX"],
+    "image": "https://picsum.photos/id/1035/900/600"
+  },
+  {
+    "id": 4,
+    "title": "Sunder",
+    "description": "Experimental typography study turned into a responsive component set.",
+    "year": 2024,
+    "tags": ["Typography", "Components", "Motion"],
+    "image": "https://picsum.photos/id/1043/900/600"
+  },
+  {
+    "id": 5,
+    "title": "Newol",
+    "description": "Gallery-style portfolio grid with accessible interactions.",
+    "year": 2026,
+    "tags": ["Gallery", "Accessibility", "Frontend"],
+    "image": "https://picsum.photos/id/1050/900/600"
+  },
+  {
+    "id": 6,
+    "title": "The Cortège",
+    "description": "Campaign page with reusable sections and consistent spacing rules.",
+    "year": 2024,
+    "tags": ["Campaign", "Web", "Strategy"],
+    "image": "https://picsum.photos/id/1067/900/600"
+  },
+  {
+    "id": 7,
+    "title": "Future Agency",
+    "description": "A clean, modern agency site concept with strong hierarchy.",
+    "year": 2025,
+    "tags": ["Agency", "Brand", "UI"],
+    "image": "https://picsum.photos/id/1074/900/600"
+  },
+  {
+    "id": 8,
+    "title": "Email Us",
+    "description": "Responsive contact flow with form states and validations.",
+    "year": 2026,
+    "tags": ["Forms", "UX", "Frontend"],
+    "image": "https://picsum.photos/id/1084/900/600"
+  },
+  {
+    "id": 9,
+    "title": "List / Grid",
+    "description": "A dual-view project browser for fast scanning and filtering.",
+    "year": 2024,
+    "tags": ["Patterns", "Filtering", "UI"],
+    "image": "https://picsum.photos/id/109/900/600"
+  },
+  {
+    "id": 10,
+    "title": "Studio Lab",
+    "description": "Internal design experiments and component prototypes collection.",
+    "year": 2025,
+    "tags": ["Prototyping", "Components", "R&D"],
+    "image": "https://picsum.photos/id/110/900/600"
+  }
+]
+
