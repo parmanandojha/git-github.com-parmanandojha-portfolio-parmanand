@@ -63,7 +63,7 @@ export default function Work() {
             const itemKey = `grid-${p.id}-${i}`
             return (
               <article key={itemKey} className="min-w-0">
-                <div className="w-full aspect-[4/5] overflow-hidden rounded-md bg-gray-200">
+                <div className="w-full aspect-[4/5] overflow-hidden bg-gray-200">
                   <img
                     src={p.image}
                     alt=""
@@ -71,7 +71,7 @@ export default function Work() {
                     loading="lazy"
                   />
                 </div>
-                <p className="mt-2 text-center text-[13px] sm:text-[14px] font-bold uppercase leading-tight text-gray-900 line-clamp-2">
+                <p className="mt-2 text-center text-[13px] sm:text-[14px] font-medium uppercase leading-tight text-gray-900 line-clamp-2">
                   {p.title}
                 </p>
               </article>
@@ -92,7 +92,7 @@ export default function Work() {
                 className={[
                   'display-condensed',
                   sizes[i] ?? sizes[sizes.length - 1],
-                  'relative text-center text-gray-900 leading-none whitespace-nowrap',
+                  'relative text-center font-medium uppercase text-gray-900 leading-none whitespace-nowrap',
                   hoveredKey === itemKey ? 'z-30' : 'z-0',
                 ].join(' ')}
                 onMouseEnter={() => {

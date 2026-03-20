@@ -1,6 +1,28 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /*
+   * Small type scale (rem, 16px root). 10px = 0.625rem — scales with user font settings.
+   * Use text-caption / md:text-caption-md for responsive steps; text-nav for 12px UI.
+   */
+  --text-caption: 0.625rem;
+  --text-caption--line-height: 1.45;
+  --text-caption-md: 0.6875rem;
+  --text-caption-md--line-height: 1.45;
+  --text-nav: 0.75rem;
+  --text-nav--line-height: 1.35;
+}
+
 @layer base {
+  html {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   html,
   body {
     scrollbar-width: none; /* Firefox */
@@ -13,10 +35,45 @@
   }
 
   .display-condensed {
-    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-    font-weight: 900;
+    font-family: var(--font-sans);
+    font-weight: 400;
     letter-spacing: -0.02em;
     line-height: 0.9;
+  }
+}
+
+@layer components {
+  /*
+   * Underline draws left → right on hover/focus; use .link-underline-ltr--active for “current” state.
+   */
+  .link-underline-ltr {
+    display: inline-block;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    transition: background-size 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    padding-bottom: 0.12em;
+  }
+
+  a.link-underline-ltr:hover,
+  a.link-underline-ltr:focus-visible {
+    background-size: 100% 1px;
+  }
+
+  button:hover:not(:disabled) .link-underline-ltr,
+  button:focus-visible:not(:disabled) .link-underline-ltr {
+    background-size: 100% 1px;
+  }
+
+  .link-underline-ltr--active {
+    background-size: 100% 1px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .link-underline-ltr {
+      transition-duration: 0.01ms;
+    }
   }
 }
 

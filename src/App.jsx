@@ -4,6 +4,7 @@ import Footer from './components/Footer.jsx'
 import Work from './pages/Work.jsx'
 import About from './pages/About.jsx'
 import Gallery from './pages/Gallery.jsx'
+import Book from './pages/Book.jsx'
 import { createPixelGrid, runPageTransition } from './utils/pixelTransition.js'
 import { useLocomotiveScroll } from './hooks/useLocomotiveScroll.js'
 
@@ -53,20 +54,34 @@ export default function App() {
   }, [page])
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
-      <Nav page={page} onChangePage={handlePageChange} isTransitioning={isTransitioning} />
+    <div className="flex min-h-screen flex-col bg-white font-normal">
+      <Nav />
 
-      <main className="flex-1 pb-24">
+      <main
+        className={
+          page === 'book'
+            ? 'flex-1 p-0'
+            : page === 'gallery'
+              ? 'flex-1 min-h-0 overflow-hidden p-0'
+              : 'flex-1 pb-44 md:pb-40'
+        }
+      >
         {page === 'work' ? (
           <Work />
         ) : page === 'gallery' ? (
           <Gallery />
+        ) : page === 'book' ? (
+          <Book />
         ) : (
           <About />
         )}
       </main>
 
-      <Footer />
+      <Footer
+        page={page}
+        onChangePage={handlePageChange}
+        isTransitioning={isTransitioning}
+      />
       <div
         className={[
           'fixed inset-0 z-[200] pointer-events-none',

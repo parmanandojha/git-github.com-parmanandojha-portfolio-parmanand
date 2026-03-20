@@ -1,41 +1,12 @@
-export default function Nav({ page, onChangePage, isTransitioning }) {
-  return (
-    <nav className="w-full bg-white sticky top-0 z-[100]">
-      <div className=" px-6 pt-6 pb-3 flex items-start justify-between shrink-0">
-        <div className="text-[12px] text-gray-900 select-none">
-          Parmanand Ojha
-        </div>
+export default function Nav() {
+  const navText = 'select-none text-nav font-normal uppercase text-gray-900'
 
-        <div className="text-[12px] text-gray-900 select-none">
-          <button
-            type="button"
-            onClick={() => onChangePage('about')}
-            disabled={isTransitioning}
-            className={page === 'about' ? 'font-bold' : 'font-medium'}
-          >
-            About
-          </button>
-          <span className="px-2">/</span>
-          <button
-            type="button"
-            onClick={() => onChangePage('work')}
-            disabled={isTransitioning}
-            className={page === 'work' ? 'font-bold' : 'font-medium'}
-          >
-            Work
-          </button>
-          <span className="px-2">/</span>
-          <button
-            type="button"
-            onClick={() => onChangePage('gallery')}
-            disabled={isTransitioning}
-            className={page === 'gallery' ? 'font-bold' : 'font-medium'}
-          >
-            Gallery
-          </button>
-        </div>
+  return (
+    <nav className="sticky top-0 z-[100] w-full bg-white">
+      <div className="flex items-end justify-between px-6 pb-3 pt-6">
+        <div className={navText}>Parmanand Ojha</div>
+        <div className={`${navText} text-right`}>visual design & development</div>
       </div>
     </nav>
   )
 }
-
