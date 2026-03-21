@@ -1,7 +1,32 @@
 @import "tailwindcss";
 
+/* Primary typeface — `src/P.woff` (bundled by Vite). Same file for 400/500/700 weights. */
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("./P.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("./P.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("./P.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Neue Montreal", ui-sans-serif, system-ui, sans-serif;
 
   /*
    * Small type scale (rem, 16px root). 10px = 0.625rem — scales with user font settings.

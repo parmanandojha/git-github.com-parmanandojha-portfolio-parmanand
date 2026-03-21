@@ -2,6 +2,10 @@
 
 React (Vite) + Tailwind CSS v4. Local dev: `npm run dev` · production build: `npm run build`.
 
+## Typography
+
+The primary font is loaded from **`src/P.woff`** (declared in `src/index.css` as the **Neue Montreal** family for `font-sans`). Vite bundles it from the CSS `url()`.
+
 ## URLs (shareable)
 
 | Path       | Section        |
