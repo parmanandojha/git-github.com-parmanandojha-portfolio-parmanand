@@ -1,17 +1,17 @@
 /**
- * Editorial “book” spread — full viewport below nav; global Footer sits above this layer.
+ * Editorial “book” spread — full viewport (no top nav on this route); Footer sits above this layer.
  */
 
 export default function Book() {
   return (
     <section
-      className="fixed inset-x-0 bottom-[14rem] top-20 z-[95] flex flex-col overflow-y-auto bg-white px-5 py-5 text-gray-900 md:bottom-[13.5rem] md:px-8 md:py-6"
+      className="fixed inset-x-0 bottom-[14rem] top-0 z-[95] flex flex-col overflow-y-auto bg-white px-5 py-5 text-gray-900 md:bottom-[13.5rem] md:px-8 md:py-6"
       aria-label="Catalogued works"
     >
       <div className="mx-auto flex min-h-full w-full max-w-[1800px] flex-1 flex-col">
         <div className="grid min-h-0 flex-1 grid-cols-1 gap-8 md:grid-cols-[1fr_auto_auto] md:grid-rows-[minmax(0,auto)_1fr] md:gap-x-10 md:gap-x-16 lg:gap-x-24">
           {/* Top left — contact */}
-          <header className="flex flex-col gap-1 md:col-start-1 md:row-start-1">
+          <header className="flex flex-col items-start gap-1 md:col-start-1 md:row-start-1">
             <p className="text-caption md:text-caption-md font-normal uppercase leading-relaxed tracking-[0.18em]">
               Available for projects
             </p>
@@ -25,7 +25,7 @@ export default function Book() {
 
           {/* Top right — roles + social */}
           <div className="flex flex-row flex-wrap justify-between gap-8 md:col-span-2 md:col-start-2 md:row-start-1 md:flex-nowrap md:justify-end md:gap-12 md:self-start lg:gap-20">
-            <div className="flex flex-col gap-4 text-caption md:text-caption-md font-normal uppercase leading-snug tracking-[0.16em] md:text-right">
+            <div className="flex flex-col gap-4 text-caption md:text-caption-md font-normal uppercase leading-none">
               <div>
                 <p>Visual designer</p>
                 <p>& developer</p>
@@ -36,13 +36,13 @@ export default function Book() {
               </div>
             </div>
             <nav
-              className="flex flex-col gap-1.5 text-caption md:text-caption-md font-normal uppercase tracking-[0.16em] md:text-right"
+              className="flex w-full flex-col items-start gap-1 text-caption md:text-caption-md font-normal uppercase"
               aria-label="Social"
             >
               <a
                 href="https://www.linkedin.com/in/parmanand-ojha-b64161204/"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="link-underline-ltr"
               >
                 LinkedIn
@@ -50,15 +50,15 @@ export default function Book() {
               <a
                 href="https://www.instagram.com/emelecollab/"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="link-underline-ltr"
               >
                 Instagram
               </a>
               <a
-                href="https://www.pinterest.com/emelecollab/"
+                href="https://www.behance.net/emelecollab"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="link-underline-ltr"
               >
                 Behance

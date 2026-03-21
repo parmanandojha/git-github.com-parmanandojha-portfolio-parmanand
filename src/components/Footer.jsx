@@ -16,14 +16,18 @@ export default function Footer({ page, onChangePage, isTransitioning }) {
 
   return (
     <footer className="fixed bottom-0 left-0 z-[100] w-full bg-white">
-      <div className="px-6 pb-6 pt-3">
-        <div className="grid grid-cols-1 gap-4 uppercase md:grid-cols-[1fr_auto_1fr] md:items-end md:gap-4">
+      <div className="px-4 pb-6 pt-3 md:px-6">
+        {/*
+          Mobile: one row — catalogue | book | overview + selected
+          md+: same three-column grid, more spacing
+        */}
+        <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-end gap-2 uppercase md:gap-4">
           <button
             type="button"
             onClick={() => onChangePage?.('work')}
             disabled={isTransitioning}
             aria-current={page === 'work' ? 'page' : undefined}
-            className="select-none text-left text-nav font-normal text-gray-900 disabled:opacity-40"
+            className="min-w-0 select-none text-left text-[clamp(0.625rem,2.8vw,0.75rem)] font-normal leading-tight text-gray-900 disabled:opacity-40 md:text-nav"
           >
             {underlineSpan('Catalogued works', page === 'work')}
           </button>
@@ -33,20 +37,20 @@ export default function Footer({ page, onChangePage, isTransitioning }) {
             onClick={() => onChangePage?.('book')}
             disabled={isTransitioning}
             aria-current={page === 'book' ? 'page' : undefined}
-            className="mx-auto max-w-full select-none text-center text-nav font-normal text-gray-900 disabled:opacity-40"
+            className="shrink-0 select-none text-center text-[clamp(0.625rem,2.8vw,0.75rem)] font-normal leading-tight text-gray-900 disabled:opacity-40 md:text-nav"
           >
             {underlineSpan(`Book ${String(year).slice(-2)}`, page === 'book')}
           </button>
 
           <nav
-            className="flex items-center justify-between gap-6 text-nav font-normal text-gray-900 select-none md:justify-self-end"
+            className="flex min-w-0 items-center justify-end gap-2 text-[clamp(0.625rem,2.8vw,0.75rem)] font-normal text-gray-900 select-none md:gap-6 md:text-nav"
             aria-label="Site sections"
           >
             <button
               type="button"
               onClick={() => onChangePage?.('about')}
               disabled={isTransitioning}
-              className="disabled:opacity-40"
+              className="shrink-0 disabled:opacity-40"
             >
               {underlineSpan('Overview', page === 'about')}
             </button>
@@ -54,7 +58,7 @@ export default function Footer({ page, onChangePage, isTransitioning }) {
               type="button"
               onClick={() => onChangePage?.('gallery')}
               disabled={isTransitioning}
-              className="disabled:opacity-40"
+              className="shrink-0 disabled:opacity-40"
             >
               {underlineSpan('Selected', page === 'gallery')}
             </button>

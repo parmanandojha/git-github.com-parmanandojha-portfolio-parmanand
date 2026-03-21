@@ -188,18 +188,32 @@ export default function WebGLHoverPreview({ imageUrl, visible, cursor }) {
     const s = stateRef.current
     if (!s.material || !imageUrl) return
 
+    let cancelled = false
+    const prevTex = s.material.uniforms.uTexture.value
+
     const loader = new THREE.TextureLoader()
     loader.load(
       imageUrl,
       (texture) => {
+        if (cancelled) {
+          texture.dispose()
+          return
+        }
         texture.colorSpace = THREE.SRGBColorSpace
         texture.minFilter = THREE.LinearFilter
         texture.magFilter = THREE.LinearFilter
+        if (prevTex && prevTex.isTexture && prevTex.image && prevTex !== texture) {
+          prevTex.dispose()
+        }
         s.material.uniforms.uTexture.value = texture
       },
       undefined,
       () => {}
     )
+
+    return () => {
+      cancelled = true
+    }
   }, [imageUrl])
 
   return <div ref={mountRef} className="fixed inset-0 pointer-events-none z-10 hidden md:block" />

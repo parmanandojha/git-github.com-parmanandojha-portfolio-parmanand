@@ -1,21 +1,23 @@
 {
-  "name": "react-tailwind-boilerplate",
+  "name": "parmanand-portfolio",
   "version": "1.0.0",
   "type": "module",
+  "private": true,
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["portfolio", "react", "vite"],
+  "author": "Parmanand Ojha",
   "license": "ISC",
-  "description": "React + Tailwind CSS boilerplate (Vite)",
+  "description": "Portfolio site — Parmanand Ojha, visual design & development",
   "dependencies": {
     "gsap": "^3.14.2",
     "locomotive-scroll": "^5.0.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "react-router-dom": "^7.13.1",
     "three": "^0.183.2"
   },
   "devDependencies": {

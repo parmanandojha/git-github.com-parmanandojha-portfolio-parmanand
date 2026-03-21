@@ -48,6 +48,8 @@
    */
   .link-underline-ltr {
     display: inline-block;
+    width: fit-content;
+    max-width: 100%;
     background-image: linear-gradient(currentColor, currentColor);
     background-position: 0 100%;
     background-repeat: no-repeat;

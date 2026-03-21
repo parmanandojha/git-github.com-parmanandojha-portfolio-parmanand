@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Nav from './components/Nav.jsx'
 import Footer from './components/Footer.jsx'
 import Work from './pages/Work.jsx'
@@ -7,15 +8,40 @@ import Gallery from './pages/Gallery.jsx'
 import Book from './pages/Book.jsx'
 import { createPixelGrid, runPageTransition } from './utils/pixelTransition.js'
 import { useLocomotiveScroll } from './hooks/useLocomotiveScroll.js'
+import {
+  isKnownPath,
+  normalizePathname,
+  pageToPath,
+  pathToPage,
+} from './utils/routes.js'
+import { applyDocumentMeta } from './utils/seo.js'
 
 export default function App() {
-  const [page, setPage] = useState('work')
+  const location = useLocation()
+  const navigate = useNavigate()
+  const page = pathToPage(location.pathname)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const transitionTimelineRef = useRef(null)
   const locoRef = useLocomotiveScroll([page, isTransitioning])
 
+  useEffect(() => {
+    const path = normalizePathname(location.pathname)
+    if (path === '/') {
+      navigate('/work', { replace: true })
+      return
+    }
+    if (!isKnownPath(location.pathname)) {
+      navigate('/work', { replace: true })
+    }
+  }, [location.pathname, navigate])
+
+  useEffect(() => {
+    applyDocumentMeta({ pathname: location.pathname })
+  }, [location.pathname])
+
   const handlePageChange = (nextPage) => {
-    if (nextPage === page || isTransitioning) return
+    const nextPath = pageToPath(nextPage)
+    if (nextPath === normalizePathname(location.pathname) || isTransitioning) return
 
     transitionTimelineRef.current?.kill()
     setIsTransitioning(true)
@@ -23,7 +49,7 @@ export default function App() {
 
     transitionTimelineRef.current = runPageTransition({
       onCovered: () => {
-        setPage(nextPage)
+        navigate(nextPath)
       },
       onComplete: () => {
         setIsTransitioning(false)
@@ -42,7 +68,6 @@ export default function App() {
     }
   }, [])
 
-  // Gallery uses its own scroll column; pause Lenis so wheel/touch isn’t captured globally
   useEffect(() => {
     const loco = locoRef.current
     if (!loco) return
@@ -55,7 +80,7 @@ export default function App() {
 
   return (
     <div className="flex min-h-screen flex-col bg-white font-normal">
-      <Nav />
+      {page !== 'book' ? <Nav /> : null}
 
       <main
         className={

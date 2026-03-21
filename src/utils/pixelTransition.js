@@ -35,6 +35,15 @@ export function createPixelGrid() {
  * 4) Pixels scale out smoothly
  */
 export function runPageTransition({ onCovered, onComplete }) {
+  if (
+    typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) {
+    onCovered?.()
+    onComplete?.()
+    return null
+  }
+
   const pixels = document.querySelectorAll('#pixel-grid div')
 
   if (!pixels.length) {
