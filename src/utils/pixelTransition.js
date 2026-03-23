@@ -66,11 +66,11 @@ export function runPageTransition({ onCovered, onComplete }) {
     onComplete: onComplete,
   })
 
-  // 1 — Cover: each block scales in at a random time until full screen is filled
+  // 1 — Cover: each block scales in (ease-in-out per pixel for soft start & end)
   tl.to(pixels, {
     scale: 1,
     duration: randomDurationIn,
-    ease: 'power2.out',
+    ease: 'power3.inOut',
     stagger: randomStaggerIn,
   })
 
@@ -88,11 +88,11 @@ export function runPageTransition({ onCovered, onComplete }) {
     }
   )
 
-  // 4 — Reveal: random scatter out
+  // 4 — Reveal: random scatter out (ease-in-out)
   tl.to(pixels, {
     scale: 0,
     duration: randomDurationOut,
-    ease: 'power2.inOut',
+    ease: 'power3.inOut',
     stagger: randomStaggerOut,
   })
 

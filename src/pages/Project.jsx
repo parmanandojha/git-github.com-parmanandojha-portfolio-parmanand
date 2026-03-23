@@ -8,16 +8,21 @@ import {
   getProjectPath,
 } from '../utils/projects.js'
 
-/** Wheel / touch delta needed past page bottom before going to next project */
-const OVERSCROLL_DELTA_TO_NEXT = 140
-const BOTTOM_TOLERANCE_PX = 16
+/**
+ * Horizontal threshold line: this many viewport-heights up from the bottom edge.
+ * When the Next Project block’s top crosses this line while scrolling down → next route.
+ */
+const NEXT_TRIGGER_FROM_BOTTOM_RATIO = 0.6
 
 export default function Project({ slug }) {
   const navigate = useNavigate()
   const project = slug ? getProjectBySlug(slug) : null
   const images = project ? getProjectImages(project) : []
   const nextProject = slug ? getNextProjectBySlug(slug) : null
-  const overscrollRef = useRef(0)
+  const nextFooterRef = useRef(null)
+  const navigatedToNextRef = useRef(false)
+  const lastFooterTopRef = useRef(null)
+  const lastScrollRef = useRef(0)
 
   useEffect(() => {
     if (!project) return
@@ -27,43 +32,54 @@ export default function Project({ slug }) {
 
   useEffect(() => {
     if (!project || !nextProject) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    navigatedToNextRef.current = false
+    lastFooterTopRef.current = null
+    lastScrollRef.current = 0
 
     let cancelled = false
     let unsubscribe = null
     let rafId = 0
 
+    const thresholdY = () =>
+      window.innerHeight * (1 - NEXT_TRIGGER_FROM_BOTTOM_RATIO)
+
     const attach = (attempt = 0) => {
       const lenis = getLenis()
       if (cancelled) return
       if (!lenis) {
-        if (attempt < 90) {
+        if (attempt < 95) {
           rafId = requestAnimationFrame(() => attach(attempt + 1))
         }
         return
       }
 
-      unsubscribe = lenis.on('virtual-scroll', ({ deltaY }) => {
-        const limit = lenis.limit
-        if (limit <= 0) return
+      lastScrollRef.current = lenis.scroll
 
-        const pos = lenis.targetScroll
-        const atBottom = pos >= limit - BOTTOM_TOLERANCE_PX
+      unsubscribe = lenis.on('scroll', (l) => {
+        if (cancelled || navigatedToNextRef.current) return
+        const el = nextFooterRef.current
+        if (!el) return
 
-        if (deltaY < 0) {
-          overscrollRef.current = 0
-          return
-        }
-        if (!atBottom) {
-          overscrollRef.current = 0
-          return
-        }
+        const yLine = thresholdY()
+        const top = el.getBoundingClientRect().top
+        const prevTop = lastFooterTopRef.current
+        const scrollDown = l.scroll > lastScrollRef.current + 0.25
+        lastScrollRef.current = l.scroll
 
-        overscrollRef.current += deltaY
-        if (overscrollRef.current >= OVERSCROLL_DELTA_TO_NEXT) {
-          overscrollRef.current = 0
+        const crossedDown =
+          scrollDown &&
+          prevTop != null &&
+          prevTop > yLine &&
+          top <= yLine
+
+        if (crossedDown) {
+          navigatedToNextRef.current = true
           navigate(getProjectPath(nextProject))
+          return
         }
+
+        lastFooterTopRef.current = top
       })
     }
 
@@ -72,7 +88,6 @@ export default function Project({ slug }) {
     return () => {
       cancelled = true
       cancelAnimationFrame(rafId)
-      overscrollRef.current = 0
       unsubscribe?.()
     }
   }, [slug, project, nextProject, navigate])
@@ -82,7 +97,7 @@ export default function Project({ slug }) {
   }
 
   return (
-    <article className="mx-auto w-full max-w-[1400px] px-5 pb-24 pt-8 md:px-8 md:pb-32 md:pt-12">
+    <article className="mx-auto w-full max-w-[1800px] px-5 pb-24 pt-8 md:px-8 md:pb-32 md:pt-12">
       <header className="mb-10 max-w-3xl md:mb-14">
         <button
           type="button"
@@ -134,7 +149,10 @@ export default function Project({ slug }) {
       </div>
 
       {nextProject ? (
-        <footer className="mt-20 border-t border-neutral-200 pt-12 pb-8 text-center md:mt-24 md:pt-16">
+        <footer
+          ref={nextFooterRef}
+          className="mt-20 border-t border-neutral-200 pt-12 pb-8 text-center md:mt-24 md:pt-16"
+        >
           <p className="text-caption font-normal uppercase tracking-[0.2em] text-neutral-400 md:text-caption-md">
             Next project
           </p>
@@ -146,7 +164,8 @@ export default function Project({ slug }) {
             {nextProject.title}
           </button>
           <p className="mx-auto mt-4 max-w-sm text-caption leading-relaxed text-neutral-500 md:text-caption-md">
-            Keep scrolling past the end of this page to open the next project.
+            Keep scrolling until this section crosses the lower part of the screen to
+            open the next project.
           </p>
         </footer>
       ) : (

@@ -26,6 +26,8 @@ export default function App() {
   const projectSlug = projectSlugMatch?.[1] ?? null
   const [isTransitioning, setIsTransitioning] = useState(false)
   const transitionTimelineRef = useRef(null)
+  const pathnameRef = useRef(location.pathname)
+  pathnameRef.current = location.pathname
   const locoRef = useLocomotiveScroll([page, isTransitioning])
 
   useEffect(() => {
@@ -47,6 +49,21 @@ export default function App() {
   useEffect(() => {
     applyDocumentMeta({ pathname: location.pathname })
   }, [location.pathname])
+
+  useEffect(() => {
+    const TAB_AWAY_TITLE = 'It was good to see you!'
+
+    const onVisibility = () => {
+      if (document.hidden) {
+        document.title = TAB_AWAY_TITLE
+      } else {
+        applyDocumentMeta({ pathname: pathnameRef.current })
+      }
+    }
+
+    document.addEventListener('visibilitychange', onVisibility)
+    return () => document.removeEventListener('visibilitychange', onVisibility)
+  }, [])
 
   const handlePageChange = (nextPage) => {
     const nextPath = pageToPath(nextPage)

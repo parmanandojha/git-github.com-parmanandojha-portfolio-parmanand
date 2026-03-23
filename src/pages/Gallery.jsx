@@ -311,8 +311,8 @@ function GalleryLayer() {
       }}
       className={[
         mobile
-          ? 'relative h-14 w-[5.5rem] shrink-0 overflow-hidden rounded-md bg-neutral-200 transition-[opacity,filter,ring]'
-          : 'relative h-24 w-full shrink-0 overflow-hidden rounded-sm bg-neutral-200 transition-[opacity,filter,ring]',
+          ? 'relative h-14 w-[5.5rem] shrink-0 overflow-hidden rounded-md bg-neutral-200 transition-[opacity,filter,ring] duration-300 ease-in-out'
+          : 'relative h-24 w-full shrink-0 overflow-hidden rounded-sm bg-neutral-200 transition-[opacity,filter,ring] duration-300 ease-in-out',
         mobile
           ? i === activeIndex
             ? 'opacity-100 grayscale ring-1 ring-neutral-400 ring-offset-2 ring-offset-white'
