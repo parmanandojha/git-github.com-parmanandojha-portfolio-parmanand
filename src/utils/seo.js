@@ -1,25 +1,43 @@
-import { normalizePathname, pathToPage } from './routes.js'
-
-const SECTION_TITLES = {
-  work: 'Work',
-  gallery: 'Selected',
-  book: 'Book',
-  about: 'Overview',
-}
+import { canonicalizePathname, normalizePathname, pathToPage } from './routes.js'
+import { getProjectBySlug } from './projects.js'
 
 const DEFAULT_DESC =
   'Parmanand Ojha — visual designer & developer. Catalogue of works, selected projects, and book.'
+
+function sectionTitleForPage(page) {
+  const y = String(new Date().getFullYear()).slice(-2)
+  switch (page) {
+    case 'work':
+      return 'Catalogued works'
+    case 'gallery':
+      return 'Selected'
+    case 'book':
+      return `Book ${y}`
+    case 'about':
+      return 'Overview'
+    default:
+      return 'Catalogued works'
+  }
+}
 
 export function applyDocumentMeta({ pathname }) {
   if (typeof document === 'undefined') return
 
   const page = pathToPage(pathname)
-  const section = SECTION_TITLES[page] ?? 'Work'
+  const projectMatch = pathname.match(/^\/project\/([^/]+)\/?$/)
+  const project = projectMatch?.[1] ? getProjectBySlug(projectMatch[1]) : null
+
+  const section =
+    project != null
+      ? project.title
+      : sectionTitleForPage(page)
   document.title = `${section} — Parmanand Ojha · Visual design & development`
 
   const origin = window.location.origin
-  const path = normalizePathname(pathname)
-  const canonicalPath = path === '/' ? '/work' : path
+  const canonicalPath =
+    projectMatch?.[1] != null
+      ? normalizePathname(pathname)
+      : canonicalizePathname(pathname)
   const url = `${origin}${canonicalPath}`
 
   const setMeta = (attr, key, value) => {

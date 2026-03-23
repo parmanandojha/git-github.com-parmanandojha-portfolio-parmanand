@@ -1,30 +1,57 @@
-/** Canonical paths for each app section (shareable URLs). */
+/** Canonical paths — match footer / nav labels (slug form). */
 export const PAGE_PATHS = {
-  work: '/work',
-  gallery: '/gallery',
+  work: '/catalogued-works',
+  gallery: '/selected',
   book: '/book',
-  about: '/about',
+  about: '/overview',
 }
 
-const KNOWN = new Set(['/', '/work', '/gallery', '/book', '/about'])
+/** Old URLs → new (bookmark / external links). */
+export const LEGACY_TO_CANONICAL = {
+  '/work': '/catalogued-works',
+  '/gallery': '/selected',
+  '/about': '/overview',
+}
+
+const KNOWN = new Set([
+  '/',
+  '/catalogued-works',
+  '/selected',
+  '/book',
+  '/overview',
+  '/work',
+  '/gallery',
+  '/about',
+])
 
 export function normalizePathname(pathname) {
   const p = (pathname || '/').replace(/\/+$/, '') || '/'
   return p === '/' ? '/' : p
 }
 
+export function canonicalizePathname(pathname) {
+  const p = normalizePathname(pathname)
+  if (p === '/') return '/catalogued-works'
+  return LEGACY_TO_CANONICAL[p] ?? p
+}
+
 export function pathToPage(pathname) {
   const p = normalizePathname(pathname)
-  if (p === '/gallery') return 'gallery'
+  if (p.startsWith('/project/') && p.length > '/project/'.length) return 'project'
+  if (p === '/selected' || p === '/gallery') return 'gallery'
   if (p === '/book') return 'book'
-  if (p === '/about') return 'about'
+  if (p === '/overview' || p === '/about') return 'about'
+  if (p === '/catalogued-works' || p === '/work') return 'work'
   return 'work'
 }
 
 export function pageToPath(page) {
-  return PAGE_PATHS[page] ?? '/work'
+  return PAGE_PATHS[page] ?? '/catalogued-works'
 }
 
 export function isKnownPath(pathname) {
-  return KNOWN.has(normalizePathname(pathname))
+  const p = normalizePathname(pathname)
+  if (KNOWN.has(p)) return true
+  if (p.startsWith('/project/') && p.slice('/project/'.length).length > 0) return true
+  return false
 }

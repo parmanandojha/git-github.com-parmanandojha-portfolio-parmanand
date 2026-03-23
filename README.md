@@ -8,21 +8,23 @@ The primary font is loaded from **`src/P.woff`** (declared in `src/index.css` as
 
 ## URLs (shareable)
 
-| Path       | Section        |
-| ---------- | -------------- |
-| `/work`    | Work catalogue |
-| `/gallery` | Selected       |
-| `/book`    | Book           |
-| `/about`   | Overview       |
+Paths match the footer labels:
 
-`/` redirects to `/work`.
+| Path                 | Section           |
+| -------------------- | ----------------- |
+| `/catalogued-works`  | Catalogued works  |
+| `/selected`          | Selected          |
+| `/book`              | Book              |
+| `/overview`          | Overview          |
+
+`/` redirects to `/catalogued-works`. Legacy `/work`, `/gallery`, and `/about` redirect to the paths above.
 
 ## Deploying (client-side routes)
 
 - **Netlify**: `public/_redirects` sends all routes to `index.html`.
 - **Vercel**: `vercel.json` rewrites are included.
 
-For other hosts, configure a **SPA fallback** to `index.html` so `/gallery` et al. load correctly.
+For other hosts, configure a **SPA fallback** to `index.html` so `/selected`, `/catalogued-works`, etc. load correctly.
 
 ## After you go live
 

@@ -1,8 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import WebGLHoverPreview from '../components/WebGLHoverPreview.jsx'
 import projects from '../data/projects.json'
+import { getProjectPath } from '../utils/projects.js'
 
 export default function Work() {
+  const navigate = useNavigate()
   const STEP = 8
   const BASE_LEN = projects.length
   const [visibleCount, setVisibleCount] = useState(Math.min(STEP, BASE_LEN))
@@ -63,17 +66,23 @@ export default function Work() {
             const itemKey = `grid-${p.id}-${i}`
             return (
               <article key={itemKey} className="min-w-0">
-                <div className="w-full aspect-[4/5] overflow-hidden bg-gray-200">
-                  <img
-                    src={p.image}
-                    alt=""
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
-                <p className="mt-2 text-center text-[13px] sm:text-[14px] font-medium uppercase leading-tight text-gray-900 line-clamp-2">
-                  {p.title}
-                </p>
+                <button
+                  type="button"
+                  onClick={() => navigate(getProjectPath(p))}
+                  className="w-full text-left"
+                >
+                  <div className="w-full aspect-[4/5] overflow-hidden bg-gray-200">
+                    <img
+                      src={p.image}
+                      alt=""
+                      className="h-full w-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                  <p className="mt-2 text-center text-[13px] sm:text-[14px] font-medium uppercase leading-tight text-gray-900 line-clamp-2">
+                    {p.title}
+                  </p>
+                </button>
               </article>
             )
           })}
@@ -87,10 +96,11 @@ export default function Work() {
             const itemKey = `${p.id}-${i}`
 
             return (
-              <div
+              <button
                 key={itemKey}
+                type="button"
                 className={[
-                  'display-condensed',
+                  'display-condensed m-0 cursor-pointer border-0 bg-transparent p-0',
                   sizes[i] ?? sizes[sizes.length - 1],
                   'relative text-center font-medium uppercase text-gray-900 leading-none whitespace-nowrap',
                   hoveredKey === itemKey ? 'z-30' : 'z-0',
@@ -104,9 +114,10 @@ export default function Work() {
                   setHoveredProject(null)
                 }}
                 onMouseMove={(e) => setCursor({ x: e.clientX, y: e.clientY })}
+                onClick={() => navigate(getProjectPath(p))}
               >
                 {p.title}
-              </div>
+              </button>
             )
           })}
         </div>

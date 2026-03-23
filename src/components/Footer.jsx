@@ -1,5 +1,10 @@
 export default function Footer({ page, onChangePage, isTransitioning }) {
   const year = new Date().getFullYear()
+  const onCatalogue = page === 'work' || page === 'project'
+
+  /** One size for every footer control (matches `text-nav` at lg+, slightly smaller on narrow screens). */
+  const footerLabel =
+    'text-[clamp(0.625rem,2.5vw,0.75rem)] font-normal leading-tight text-gray-900 uppercase select-none lg:text-nav'
 
   const underlineSpan = (label, isActive) => (
     <span
@@ -14,55 +19,107 @@ export default function Footer({ page, onChangePage, isTransitioning }) {
     </span>
   )
 
+  /** Shared button chrome — typography comes from `footerLabel` only. */
+  const btn =
+    `m-0 p-0 ${footerLabel} disabled:opacity-40`
+
   return (
     <footer className="fixed bottom-0 left-0 z-[100] w-full bg-white uppercase">
-      <div className="px-4 pb-6 pt-3 md:px-6">
-        {/*
-          Mobile: one row — catalogue | book | overview + selected
-          md+: same three-column grid, more spacing
-        */}
-        <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-end gap-2 uppercase md:gap-4">
-          <button
-            type="button"
-            onClick={() => onChangePage?.('work')}
-            disabled={isTransitioning}
-            aria-current={page === 'work' ? 'page' : undefined}
-            className="min-w-0 select-none text-left uppercase text-[clamp(0.625rem,2.8vw,0.75rem)] font-normal leading-tight text-gray-900 disabled:opacity-40 md:text-nav"
-          >
-            {underlineSpan('Catalogued works', page === 'work')}
-          </button>
-
-          <button
-            type="button"
-            onClick={() => onChangePage?.('book')}
-            disabled={isTransitioning}
-            aria-current={page === 'book' ? 'page' : undefined}
-            className="shrink-0 select-none text-center uppercase text-[clamp(0.625rem,2.8vw,0.75rem)] font-normal leading-tight text-gray-900 disabled:opacity-40 md:text-nav"
-          >
-            {underlineSpan(`Book ${String(year).slice(-2)}`, page === 'book')}
-          </button>
-
-          <nav
-            className="flex min-w-0 items-center justify-end gap-2 uppercase text-[clamp(0.625rem,2.8vw,0.75rem)] font-normal text-gray-900 select-none md:gap-6 md:text-nav"
+      <div className="px-5 pb-6 pt-3 md:px-8">
+        <div className="mx-auto w-full max-w-[1800px]">
+          {/*
+            Mobile: Book truly centered (absolute), Catalogue left, Overview+Selected right.
+          */}
+          <div
+            className="relative flex min-h-[1.35rem] w-full items-end justify-between lg:hidden"
             aria-label="Site sections"
           >
             <button
               type="button"
-              onClick={() => onChangePage?.('about')}
+              onClick={() => onChangePage?.('work')}
               disabled={isTransitioning}
-              className="shrink-0 uppercase disabled:opacity-40"
+              aria-current={onCatalogue ? 'page' : undefined}
+              className={`${btn} relative z-[1] min-w-0 max-w-[32%] shrink text-left`}
             >
-              {underlineSpan('Overview', page === 'about')}
+              {underlineSpan('Catalogued works', onCatalogue)}
             </button>
+
             <button
               type="button"
-              onClick={() => onChangePage?.('gallery')}
+              onClick={() => onChangePage?.('book')}
               disabled={isTransitioning}
-              className="shrink-0 uppercase disabled:opacity-40"
+              aria-current={page === 'book' ? 'page' : undefined}
+              className={`${btn} absolute bottom-0 left-1/2 z-[1] -translate-x-1/2 whitespace-nowrap text-center`}
             >
-              {underlineSpan('Selected', page === 'gallery')}
+              {underlineSpan(`Book ${String(year).slice(-2)}`, page === 'book')}
             </button>
-          </nav>
+
+            <div className="relative z-[1] flex shrink-0 flex-row flex-nowrap items-end gap-3">
+              <button
+                type="button"
+                onClick={() => onChangePage?.('about')}
+                disabled={isTransitioning}
+                className={`${btn} text-left`}
+              >
+                {underlineSpan('Overview', page === 'about')}
+              </button>
+              <button
+                type="button"
+                onClick={() => onChangePage?.('gallery')}
+                disabled={isTransitioning}
+                className={`${btn} text-left`}
+              >
+                {underlineSpan('Selected', page === 'gallery')}
+              </button>
+            </div>
+          </div>
+
+          {/*
+            lg+: Book centered in the bar (absolute), Catalogue left, Overview+Selected right.
+          */}
+          <div className="relative hidden min-h-[1.35rem] w-full items-end lg:flex">
+            <button
+              type="button"
+              onClick={() => onChangePage?.('work')}
+              disabled={isTransitioning}
+              aria-current={onCatalogue ? 'page' : undefined}
+              className={`${btn} relative z-[1] min-w-0 max-w-[min(40%,22rem)] shrink text-left`}
+            >
+              {underlineSpan('Catalogued works', onCatalogue)}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => onChangePage?.('book')}
+              disabled={isTransitioning}
+              aria-current={page === 'book' ? 'page' : undefined}
+              className={`${btn} absolute bottom-0 left-1/2 z-[1] -translate-x-1/2 whitespace-nowrap text-center`}
+            >
+              {underlineSpan(`Book ${String(year).slice(-2)}`, page === 'book')}
+            </button>
+
+            <nav
+              className="relative z-[1] ml-auto flex shrink-0 flex-row flex-nowrap items-end justify-end gap-12 xl:gap-20"
+              aria-label="Site sections"
+            >
+              <button
+                type="button"
+                onClick={() => onChangePage?.('about')}
+                disabled={isTransitioning}
+                className={`${btn} text-left`}
+              >
+                {underlineSpan('Overview', page === 'about')}
+              </button>
+              <button
+                type="button"
+                onClick={() => onChangePage?.('gallery')}
+                disabled={isTransitioning}
+                className={`${btn} text-left`}
+              >
+                {underlineSpan('Selected', page === 'gallery')}
+              </button>
+            </nav>
+          </div>
         </div>
       </div>
     </footer>

@@ -3,7 +3,7 @@ export default function Nav() {
 
   return (
     <nav className="sticky top-0 z-[100] w-full bg-white">
-      <div className="flex items-end justify-between px-6 pb-3 pt-6">
+      <div className="mx-auto flex w-full max-w-[1800px] items-end justify-between px-5 pb-3 pt-6 md:px-8">
         <div className={navText}>Parmanand Ojha</div>
         <div className={`${navText} text-right`}>visual design & development</div>
       </div>

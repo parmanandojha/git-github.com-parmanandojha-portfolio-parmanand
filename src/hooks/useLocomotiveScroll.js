@@ -1,5 +1,9 @@
 import { useEffect, useRef } from 'react'
 import LocomotiveScroll from 'locomotive-scroll'
+import {
+  registerLocomotiveScroll,
+  unregisterLocomotiveScroll,
+} from '../utils/locomotiveBridge.js'
 
 /**
  * Locomotive Scroll v5 (Lenis-based) — smooth scrolling for the page.
@@ -19,8 +23,10 @@ export function useLocomotiveScroll(resizeDeps = []) {
     })
 
     instanceRef.current = loco
+    registerLocomotiveScroll(loco)
 
     return () => {
+      unregisterLocomotiveScroll()
       loco.destroy()
       instanceRef.current = null
     }

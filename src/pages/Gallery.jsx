@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import projects from '../data/projects.json'
+import { getProjectPath } from '../utils/projects.js'
 
 const THUMB_HEIGHT = 96
 const MOBILE_THUMB_W = 88
@@ -21,6 +23,7 @@ function useIsDesktop() {
 }
 
 function GalleryLayer() {
+  const navigate = useNavigate()
   const isDesktop = useIsDesktop()
   const scrollRef = useRef(null)
   const trackRef = useRef(null)
@@ -302,6 +305,10 @@ function GalleryLayer() {
         itemRefs.current[i] = el
       }}
       onClick={() => scrollThumbIndexToCenter(i)}
+      onDoubleClick={(e) => {
+        e.preventDefault()
+        navigate(getProjectPath(p))
+      }}
       className={[
         mobile
           ? 'relative h-14 w-[5.5rem] shrink-0 overflow-hidden rounded-md bg-neutral-200 transition-[opacity,filter,ring]'
@@ -314,7 +321,7 @@ function GalleryLayer() {
             ? 'opacity-100 grayscale-0 ring-2 ring-neutral-900 ring-offset-2 ring-offset-white'
             : 'grayscale opacity-[0.72] hover:opacity-90 hover:grayscale-0',
       ].join(' ')}
-      aria-label={`View ${p.title}`}
+      aria-label={`${p.title}. Double-click to open project.`}
       aria-current={i === activeIndex ? 'true' : undefined}
     >
       <img
@@ -376,11 +383,19 @@ function GalleryLayer() {
             className="h-full w-full object-cover"
           />
         </div>
-        <p className="pointer-events-none mt-4 max-w-[90vw] text-center text-[11px] font-medium uppercase tracking-wide text-neutral-600">
-          {active.title}
-          <span className="mx-2 text-neutral-400">/</span>
-          {active.year}
-        </p>
+        <div className="pointer-events-auto mt-4 max-w-[90vw] text-center text-[11px] font-medium uppercase tracking-wide text-neutral-600">
+          <p className="m-0">
+            {active.title}
+            <span className="mx-2 text-neutral-400">/</span>
+            {active.year}
+          </p>
+          <Link
+            to={getProjectPath(active)}
+            className="link-underline-ltr mt-2 inline-block text-nav text-neutral-800"
+          >
+            All images
+          </Link>
+        </div>
       </div>
 
       {/* Mobile: main image below scrubber */}
@@ -393,11 +408,19 @@ function GalleryLayer() {
             className="h-full w-full object-cover"
           />
         </div>
-        <p className="mt-3 max-w-[90vw] text-center text-[11px] font-medium uppercase tracking-wide text-neutral-600">
-          {active.title}
-          <span className="mx-2 text-neutral-400">/</span>
-          {active.year}
-        </p>
+        <div className="mt-3 max-w-[90vw] text-center text-[11px] font-medium uppercase tracking-wide text-neutral-600">
+          <p className="m-0">
+            {active.title}
+            <span className="mx-2 text-neutral-400">/</span>
+            {active.year}
+          </p>
+          <Link
+            to={getProjectPath(active)}
+            className="link-underline-ltr mt-2 inline-block text-nav text-neutral-800"
+          >
+            All images
+          </Link>
+        </div>
       </div>
 
       {/* Thumbnail strip: horizontal (mobile) / vertical (desktop) */}

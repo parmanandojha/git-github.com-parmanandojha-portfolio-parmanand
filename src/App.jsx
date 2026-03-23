@@ -6,10 +6,12 @@ import Work from './pages/Work.jsx'
 import About from './pages/About.jsx'
 import Gallery from './pages/Gallery.jsx'
 import Book from './pages/Book.jsx'
+import Project from './pages/Project.jsx'
 import { createPixelGrid, runPageTransition } from './utils/pixelTransition.js'
 import { useLocomotiveScroll } from './hooks/useLocomotiveScroll.js'
 import {
   isKnownPath,
+  LEGACY_TO_CANONICAL,
   normalizePathname,
   pageToPath,
   pathToPage,
@@ -20,18 +22,25 @@ export default function App() {
   const location = useLocation()
   const navigate = useNavigate()
   const page = pathToPage(location.pathname)
+  const projectSlugMatch = location.pathname.match(/^\/project\/([^/]+)\/?$/)
+  const projectSlug = projectSlugMatch?.[1] ?? null
   const [isTransitioning, setIsTransitioning] = useState(false)
   const transitionTimelineRef = useRef(null)
   const locoRef = useLocomotiveScroll([page, isTransitioning])
 
   useEffect(() => {
     const path = normalizePathname(location.pathname)
+    const upgraded = LEGACY_TO_CANONICAL[path]
+    if (upgraded) {
+      navigate(upgraded, { replace: true })
+      return
+    }
     if (path === '/') {
-      navigate('/work', { replace: true })
+      navigate('/catalogued-works', { replace: true })
       return
     }
     if (!isKnownPath(location.pathname)) {
-      navigate('/work', { replace: true })
+      navigate('/catalogued-works', { replace: true })
     }
   }, [location.pathname, navigate])
 
@@ -91,7 +100,9 @@ export default function App() {
               : 'flex-1 pb-44 md:pb-40'
         }
       >
-        {page === 'work' ? (
+        {page === 'project' && projectSlug ? (
+          <Project slug={projectSlug} />
+        ) : page === 'work' ? (
           <Work />
         ) : page === 'gallery' ? (
           <Gallery />
