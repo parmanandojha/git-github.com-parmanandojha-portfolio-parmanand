@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import WebGLHoverPreview from '../components/WebGLHoverPreview.jsx'
 import projects from '../data/projects.json'
 import { getProjectPath } from '../utils/projects.js'
 
-export default function Work() {
+const WebGLHoverPreview = lazy(() => import('../components/WebGLHoverPreview.jsx'))
+
+export default function Work({ onNavigateWithTransition }) {
   const navigate = useNavigate()
   const STEP = 8
   const BASE_LEN = projects.length
@@ -17,10 +18,29 @@ export default function Work() {
     y: typeof window !== 'undefined' ? window.innerHeight / 2 : 0,
   })
   const sentinelRef = useRef(null)
+  const [canShowHoverPreview, setCanShowHoverPreview] = useState(false)
 
   const visibleProjects = useMemo(() => {
     return Array.from({ length: visibleCount }, (_, i) => projects[i % BASE_LEN])
   }, [visibleCount])
+
+  useEffect(() => {
+    const mqDesktop = window.matchMedia('(min-width: 768px)')
+    const mqReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+
+    const syncCanPreview = () => {
+      setCanShowHoverPreview(mqDesktop.matches && !mqReducedMotion.matches)
+    }
+
+    syncCanPreview()
+    mqDesktop.addEventListener('change', syncCanPreview)
+    mqReducedMotion.addEventListener('change', syncCanPreview)
+
+    return () => {
+      mqDesktop.removeEventListener('change', syncCanPreview)
+      mqReducedMotion.removeEventListener('change', syncCanPreview)
+    }
+  }, [])
 
   useEffect(() => {
     const el = sentinelRef.current
@@ -57,6 +77,15 @@ export default function Work() {
     'text-[clamp(42px,6.5vw,96px)]',
   ]
 
+  const goToProject = (project) => {
+    const path = getProjectPath(project)
+    if (onNavigateWithTransition) {
+      onNavigateWithTransition(path)
+      return
+    }
+    navigate(path)
+  }
+
   return (
     <div className="w-full max-w-[1600px] px-4 py-6 mx-auto md:max-w-[980px] md:px-6">
       {/* Mobile: grid of project cards */}
@@ -68,13 +97,13 @@ export default function Work() {
               <article key={itemKey} className="min-w-0">
                 <button
                   type="button"
-                  onClick={() => navigate(getProjectPath(p))}
+                  onClick={() => goToProject(p)}
                   className="w-full text-left"
                 >
                   <div className="w-full aspect-[4/5] overflow-hidden bg-[#e8e7de]">
                     <img
                       src={p.image}
-                      alt=""
+                      alt={`${p.title} cover`}
                       className="h-full w-full object-cover"
                       loading="lazy"
                     />
@@ -102,7 +131,7 @@ export default function Work() {
                 className={[
                   'catalogue-project-title m-0 cursor-pointer border-0 bg-transparent p-0',
                   sizes[i] ?? sizes[sizes.length - 1],
-                  'relative text-center uppercase text-[#7f7954] leading-[0.9] tracking-[-0.02em] whitespace-nowrap',
+                  'relative text-center uppercase text-[#7f7954] leading-[0.9] tracking-[-0.02em] whitespace-nowrap focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#7f7954]',
                   hoveredKey === itemKey ? 'z-30' : 'z-0',
                 ].join(' ')}
                 onMouseEnter={() => {
@@ -114,7 +143,7 @@ export default function Work() {
                   setHoveredProject(null)
                 }}
                 onMouseMove={(e) => setCursor({ x: e.clientX, y: e.clientY })}
-                onClick={() => navigate(getProjectPath(p))}
+                onClick={() => goToProject(p)}
               >
                 {p.title}
               </button>
@@ -125,11 +154,15 @@ export default function Work() {
 
       <div ref={sentinelRef} className="h-10 w-full" aria-hidden="true" />
 
-      <WebGLHoverPreview
-        imageUrl={hoveredProject?.image}
-        visible={Boolean(hoveredProject?.image)}
-        cursor={cursor}
-      />
+      {canShowHoverPreview ? (
+        <Suspense fallback={null}>
+          <WebGLHoverPreview
+            imageUrl={hoveredProject?.image}
+            visible={Boolean(hoveredProject?.image)}
+            cursor={cursor}
+          />
+        </Suspense>
+      ) : null}
     </div>
   )
 }

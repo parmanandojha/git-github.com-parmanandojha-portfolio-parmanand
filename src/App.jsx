@@ -1,12 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Nav from './components/Nav.jsx'
 import Footer from './components/Footer.jsx'
-import Work from './pages/Work.jsx'
-import About from './pages/About.jsx'
-import Gallery from './pages/Gallery.jsx'
-import Book from './pages/Book.jsx'
-import Project from './pages/Project.jsx'
 import { createPixelGrid, runPageTransition } from './utils/pixelTransition.js'
 import { useLocomotiveScroll } from './hooks/useLocomotiveScroll.js'
 import {
@@ -17,6 +12,12 @@ import {
   pathToPage,
 } from './utils/routes.js'
 import { applyDocumentMeta } from './utils/seo.js'
+
+const Work = lazy(() => import('./pages/Work.jsx'))
+const About = lazy(() => import('./pages/About.jsx'))
+const Gallery = lazy(() => import('./pages/Gallery.jsx'))
+const Book = lazy(() => import('./pages/Book.jsx'))
+const Project = lazy(() => import('./pages/Project.jsx'))
 
 export default function App() {
   const location = useLocation()
@@ -65,8 +66,7 @@ export default function App() {
     return () => document.removeEventListener('visibilitychange', onVisibility)
   }, [])
 
-  const handlePageChange = (nextPage) => {
-    const nextPath = pageToPath(nextPage)
+  const handlePathChange = (nextPath) => {
     if (nextPath === normalizePathname(location.pathname) || isTransitioning) return
 
     transitionTimelineRef.current?.kill()
@@ -85,6 +85,10 @@ export default function App() {
         })
       },
     })
+  }
+
+  const handlePageChange = (nextPage) => {
+    handlePathChange(pageToPath(nextPage))
   }
 
   useEffect(() => {
@@ -106,7 +110,9 @@ export default function App() {
 
   return (
     <div className="flex min-h-screen flex-col bg-canvas font-normal">
-      {page !== 'book' ? <Nav /> : null}
+      {page !== 'book' ? (
+        <Nav onChangePage={handlePageChange} isTransitioning={isTransitioning} />
+      ) : null}
 
       <main
         className={
@@ -117,17 +123,19 @@ export default function App() {
               : 'flex-1 pb-44 md:pb-40'
         }
       >
-        {page === 'project' && projectSlug ? (
-          <Project slug={projectSlug} />
-        ) : page === 'work' ? (
-          <Work />
-        ) : page === 'gallery' ? (
-          <Gallery />
-        ) : page === 'book' ? (
-          <Book />
-        ) : (
-          <About />
-        )}
+        <Suspense fallback={<div className="h-full w-full" aria-hidden="true" />}>
+          {page === 'project' && projectSlug ? (
+            <Project slug={projectSlug} />
+          ) : page === 'work' ? (
+            <Work onNavigateWithTransition={handlePathChange} />
+          ) : page === 'gallery' ? (
+            <Gallery />
+          ) : page === 'book' ? (
+            <Book />
+          ) : (
+            <About />
+          )}
+        </Suspense>
       </main>
 
       <Footer

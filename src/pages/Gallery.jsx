@@ -25,6 +25,11 @@ function useIsDesktop() {
 function GalleryLayer() {
   const navigate = useNavigate()
   const isDesktop = useIsDesktop()
+  const [reducedMotion, setReducedMotion] = useState(() =>
+    typeof window !== 'undefined'
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false
+  )
   const scrollRef = useRef(null)
   const trackRef = useRef(null)
   const itemRefs = useRef([])
@@ -34,6 +39,13 @@ function GalleryLayer() {
   const [scrollProgress, setScrollProgress] = useState(0)
 
   const active = projects[activeIndex] ?? projects[0]
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const onChange = () => setReducedMotion(mq.matches)
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [])
 
   /** Use the thumb strip’s own midline — not full viewport — so top items can be “active” */
   const getStripCenterY = () => {
@@ -80,7 +92,7 @@ function GalleryLayer() {
       })
     }
     setActiveIndex(best)
-  }, [isDesktop])
+  }, [isDesktop, reducedMotion])
 
   const syncScrollProgress = useCallback(() => {
     const el = scrollRef.current
@@ -239,17 +251,18 @@ function GalleryLayer() {
       const elRect = el.getBoundingClientRect()
       const cy = elRect.top + elRect.height / 2
       const delta = cy - getStripCenterY()
-      container.scrollBy({ top: delta, behavior: 'smooth' })
+      container.scrollBy({ top: delta, behavior: reducedMotion ? 'auto' : 'smooth' })
     } else {
       const elRect = el.getBoundingClientRect()
       const cx = elRect.left + elRect.width / 2
       const delta = cx - getStripCenterX()
-      container.scrollBy({ left: delta, behavior: 'smooth' })
+      container.scrollBy({ left: delta, behavior: reducedMotion ? 'auto' : 'smooth' })
     }
   }
 
   const onScrubPointerDown = (e) => {
     if (e.pointerType === 'mouse' && e.button !== 0) return
+    if (reducedMotion) return
     scrubbingRef.current = true
     e.currentTarget.setPointerCapture(e.pointerId)
     applyScrubFromClientX(e.clientX)
@@ -326,7 +339,7 @@ function GalleryLayer() {
     >
       <img
         src={p.image}
-        alt=""
+        alt={`${p.title} thumbnail`}
         className="h-full w-full object-cover"
         loading="lazy"
         draggable={false}
@@ -374,8 +387,8 @@ function GalleryLayer() {
       />
 
       {/* Desktop: fixed center main image */}
-      <div className="pointer-events-none fixed inset-0 z-[110] hidden flex-col items-center justify-center px-6 pt-20 pb-28 md:flex">
-        <div className="w-full max-w-[min(42vw,340px)] overflow-hidden rounded-sm bg-[#e5e4d9] shadow-sm aspect-[3/4] max-h-[min(68vh,720px)]">
+      <div className="pointer-events-none h-[100vh] w-[50vw]  fixed  left-[50%] -translate-x-1/2 inset-0 z-[110] hidden flex-col items-center justify-center px-6 pt-20 pb-28 md:flex">
+        <div className="w-full  overflow-hidden rounded-sm bg-[#e5e4d9] shadow-sm">
           <img
             key={active.id}
             src={active.image}
