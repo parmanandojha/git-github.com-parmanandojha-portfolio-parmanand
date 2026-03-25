@@ -53,11 +53,13 @@
     "description": "Experimental typography study turned into a responsive component set.",
     "year": 2024,
     "tags": ["Typography", "Website Design", "Motion", "Development"],
-    "image": "https://picsum.photos/id/1043/900/600",
+    "image": "/smarttek/project-smarttek-1.png",
     "images": [
-      "https://picsum.photos/id/1043/1400/900",
-      "https://picsum.photos/id/1044/1400/900",
-      "https://picsum.photos/id/1045/1400/900"
+      "/smarttek/project-smarttek-1.png",
+      "/smarttek/project-smarttek-2.png",
+      "/smarttek/project-smarttek-3.png",
+      "/smarttek/project-smarttek-4.png",
+      "/smarttek/project-smarttek-5.png"
     ]
   },
   {
@@ -67,11 +69,16 @@
     "description": "Gallery-style portfolio grid with accessible interactions.",
     "year": 2026,
     "tags": ["Branding", "Visual Identity"],
-    "image": "https://picsum.photos/id/1050/900/600",
+    "image": "/ila/project-ila-1.png",
     "images": [
-      "https://picsum.photos/id/1050/1400/900",
-      "https://picsum.photos/id/1051/1400/900",
-      "https://picsum.photos/id/1052/1400/900"
+      "/ila/project-ila-1.png",
+      "/ila/project-ila-2.png",
+      "/ila/project-ila-3.png",
+      "/ila/project-ila-4.png",
+      "/ila/project-ila-5.png",
+      "/ila/project-ila-6.png",
+      "/ila/project-ila-7.png",
+      "/ila/project-ila-8.png"
     ]
   },
   {
@@ -81,12 +88,18 @@
     "description": "Challenge: To create unique style and showcase the project and develop on no-code tool mostly preferred on wix.",
     "year": 2024,
     "tags": ["Web", "Strategy" , "Wix"],
-    "image": "https://picsum.photos/id/1067/900/600",
+    "image": "/exponify/project-exponify-1.png",
     "images": [
-      "https://picsum.photos/id/1067/1400/900",
-      "https://picsum.photos/id/1068/1400/900",
-      "https://picsum.photos/id/1069/1400/900",
-      "https://picsum.photos/id/1070/1400/900"
+      "/exponify/project-exponify-1.png",
+      "/exponify/project-exponify-2.png",
+      "/exponify/project-exponify-3.png",
+      "/exponify/project-exponify-4.png",
+      "/exponify/project-exponify-5.png",
+      "/exponify/project-exponify-6.png",
+      "/exponify/project-exponify-7.png",
+      "/exponify/project-exponify-8.png",
+      "/exponify/project-exponify-9.png",
+      "/exponify/project-exponify-10.png"
     ]
   },
   {
@@ -138,12 +151,16 @@
     "description": "Internal design experiments and component prototypes collection.",
     "year": 2025,
     "tags": ["Prototyping", "Components", "R&D"],
-    "image": "https://picsum.photos/id/119/900/600",
+    "image": "/svapn/project-svapn-1.png",
     "images": [
-      "https://picsum.photos/id/119/1400/900",
-      "https://picsum.photos/id/120/1400/900",
-      "https://picsum.photos/id/121/1400/900",
-      "https://picsum.photos/id/122/1400/900"
+      "/svapn/project-svapn-1.png",
+      "/svapn/project-svapn-2.png",
+      "/svapn/project-svapn-3.png",
+      "/svapn/project-svapn-4.png",
+      "/svapn/project-svapn-5.png",
+      "/svapn/project-svapn-6.png",
+      "/svapn/project-svapn-7.png",
+      "/svapn/project-svapn-8.png"
     ]
   }
 ]
