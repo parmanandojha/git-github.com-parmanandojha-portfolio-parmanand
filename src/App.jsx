@@ -1,7 +1,8 @@
-import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Nav from './components/Nav.jsx'
 import Footer from './components/Footer.jsx'
+import SitePreloader from './components/SitePreloader.jsx'
 import { createPixelGrid, runPageTransition } from './utils/pixelTransition.js'
 import { useLocomotiveScroll } from './hooks/useLocomotiveScroll.js'
 import {
@@ -22,6 +23,8 @@ const Project = lazy(() => import('./pages/Project.jsx'))
 export default function App() {
   const location = useLocation()
   const navigate = useNavigate()
+  const [siteImagesReady, setSiteImagesReady] = useState(false)
+  const onPreloaderComplete = useCallback(() => setSiteImagesReady(true), [])
   const page = pathToPage(location.pathname)
   const projectSlugMatch = location.pathname.match(/^\/project\/([^/]+)\/?$/)
   const projectSlug = projectSlugMatch?.[1] ?? null
@@ -110,6 +113,7 @@ export default function App() {
 
   return (
     <div className="flex min-h-screen flex-col bg-canvas font-normal">
+      {!siteImagesReady ? <SitePreloader onComplete={onPreloaderComplete} /> : null}
       {page !== 'book' ? (
         <Nav onChangePage={handlePageChange} isTransitioning={isTransitioning} />
       ) : null}

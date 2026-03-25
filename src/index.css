@@ -35,8 +35,8 @@
 }
 
 @theme {
-  /* Site background — warm off-white */
-  --color-canvas: #f1f0e7;
+  /* Site background */
+  --color-canvas: #e5e5e5;
 
   --font-sans: "Neue Montreal", ui-sans-serif, system-ui, sans-serif;
 
