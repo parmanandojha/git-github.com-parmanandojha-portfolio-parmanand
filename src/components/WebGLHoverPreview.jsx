@@ -71,6 +71,9 @@ export default function WebGLHoverPreview({ imageUrl, visible, cursor }) {
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true })
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.setSize(window.innerWidth, window.innerHeight)
+    /* Match browser / <img> appearance — default ACES tone mapping darkens photos */
+    renderer.outputColorSpace = THREE.SRGBColorSpace
+    renderer.toneMapping = THREE.NoToneMapping
     mount.appendChild(renderer.domElement)
 
     const scene = new THREE.Scene()
@@ -88,6 +91,7 @@ export default function WebGLHoverPreview({ imageUrl, visible, cursor }) {
     const emptyTexture = new THREE.Texture()
     const material = new THREE.ShaderMaterial({
       transparent: true,
+      toneMapped: false,
       uniforms: {
         uTime: { value: 0 },
         uTexture: { value: emptyTexture },

@@ -311,14 +311,14 @@ function GalleryLayer() {
       }}
       className={[
         mobile
-          ? 'relative h-14 w-[5.5rem] shrink-0 overflow-hidden rounded-md bg-neutral-200 transition-[opacity,filter,ring] duration-300 ease-in-out'
-          : 'relative h-24 w-full shrink-0 overflow-hidden rounded-sm bg-neutral-200 transition-[opacity,filter,ring] duration-300 ease-in-out',
+          ? 'relative h-14 w-[5.5rem] shrink-0 overflow-hidden rounded-md bg-[#e5e4d9] transition-[opacity,filter,ring] duration-300 ease-in-out'
+          : 'relative h-24 w-full shrink-0 overflow-hidden rounded-sm bg-[#e5e4d9] transition-[opacity,filter,ring] duration-300 ease-in-out',
         mobile
           ? i === activeIndex
-            ? 'opacity-100 grayscale ring-1 ring-neutral-400 ring-offset-2 ring-offset-white'
+            ? 'opacity-100 grayscale ring-1 ring-neutral-400 ring-offset-2 ring-offset-canvas'
             : 'grayscale opacity-[0.85]'
           : i === activeIndex
-            ? 'opacity-100 grayscale-0 ring-2 ring-neutral-900 ring-offset-2 ring-offset-white'
+            ? 'opacity-100 grayscale-0 ring-2 ring-neutral-900 ring-offset-2 ring-offset-canvas'
             : 'grayscale opacity-[0.72] hover:opacity-90 hover:grayscale-0',
       ].join(' ')}
       aria-label={`${p.title}. Double-click to open project.`}
@@ -355,7 +355,7 @@ function GalleryLayer() {
       aria-valuenow={Math.round(scrollProgress * 100)}
       aria-label="Scroll gallery images"
     >
-      <div ref={trackRef} className="relative h-px w-full max-w-none bg-neutral-300 md:max-w-lg">
+      <div ref={trackRef} className="relative h-px w-full max-w-none bg-[#d8d6ca] md:max-w-lg">
         <div
           className="pointer-events-none absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-slate-400"
           style={{ left: `${scrollProgress * 100}%` }}
@@ -369,13 +369,13 @@ function GalleryLayer() {
     <>
       {/* Mobile: full-bleed background behind gallery content */}
       <div
-        className="fixed inset-x-0 top-20 bottom-24 z-[107] bg-white md:hidden"
+        className="fixed inset-x-0 top-20 bottom-24 z-[107] bg-canvas md:hidden"
         aria-hidden
       />
 
       {/* Desktop: fixed center main image */}
       <div className="pointer-events-none fixed inset-0 z-[110] hidden flex-col items-center justify-center px-6 pt-20 pb-28 md:flex">
-        <div className="w-full max-w-[min(42vw,340px)] overflow-hidden rounded-sm bg-neutral-200 shadow-sm aspect-[3/4] max-h-[min(68vh,720px)]">
+        <div className="w-full max-w-[min(42vw,340px)] overflow-hidden rounded-sm bg-[#e5e4d9] shadow-sm aspect-[3/4] max-h-[min(68vh,720px)]">
           <img
             key={active.id}
             src={active.image}
@@ -400,7 +400,7 @@ function GalleryLayer() {
 
       {/* Mobile: main image below scrubber */}
       <div className="fixed inset-x-0 top-[13.5rem] bottom-24 z-[108] flex flex-col items-center justify-center px-6 pb-4 pt-2 md:hidden">
-        <div className="w-full max-w-[min(88vw,320px)] overflow-hidden rounded-md bg-neutral-200 aspect-[3/4] max-h-[min(52vh,480px)] shadow-sm">
+        <div className="w-full max-w-[min(88vw,320px)] overflow-hidden rounded-md bg-[#e5e4d9] aspect-[3/4] max-h-[min(52vh,480px)] shadow-sm">
           <img
             key={`mob-${active.id}`}
             src={active.image}
@@ -481,7 +481,7 @@ export default function Gallery() {
   return (
     <>
       <div
-        className="min-h-[calc(100dvh-10rem)] w-full bg-white"
+        className="min-h-[calc(100dvh-10rem)] w-full bg-canvas"
         aria-hidden="true"
       />
       {mounted ? createPortal(<GalleryLayer />, document.body) : null}

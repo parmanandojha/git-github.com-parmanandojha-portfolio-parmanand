@@ -25,7 +25,19 @@
   font-display: swap;
 }
 
+/* Catalogue page titles only — dedicated bold master */
+@font-face {
+  font-family: "Neue Montreal Catalogue Bold";
+  src: url("./PBold.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
+  /* Site background — warm off-white */
+  --color-canvas: #f1f0e7;
+
   --font-sans: "Neue Montreal", ui-sans-serif, system-ui, sans-serif;
 
   /*
@@ -46,6 +58,11 @@
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: var(--color-canvas);
+  }
+
+  body {
+    background-color: var(--color-canvas);
   }
 
   html,
@@ -68,6 +85,13 @@
 }
 
 @layer components {
+  /* Catalogued works — project names use PBold.woff */
+  .catalogue-project-title {
+    font-family: 'Neue Montreal Catalogue Bold', 'Neue Montreal', ui-sans-serif, system-ui,
+      sans-serif;
+    font-weight: 400;
+  }
+
   /*
    * Underline draws left → right on hover/focus; use .link-underline-ltr--active for “current” state.
    */

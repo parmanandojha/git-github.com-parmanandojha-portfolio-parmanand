@@ -105,7 +105,7 @@ export default function App() {
   }, [page])
 
   return (
-    <div className="flex min-h-screen flex-col bg-white font-normal">
+    <div className="flex min-h-screen flex-col bg-canvas font-normal">
       {page !== 'book' ? <Nav /> : null}
 
       <main

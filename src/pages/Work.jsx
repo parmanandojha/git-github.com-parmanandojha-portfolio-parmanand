@@ -71,7 +71,7 @@ export default function Work() {
                   onClick={() => navigate(getProjectPath(p))}
                   className="w-full text-left"
                 >
-                  <div className="w-full aspect-[4/5] overflow-hidden bg-gray-200">
+                  <div className="w-full aspect-[4/5] overflow-hidden bg-[#e8e7de]">
                     <img
                       src={p.image}
                       alt=""
@@ -79,7 +79,7 @@ export default function Work() {
                       loading="lazy"
                     />
                   </div>
-                  <p className="mt-2 text-center text-[13px] sm:text-[14px] font-medium uppercase leading-tight text-gray-900 line-clamp-2">
+                  <p className="catalogue-project-title mt-2 text-center text-[13px] sm:text-[14px] uppercase leading-tight text-[#7f7954] line-clamp-2">
                     {p.title}
                   </p>
                 </button>
@@ -100,9 +100,9 @@ export default function Work() {
                 key={itemKey}
                 type="button"
                 className={[
-                  'display-condensed m-0 cursor-pointer border-0 bg-transparent p-0',
+                  'catalogue-project-title m-0 cursor-pointer border-0 bg-transparent p-0',
                   sizes[i] ?? sizes[sizes.length - 1],
-                  'relative text-center font-medium uppercase text-gray-900 leading-none whitespace-nowrap',
+                  'relative text-center uppercase text-[#7f7954] leading-[0.9] tracking-[-0.02em] whitespace-nowrap',
                   hoveredKey === itemKey ? 'z-30' : 'z-0',
                 ].join(' ')}
                 onMouseEnter={() => {

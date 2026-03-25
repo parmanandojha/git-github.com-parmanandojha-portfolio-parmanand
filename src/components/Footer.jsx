@@ -24,7 +24,7 @@ export default function Footer({ page, onChangePage, isTransitioning }) {
     `m-0 p-0 ${footerLabel} disabled:opacity-40`
 
   return (
-    <footer className="fixed bottom-0 left-0 z-[100] w-full bg-white uppercase">
+    <footer className="fixed bottom-0 left-0 z-[100] w-full bg-canvas uppercase">
       <div className="px-5 pb-6 pt-3 md:px-8">
         <div className="mx-auto w-full max-w-[1800px]">
           {/*

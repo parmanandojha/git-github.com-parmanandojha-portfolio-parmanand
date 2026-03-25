@@ -1,11 +1,11 @@
 [
   {
     "id": 1,
-    "slug": "jump-factory",
-    "title": "Jump Factory",
+    "slug": "plethorait",
+    "title": "Plethora IT",
     "description": "A bold brand refresh for a performance-driven studio.",
     "year": 2026,
-    "tags": ["Branding", "Identity", "Web"],
+    "tags": ["Branding", "Identity", "Web Design", "Development"],
     "image": "https://picsum.photos/id/1015/900/600",
     "images": [
       "https://picsum.photos/id/1015/1400/900",
@@ -16,11 +16,11 @@
   },
   {
     "id": 2,
-    "slug": "adoker",
-    "title": "Adoker",
+    "slug": "narasha",
+    "title": "Narasha",
     "description": "Minimal landing system with modular sections and variants.",
     "year": 2025,
-    "tags": ["UI", "Design System", "Landing"],
+    "tags": ["UI", "Design System", "Web Design", "Development"],
     "image": "https://picsum.photos/id/1025/900/600",
     "images": [
       "https://picsum.photos/id/1025/1400/900",
@@ -30,26 +30,29 @@
   },
   {
     "id": 3,
-    "slug": "jochilabs",
-    "title": "Jochilabs",
+    "slug": "flora",
+    "title": "Flora",
     "description": "Product storytelling layout optimized for clarity and speed.",
     "year": 2025,
-    "tags": ["Content", "Layout", "UX"],
-    "image": "https://picsum.photos/id/1035/900/600",
+    "tags": ["Content", "Layout", "Marketing", "Magzine Design", "Typography"],
+    "image": "/flora/project-flora-1.png",
     "images": [
-      "https://picsum.photos/id/1035/1400/900",
-      "https://picsum.photos/id/1036/1400/900",
-      "https://picsum.photos/id/1037/1400/900",
-      "https://picsum.photos/id/1038/1400/900"
+      "/flora/project-flora-1.png",
+      "/flora/project-flora-2.png",
+      "/flora/project-flora-3.png",
+      "/flora/project-flora-4.png",
+      "/flora/project-flora-5.png",
+      "/flora/project-flora-6.png",
+      "/flora/project-flora-7.png"
     ]
   },
   {
     "id": 4,
-    "slug": "sunder",
-    "title": "Sunder",
+    "slug": "smarttek",
+    "title": "SmartTek",
     "description": "Experimental typography study turned into a responsive component set.",
     "year": 2024,
-    "tags": ["Typography", "Components", "Motion"],
+    "tags": ["Typography", "Website Design", "Motion", "Development"],
     "image": "https://picsum.photos/id/1043/900/600",
     "images": [
       "https://picsum.photos/id/1043/1400/900",
@@ -59,11 +62,11 @@
   },
   {
     "id": 5,
-    "slug": "newol",
-    "title": "Newol",
+    "slug": "ila",
+    "title": "Ila",
     "description": "Gallery-style portfolio grid with accessible interactions.",
     "year": 2026,
-    "tags": ["Gallery", "Accessibility", "Frontend"],
+    "tags": ["Branding", "Visual Identity"],
     "image": "https://picsum.photos/id/1050/900/600",
     "images": [
       "https://picsum.photos/id/1050/1400/900",
@@ -73,11 +76,11 @@
   },
   {
     "id": 6,
-    "slug": "the-cortege",
-    "title": "The Cortège",
-    "description": "Campaign page with reusable sections and consistent spacing rules.",
+    "slug": "exponify",
+    "title": "Exponify",
+    "description": "Challenge: To create unique style and showcase the project and develop on no-code tool mostly preferred on wix.",
     "year": 2024,
-    "tags": ["Campaign", "Web", "Strategy"],
+    "tags": ["Web", "Strategy" , "Wix"],
     "image": "https://picsum.photos/id/1067/900/600",
     "images": [
       "https://picsum.photos/id/1067/1400/900",
@@ -88,8 +91,8 @@
   },
   {
     "id": 7,
-    "slug": "future-agency",
-    "title": "Future Agency",
+    "slug": "pransform",
+    "title": "Pransform",
     "description": "A clean, modern agency site concept with strong hierarchy.",
     "year": 2025,
     "tags": ["Agency", "Brand", "UI"],
@@ -102,8 +105,8 @@
   },
   {
     "id": 8,
-    "slug": "email-us",
-    "title": "Email Us",
+    "slug": "smarttek",
+    "title": "SmartTek",
     "description": "Responsive contact flow with form states and validations.",
     "year": 2026,
     "tags": ["Forms", "UX", "Frontend"],
@@ -116,8 +119,8 @@
   },
   {
     "id": 9,
-    "slug": "list-grid",
-    "title": "List / Grid",
+    "slug": "gallantt",
+    "title": "Gallantt",
     "description": "A dual-view project browser for fast scanning and filtering.",
     "year": 2024,
     "tags": ["Patterns", "Filtering", "UI"],
@@ -130,8 +133,8 @@
   },
   {
     "id": 10,
-    "slug": "studio-lab",
-    "title": "Studio Lab",
+    "slug": "svapn",
+    "title": "Svapn",
     "description": "Internal design experiments and component prototypes collection.",
     "year": 2025,
     "tags": ["Prototyping", "Components", "R&D"],

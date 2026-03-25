@@ -135,7 +135,7 @@ export default function Project({ slug }) {
         {images.map((src, i) => (
           <figure
             key={`${project.id}-${i}`}
-            className="w-full overflow-hidden bg-neutral-100"
+            className="w-full overflow-hidden bg-[#e8e7de]"
           >
             <img
               src={src}
