@@ -6,12 +6,13 @@
     "description": "A bold brand refresh for a performance-driven studio.",
     "year": 2026,
     "tags": ["Branding", "Identity", "Web Design", "Development"],
-    "image": "https://picsum.photos/id/1015/900/600",
+    "image": "/plethorait/project-plethorait-1.png",
     "images": [
-      "https://picsum.photos/id/1015/1400/900",
-      "https://picsum.photos/id/1016/1400/900",
-      "https://picsum.photos/id/1018/1400/900",
-      "https://picsum.photos/id/1019/1400/900"
+      "/plethorait/project-plethorait-1.png",
+      "/plethorait/project-plethorait-2.png",
+      "/plethorait/project-plethorait-3.png",
+      "/plethorait/project-plethorait-4.png",
+      "/plethorait/project-plethorait-5.png"
     ]
   },
   {
@@ -90,7 +91,7 @@
     "title": "Exponify",
     "description": "Challenge: To create unique style and showcase the project and develop on no-code tool mostly preferred on wix.",
     "year": 2024,
-    "tags": ["Web", "Strategy" , "Wix"],
+    "tags": ["Web", "Strategy", "Wix"],
     "image": "/exponify/project-exponify-1.png",
     "images": [
       "/exponify/project-exponify-1.png",
@@ -107,48 +108,6 @@
   },
   {
     "id": 7,
-    "slug": "pransform",
-    "title": "Pransform",
-    "description": "A clean, modern agency site concept with strong hierarchy.",
-    "year": 2025,
-    "tags": ["Agency", "Brand", "UI"],
-    "image": "https://picsum.photos/id/1074/900/600",
-    "images": [
-      "https://picsum.photos/id/1074/1400/900",
-      "https://picsum.photos/id/1075/1400/900",
-      "https://picsum.photos/id/1076/1400/900"
-    ]
-  },
-  {
-    "id": 8,
-    "slug": "smarttek",
-    "title": "SmartTek",
-    "description": "Responsive contact flow with form states and validations.",
-    "year": 2026,
-    "tags": ["Forms", "UX", "Frontend"],
-    "image": "https://picsum.photos/id/1084/900/600",
-    "images": [
-      "https://picsum.photos/id/1084/1400/900",
-      "https://picsum.photos/id/1080/1400/900",
-      "https://picsum.photos/id/1081/1400/900"
-    ]
-  },
-  {
-    "id": 9,
-    "slug": "gallantt",
-    "title": "Gallantt",
-    "description": "A dual-view project browser for fast scanning and filtering.",
-    "year": 2024,
-    "tags": ["Patterns", "Filtering", "UI"],
-    "image": "https://picsum.photos/id/109/900/600",
-    "images": [
-      "https://picsum.photos/id/109/1400/900",
-      "https://picsum.photos/id/110/1400/900",
-      "https://picsum.photos/id/111/1400/900"
-    ]
-  },
-  {
-    "id": 10,
     "slug": "svapn",
     "title": "Svapn",
     "description": "Internal design experiments and component prototypes collection.",
