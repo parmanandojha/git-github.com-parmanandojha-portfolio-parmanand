@@ -21,11 +21,14 @@
     "description": "Minimal landing system with modular sections and variants.",
     "year": 2025,
     "tags": ["UI", "Design System", "Web Design", "Development"],
-    "image": "https://picsum.photos/id/1025/900/600",
+    "image": "/narasha/project-narasha-1.png",
     "images": [
-      "https://picsum.photos/id/1025/1400/900",
-      "https://picsum.photos/id/1026/1400/900",
-      "https://picsum.photos/id/1027/1400/900"
+      "/narasha/project-narasha-1.png",
+      "/narasha/project-narasha-2.png",
+      "/narasha/project-narasha-3.png",
+      "/narasha/project-narasha-4.png",
+      "/narasha/project-narasha-5.png",
+      "/narasha/project-narasha-6.png"
     ]
   },
   {
