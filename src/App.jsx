@@ -69,30 +69,40 @@ export default function App() {
     return () => document.removeEventListener('visibilitychange', onVisibility)
   }, [])
 
+  const startTransition = useCallback(
+    (onCovered) => {
+      if (isTransitioning) return false
+      transitionTimelineRef.current?.kill()
+      setIsTransitioning(true)
+      createPixelGrid()
+
+      transitionTimelineRef.current = runPageTransition({
+        onCovered,
+        onComplete: () => {
+          setIsTransitioning(false)
+          transitionTimelineRef.current = null
+          requestAnimationFrame(() => {
+            locoRef.current?.resize()
+          })
+        },
+      })
+      return true
+    },
+    [isTransitioning, locoRef]
+  )
+
   const handlePathChange = (nextPath) => {
-    if (nextPath === normalizePathname(location.pathname) || isTransitioning) return
-
-    transitionTimelineRef.current?.kill()
-    setIsTransitioning(true)
-    createPixelGrid()
-
-    transitionTimelineRef.current = runPageTransition({
-      onCovered: () => {
-        navigate(nextPath)
-      },
-      onComplete: () => {
-        setIsTransitioning(false)
-        transitionTimelineRef.current = null
-        requestAnimationFrame(() => {
-          locoRef.current?.resize()
-        })
-      },
-    })
+    if (nextPath === normalizePathname(location.pathname)) return
+    startTransition(() => navigate(nextPath))
   }
 
   const handlePageChange = (nextPage) => {
     handlePathChange(pageToPath(nextPage))
   }
+
+  const handleBackWithTransition = useCallback(() => {
+    startTransition(() => navigate(-1))
+  }, [navigate, startTransition])
 
   useEffect(() => {
     createPixelGrid()
@@ -129,7 +139,7 @@ export default function App() {
       >
         <Suspense fallback={<div className="h-full w-full" aria-hidden="true" />}>
           {page === 'project' && projectSlug ? (
-            <Project slug={projectSlug} />
+            <Project slug={projectSlug} onBackWithTransition={handleBackWithTransition} />
           ) : page === 'work' ? (
             <Work onNavigateWithTransition={handlePathChange} />
           ) : page === 'gallery' ? (

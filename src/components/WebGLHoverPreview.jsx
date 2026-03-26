@@ -33,8 +33,7 @@ varying vec2 vUv;
 
 void main() {
   vec4 tex = texture2D(uTexture, vUv);
-  float alpha = tex.a * uReveal;
-  gl_FragColor = vec4(tex.rgb, alpha);
+  gl_FragColor = vec4(tex.rgb, tex.a * uReveal);
 }
 `
 
@@ -74,6 +73,7 @@ export default function WebGLHoverPreview({ imageUrl, visible, cursor }) {
     /* Match browser / <img> appearance — default ACES tone mapping darkens photos */
     renderer.outputColorSpace = THREE.SRGBColorSpace
     renderer.toneMapping = THREE.NoToneMapping
+    renderer.toneMappingExposure = 1
     mount.appendChild(renderer.domElement)
 
     const scene = new THREE.Scene()
@@ -204,8 +204,10 @@ export default function WebGLHoverPreview({ imageUrl, visible, cursor }) {
           return
         }
         texture.colorSpace = THREE.SRGBColorSpace
-        texture.minFilter = THREE.LinearFilter
+        texture.minFilter = THREE.LinearMipmapLinearFilter
         texture.magFilter = THREE.LinearFilter
+        texture.generateMipmaps = true
+        texture.needsUpdate = true
         if (prevTex && prevTex.isTexture && prevTex.image && prevTex !== texture) {
           prevTex.dispose()
         }

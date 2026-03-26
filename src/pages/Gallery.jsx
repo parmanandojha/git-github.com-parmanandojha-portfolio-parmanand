@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Link, useNavigate } from 'react-router-dom'
 import projects from '../data/projects.json'
@@ -6,6 +6,15 @@ import { getProjectPath } from '../utils/projects.js'
 
 const THUMB_HEIGHT = 96
 const MOBILE_THUMB_W = 88
+
+function shuffleArray(list) {
+  const out = [...list]
+  for (let i = out.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[out[i], out[j]] = [out[j], out[i]]
+  }
+  return out
+}
 
 function useIsDesktop() {
   const [isDesktop, setIsDesktop] = useState(() =>
@@ -37,8 +46,25 @@ function GalleryLayer() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [edgePad, setEdgePad] = useState(48)
   const [scrollProgress, setScrollProgress] = useState(0)
+  const galleryItems = useMemo(() => {
+    const all = projects.flatMap((project) => {
+      const images = Array.isArray(project.images) && project.images.length > 0
+        ? project.images
+        : project.image
+          ? [project.image]
+          : []
+      return images.map((src, imageIndex) => ({
+        id: `${project.id}-${imageIndex}`,
+        slug: project.slug,
+        title: project.title,
+        year: project.year,
+        image: src,
+      }))
+    })
+    return shuffleArray(all)
+  }, [])
 
-  const active = projects[activeIndex] ?? projects[0]
+  const active = galleryItems[activeIndex] ?? galleryItems[0]
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -288,7 +314,7 @@ function GalleryLayer() {
     if (isDesktop) {
       const max = container.scrollHeight - container.clientHeight
       if (max <= 0) return
-      const step = max / Math.max(1, projects.length - 1)
+      const step = max / Math.max(1, galleryItems.length - 1)
       if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
         e.preventDefault()
         container.scrollTop = Math.max(0, container.scrollTop - step)
@@ -299,7 +325,7 @@ function GalleryLayer() {
     } else {
       const max = container.scrollWidth - container.clientWidth
       if (max <= 0) return
-      const step = max / Math.max(1, projects.length - 1)
+      const step = max / Math.max(1, galleryItems.length - 1)
       if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
         e.preventDefault()
         container.scrollLeft = Math.max(0, container.scrollLeft - step)
@@ -397,13 +423,8 @@ function GalleryLayer() {
           />
         </div>
         <div className="pointer-events-auto mt-4 max-w-[90vw] text-center text-[11px] font-medium uppercase tracking-wide text-neutral-600">
-          <p className="m-0">
-            {active.title}
-            <span className="mx-2 text-neutral-400">/</span>
-            {active.year}
-          </p>
           <Link
-            to={getProjectPath(active)}
+            to={active?.slug ? getProjectPath(active) : '/catalogued-works'}
             className="link-underline-ltr mt-2 inline-block text-nav text-neutral-800"
           >
             All images
@@ -413,26 +434,13 @@ function GalleryLayer() {
 
       {/* Mobile: main image below scrubber */}
       <div className="fixed inset-x-0 top-[13.5rem] bottom-24 z-[108] flex flex-col items-center justify-center px-6 pb-4 pt-2 md:hidden">
-        <div className="w-full max-w-[min(88vw,320px)] overflow-hidden rounded-md bg-[#e5e4d9] aspect-[3/4] max-h-[min(52vh,480px)] shadow-sm">
+        <div className="w-full max-w-[min(88vw,320px)] overflow-hidden rounded-md bg-[#e5e4d9] aspect-none sm:aspect-[2/4] max-h-[min(52vh,480px)] shadow-sm">
           <img
             key={`mob-${active.id}`}
             src={active.image}
             alt={active.title}
             className="h-full w-full object-cover"
           />
-        </div>
-        <div className="mt-3 max-w-[90vw] text-center text-[11px] font-medium uppercase tracking-wide text-neutral-600">
-          <p className="m-0">
-            {active.title}
-            <span className="mx-2 text-neutral-400">/</span>
-            {active.year}
-          </p>
-          <Link
-            to={getProjectPath(active)}
-            className="link-underline-ltr mt-2 inline-block text-nav text-neutral-800"
-          >
-            All images
-          </Link>
         </div>
       </div>
 
@@ -454,7 +462,7 @@ function GalleryLayer() {
             WebkitOverflowScrolling: 'touch',
           }}
         >
-          <div className="flex flex-col gap-2.5">{projects.map((p, i) => thumbButton(p, i, false))}</div>
+          <div className="flex flex-col gap-2.5">{galleryItems.map((p, i) => thumbButton(p, i, false))}</div>
         </div>
       ) : (
         <div
@@ -474,7 +482,7 @@ function GalleryLayer() {
             WebkitOverflowScrolling: 'touch',
           }}
         >
-          <div className="flex w-max flex-row gap-2.5">{projects.map((p, i) => thumbButton(p, i, true))}</div>
+          <div className="flex w-max flex-row gap-2.5">{galleryItems.map((p, i) => thumbButton(p, i, true))}</div>
         </div>
       )}
 

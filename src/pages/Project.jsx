@@ -14,7 +14,7 @@ import {
  */
 const NEXT_TRIGGER_FROM_BOTTOM_RATIO = 0.6
 
-export default function Project({ slug }) {
+export default function Project({ slug, onBackWithTransition }) {
   const navigate = useNavigate()
   const project = slug ? getProjectBySlug(slug) : null
   const images = project ? getProjectImages(project) : []
@@ -101,7 +101,13 @@ export default function Project({ slug }) {
       <header className="mb-10 max-w-3xl md:mb-14">
         <button
           type="button"
-          onClick={() => navigate(-1)}
+          onClick={() => {
+            if (onBackWithTransition) {
+              onBackWithTransition()
+              return
+            }
+            navigate(-1)
+          }}
           className="link-underline-ltr mb-6 text-nav font-normal uppercase text-gray-900"
         >
           Back
