@@ -31,7 +31,7 @@ function useIsDesktop() {
   return isDesktop
 }
 
-function GalleryLayer() {
+function GalleryLayer({ onNavigateWithTransition }) {
   const navigate = useNavigate()
   const isDesktop = useIsDesktop()
   const [reducedMotion, setReducedMotion] = useState(() =>
@@ -66,6 +66,14 @@ function GalleryLayer() {
 
   const active = galleryItems[activeIndex] ?? galleryItems[0]
   const activeCategory = projects.find((p) => p.slug === active?.slug)?.tags?.[0] ?? 'Selected'
+  const navigateToPath = (path) => {
+    if (!path) return
+    if (typeof onNavigateWithTransition === 'function') {
+      onNavigateWithTransition(path)
+      return
+    }
+    navigate(path)
+  }
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -207,6 +215,36 @@ function GalleryLayer() {
   }, [isDesktop, updateActiveFromScroll, syncScrollProgress])
 
   useEffect(() => {
+    let wheelVelocity = 0
+    let wheelRaf = 0
+
+    const stopWheelLoop = () => {
+      if (wheelRaf) cancelAnimationFrame(wheelRaf)
+      wheelRaf = 0
+    }
+
+    const stepWheelLoop = () => {
+      const container = scrollRef.current
+      if (!container) {
+        stopWheelLoop()
+        return
+      }
+      if (Math.abs(wheelVelocity) < 0.08) {
+        wheelVelocity = 0
+        stopWheelLoop()
+        return
+      }
+
+      const delta = wheelVelocity * 0.35
+      if (isDesktop) {
+        container.scrollTop += delta
+      } else {
+        container.scrollLeft += delta
+      }
+      wheelVelocity *= 0.82
+      wheelRaf = requestAnimationFrame(stepWheelLoop)
+    }
+
     const onWheelCapture = (e) => {
       const container = scrollRef.current
       if (!container) return
@@ -214,10 +252,10 @@ function GalleryLayer() {
       if (e.target.closest?.('[data-gallery-scrubber]')) return
 
       e.preventDefault()
-      if (isDesktop) {
-        container.scrollTop += e.deltaY
-      } else {
-        container.scrollLeft += e.deltaY
+      wheelVelocity += e.deltaY * 0.95
+      wheelVelocity = Math.max(-120, Math.min(120, wheelVelocity))
+      if (!wheelRaf) {
+        wheelRaf = requestAnimationFrame(stepWheelLoop)
       }
     }
 
@@ -262,6 +300,7 @@ function GalleryLayer() {
     window.addEventListener('touchcancel', endTouchForward, { capture: true })
 
     return () => {
+      stopWheelLoop()
       window.removeEventListener('wheel', onWheelCapture, { capture: true })
       window.removeEventListener('touchstart', onTouchStartCapture, { capture: true })
       window.removeEventListener('touchmove', onTouchMoveCapture, { capture: true })
@@ -347,7 +386,7 @@ function GalleryLayer() {
       onClick={() => scrollThumbIndexToCenter(i)}
       onDoubleClick={(e) => {
         e.preventDefault()
-        navigate(getProjectPath(p))
+        navigateToPath(getProjectPath(p))
       }}
       className={[
         mobile
@@ -494,7 +533,7 @@ function GalleryLayer() {
   )
 }
 
-export default function Gallery() {
+export default function Gallery({ onNavigateWithTransition }) {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -508,7 +547,7 @@ export default function Gallery() {
         className="min-h-[calc(100dvh-10rem)] w-full bg-canvas"
         aria-hidden="true"
       />
-      {mounted ? createPortal(<GalleryLayer />, document.body) : null}
+      {mounted ? createPortal(<GalleryLayer onNavigateWithTransition={onNavigateWithTransition} />, document.body) : null}
     </>
   )
 }

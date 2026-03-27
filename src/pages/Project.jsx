@@ -14,7 +14,7 @@ import {
  */
 const NEXT_TRIGGER_FROM_BOTTOM_RATIO = 0.6
 
-export default function Project({ slug, onBackWithTransition }) {
+export default function Project({ slug, onBackWithTransition, onNavigateWithTransition }) {
   const navigate = useNavigate()
   const project = slug ? getProjectBySlug(slug) : null
   const images = project ? getProjectImages(project) : []
@@ -23,6 +23,14 @@ export default function Project({ slug, onBackWithTransition }) {
   const navigatedToNextRef = useRef(false)
   const lastFooterTopRef = useRef(null)
   const lastScrollRef = useRef(0)
+  const navigateToPath = (path) => {
+    if (!path) return
+    if (onNavigateWithTransition) {
+      onNavigateWithTransition(path)
+      return
+    }
+    navigate(path)
+  }
 
   useEffect(() => {
     if (!project) return
@@ -83,7 +91,7 @@ export default function Project({ slug, onBackWithTransition }) {
 
         if (crossedDown || nearBottom) {
           navigatedToNextRef.current = true
-          navigate(getProjectPath(nextProject))
+          navigateToPath(getProjectPath(nextProject))
           return
         }
 
@@ -98,7 +106,7 @@ export default function Project({ slug, onBackWithTransition }) {
       cancelAnimationFrame(rafId)
       unsubscribe?.()
     }
-  }, [slug, project, nextProject, navigate])
+  }, [slug, project, nextProject, navigate, onNavigateWithTransition])
 
   if (!slug || !project) {
     return <Navigate to="/catalogued-works" replace />
@@ -172,7 +180,7 @@ export default function Project({ slug, onBackWithTransition }) {
           </p>
           <button
             type="button"
-            onClick={() => navigate(getProjectPath(nextProject))}
+            onClick={() => navigateToPath(getProjectPath(nextProject))}
             className="link-underline-ltr mt-3 text-nav font-normal uppercase text-gray-900"
           >
             {nextProject.title}
@@ -185,7 +193,7 @@ export default function Project({ slug, onBackWithTransition }) {
           </p>
           <button
             type="button"
-            onClick={() => navigate('/catalogued-works')}
+            onClick={() => navigateToPath('/catalogued-works')}
             className="link-underline-ltr mt-3 text-nav font-normal uppercase text-gray-900"
           >
             Back to catalogued works

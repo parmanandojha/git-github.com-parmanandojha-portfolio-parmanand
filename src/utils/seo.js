@@ -15,6 +15,8 @@ function sectionTitleForPage(page) {
       return `Book ${y}`
     case 'about':
       return 'Overview'
+    case 'notfound':
+      return '404'
     default:
       return 'Catalogued works'
   }

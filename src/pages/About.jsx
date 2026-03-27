@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import projects from '../data/projects.json'
 import {
   awards,
@@ -25,8 +25,17 @@ function Column({ title, children }) {
   )
 }
 
-export default function About() {
+export default function About({ onNavigateWithTransition }) {
+  const navigate = useNavigate()
   const recentWork = [...projects].sort((a, b) => (b.year ?? 0) - (a.year ?? 0)).slice(0, 8)
+  const goToProject = (project) => {
+    const path = getProjectPath(project)
+    if (onNavigateWithTransition) {
+      onNavigateWithTransition(path)
+      return
+    }
+    navigate(path)
+  }
 
   return (
     <div className="mx-auto w-full max-w-[1800px] px-5 pb-28 pt-10 md:px-8 md:pt-14">
@@ -50,9 +59,13 @@ export default function About() {
           <ul className="m-0 list-none space-y-1.5 p-0">
             {recentWork.map((p) => (
               <li key={p.id}>
-                <Link to={getProjectPath(p)} className={listLink}>
+                <button
+                  type="button"
+                  onClick={() => goToProject(p)}
+                  className={`${listLink} border-0 bg-transparent p-0`}
+                >
                   {p.title}
-                </Link>
+                </button>
               </li>
             ))}
           </ul>

@@ -42,7 +42,7 @@ export function pathToPage(pathname) {
   if (p === '/book') return 'book'
   if (p === '/overview' || p === '/about') return 'about'
   if (p === '/catalogued-works' || p === '/work') return 'work'
-  return 'work'
+  return 'notfound'
 }
 
 export function pageToPath(page) {

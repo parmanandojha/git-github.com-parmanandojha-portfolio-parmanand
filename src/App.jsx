@@ -6,7 +6,6 @@ import SitePreloader from './components/SitePreloader.jsx'
 import { createPixelGrid, runPageTransition } from './utils/pixelTransition.js'
 import { useLocomotiveScroll } from './hooks/useLocomotiveScroll.js'
 import {
-  isKnownPath,
   LEGACY_TO_CANONICAL,
   normalizePathname,
   pageToPath,
@@ -19,6 +18,7 @@ const About = lazy(() => import('./pages/About.jsx'))
 const Gallery = lazy(() => import('./pages/Gallery.jsx'))
 const Book = lazy(() => import('./pages/Book.jsx'))
 const Project = lazy(() => import('./pages/Project.jsx'))
+const NotFound = lazy(() => import('./pages/NotFound.jsx'))
 
 export default function App() {
   const location = useLocation()
@@ -44,9 +44,6 @@ export default function App() {
     if (path === '/') {
       navigate('/catalogued-works', { replace: true })
       return
-    }
-    if (!isKnownPath(location.pathname)) {
-      navigate('/catalogued-works', { replace: true })
     }
   }, [location.pathname, navigate])
 
@@ -114,11 +111,7 @@ export default function App() {
   useEffect(() => {
     const loco = locoRef.current
     if (!loco) return
-    if (page === 'gallery') {
-      loco.stop()
-    } else {
-      loco.start()
-    }
+    loco.start()
   }, [page])
 
   return (
@@ -139,15 +132,21 @@ export default function App() {
       >
         <Suspense fallback={<div className="h-full w-full" aria-hidden="true" />}>
           {page === 'project' && projectSlug ? (
-            <Project slug={projectSlug} onBackWithTransition={handleBackWithTransition} />
+            <Project
+              slug={projectSlug}
+              onBackWithTransition={handleBackWithTransition}
+              onNavigateWithTransition={handlePathChange}
+            />
           ) : page === 'work' ? (
             <Work onNavigateWithTransition={handlePathChange} />
           ) : page === 'gallery' ? (
-            <Gallery />
+            <Gallery onNavigateWithTransition={handlePathChange} />
           ) : page === 'book' ? (
             <Book />
+          ) : page === 'notfound' ? (
+            <NotFound onNavigateWithTransition={handlePathChange} />
           ) : (
-            <About />
+            <About onNavigateWithTransition={handlePathChange} />
           )}
         </Suspense>
       </main>
