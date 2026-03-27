@@ -3,40 +3,30 @@
  */
 
 export const overviewIntro = [
-  'Parmanand Ojha is a visual designer and developer working at the intersection of brand, interface, and motion. The practice is built around clarity of form, careful typography, and systems that stay coherent as products grow.',
-  'Projects range from identity and campaign sites to interactive layouts and editorial tools. The aim is always the same: strong hierarchy, restrained palettes, and motion that supports the story instead of distracting from it.',
-  'Alongside client work, time is spent teaching, writing, and experimenting with how we read and move through digital space — with a focus on accessibility and performance.',
+  'Detail-oriented UI/UX and Graphic Designer with 5+ years of experience creating user-centered digital experiences. Expertise in designing responsive interfaces, conducting user research, and developing brand identities.',
+  'Proven track record of improving conversion rates, reducing user friction, and delivering visually compelling designs that meet business objectives.',
 ]
 
-/** Talks, interviews, publications — label + URL */
-export const talksAndMedia = [
-  { label: "It's Nice That · On clarity in digital craft", href: 'https://www.itsnicethat.com/' },
-  { label: 'Awwwards · Amsterdam conference notes', href: 'https://www.awwwards.com/' },
-  { label: 'Design Matters · Podcast appearance', href: 'https://designmatters.io/' },
-  { label: 'Eye on Design · Feature interview', href: 'https://eyeondesign.aiga.org/' },
-]
 
 /** Shown in “Fields of practice” */
 export const fieldsOfPractice = [
-  'Creative direction',
-  'Art direction',
-  'Digital design',
-  'Interactive storytelling',
-  'Design systems',
-  'Frontend development',
+  'Graphic Design: Brand Identity, Typography, Color Theory, Digital Illustration, Social Media Graphics',
+  'UX Design: User Research, Journey Mapping, Wireframing, Prototyping, Usability Testing, Information Architecture, A/B Testing',
+  'UI Design: Visual Design, Interaction Design, Responsive Design, Design Systems, Mobile-First Design, Accessibility',
+  'Technical Skills: HTML, CSS (Tailwind), JavaScript (basic), WordPress, Wix, SquareSpace, Shopify, Adobe Suite, Figma',
 ]
 
 /** Awards & recognition lines */
 export const awards = [
-  'Awwwards · Site of the Day',
-  'FWA · Site of the Day',
-  'CSS Design Awards · Special Kudos',
-  'Webby Awards · Honoree',
-  'Communication Arts · Interactive',
+  'Star Performer — Secured star employee designation for two consecutive quarters at Plethora IT.',
+  'IPEC Techathlon — 2nd position in project presentation for RFID scanner module.',
+  'Innovazia 2k17 — 1st position in project presentation, sponsored by Computer Society of India.',
+  "Engineer's Day 2k17 — 1st position in technical problem-solving competition.",
 ]
 
 /** Short paragraphs under “Further information” */
 export const furtherInformation = [
-  'Guest lectures and workshops on typography, layout, and creative coding at design schools and studios.',
-  'Jury and advisory roles for student awards and digital design festivals.',
+  'Education: Bachelor of Technology in Computer Science, Indraprastha Engineering College, Ghaziabad (Aug 2015 - Jun 2019).',
+  'Certifications: UI/UX Design Bootcamp (Design Boat, Nov 2020 - Mar 2021).',
+  'Languages: English (Professional), Hindi (Native).',
 ]

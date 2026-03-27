@@ -7,20 +7,23 @@ uniform vec2 uMouseNorm;
 uniform float uReveal;
 uniform float uMotion;
 varying vec2 vUv;
+varying float vRipple;
 
 void main() {
   vUv = uv;
   vec3 p = position;
 
-  float waveX = sin((p.y * 0.045) + (uTime * 2.2)) * 8.0 * uMotion;
-  float waveY = cos((p.x * 0.03) + (uTime * 1.7)) * 5.0 * uMotion;
-  p.z += waveX + waveY;
+  vec2 m = vec2(uMouseNorm.x, 1.0 - uMouseNorm.y);
+  float d = distance(uv, m);
+  float ring = sin((d * 60.0) - (uTime * 7.0));
+  float falloff = exp(-d * 7.0);
+  float ripple = ring * falloff;
 
-  vec2 centerDist = vec2(uv.x - uMouseNorm.x, uv.y - (1.0 - uMouseNorm.y));
-  float influence = exp(-dot(centerDist, centerDist) * 12.0);
-  p.z += influence * 24.0 * uMotion;
-
-  p.x += sin((uv.y * 12.0) + uTime * 2.5) * 4.0 * uReveal * uMotion;
+  float drift = sin((uv.x * 14.0 + uTime * 1.1)) * cos((uv.y * 12.0 - uTime * 0.9));
+  p.z += (ripple * 18.0 + drift * 3.5) * uMotion;
+  p.x += sin((uv.y * 16.0) + (uTime * 1.7)) * 1.6 * uMotion;
+  p.y += cos((uv.x * 13.0) - (uTime * 1.4)) * 1.2 * uMotion;
+  vRipple = ripple;
 
   gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
 }
@@ -29,10 +32,30 @@ void main() {
 const fragmentShader = `
 uniform sampler2D uTexture;
 uniform float uReveal;
+uniform float uTime;
+uniform float uMotion;
 varying vec2 vUv;
+varying float vRipple;
 
 void main() {
-  vec4 tex = texture2D(uTexture, vUv);
+  vec2 m = vec2(0.5, 0.5);
+  vec2 dv = vUv - m;
+  float d = length(dv);
+  vec2 dir = d > 0.0001 ? normalize(dv) : vec2(0.0);
+
+  // Water-like radial refraction around center + subtle global wave.
+  float radial = sin((d * 70.0) - (uTime * 7.5)) * exp(-d * 8.5);
+  vec2 uv = vUv;
+  uv += dir * radial * 0.018 * uMotion;
+  uv.x += sin((uv.y * 18.0) + (uTime * 2.2)) * 0.0028 * uMotion;
+  uv.y += cos((uv.x * 22.0) - (uTime * 1.9)) * 0.0022 * uMotion;
+
+  vec4 tex = texture2D(uTexture, uv);
+
+  // Tiny shimmer from ripple energy (no color tint).
+  float shimmer = 1.0 + (vRipple * 0.045 * uMotion);
+  tex.rgb *= clamp(shimmer, 0.94, 1.06);
+
   gl_FragColor = vec4(tex.rgb, tex.a * uReveal);
 }
 `

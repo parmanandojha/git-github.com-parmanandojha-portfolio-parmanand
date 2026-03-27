@@ -351,8 +351,8 @@ function GalleryLayer() {
       }}
       className={[
         mobile
-          ? 'relative h-14 w-[5.5rem] shrink-0 overflow-hidden rounded-md bg-[#e5e4d9] transition-[opacity,filter,ring] duration-300 ease-in-out'
-          : 'relative h-10 w-14 shrink-0 overflow-hidden rounded-sm bg-[#e5e4d9] transition-[opacity,filter,ring] duration-300 ease-in-out',
+          ? 'relative h-14 w-[5.5rem] shrink-0 overflow-hidden bg-[#e5e4d9] transition-[opacity,filter,ring] duration-300 ease-in-out'
+          : 'relative h-10 w-14 shrink-0 overflow-hidden bg-[#e5e4d9] transition-[opacity,filter,ring] duration-300 ease-in-out',
         mobile
           ? i === activeIndex
             ? 'opacity-100 grayscale ring-1 ring-neutral-400 ring-offset-2 ring-offset-canvas'
@@ -425,7 +425,7 @@ function GalleryLayer() {
 
       {/* Desktop: fixed center main image */}
       <div className="pointer-events-none fixed inset-0 left-[50%] z-[110] hidden h-[100vh] w-[44vw] -translate-x-1/2 flex-col items-center justify-center px-6 pt-3 pb-3 md:flex">
-        <div className="w-full max-h-[96vh] overflow-hidden rounded-sm bg-[#e5e4d9] shadow-sm">
+        <div className="w-full max-h-[96vh] overflow-hidden bg-[#e5e4d9] shadow-sm">
           <img
             key={active.id}
             src={active.image}
@@ -437,7 +437,7 @@ function GalleryLayer() {
 
       {/* Mobile: main image below scrubber */}
       <div className="fixed inset-x-0 top-[13.5rem] bottom-24 z-[108] flex flex-col items-center justify-center px-6 pb-4 pt-2 md:hidden">
-        <div className="w-full max-w-[min(88vw,320px)] overflow-hidden rounded-md bg-[#e5e4d9] aspect-none sm:aspect-[2/4] max-h-[min(52vh,480px)] shadow-sm">
+        <div className="w-full max-w-[min(88vw,320px)] overflow-hidden bg-[#e5e4d9] aspect-none sm:aspect-[2/4] max-h-[min(52vh,480px)] shadow-sm">
           <img
             key={`mob-${active.id}`}
             src={active.image}

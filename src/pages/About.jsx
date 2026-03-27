@@ -5,7 +5,6 @@ import {
   fieldsOfPractice,
   furtherInformation,
   overviewIntro,
-  talksAndMedia,
 } from '../data/overviewContent.js'
 import { getProjectPath } from '../utils/projects.js'
 
@@ -47,25 +46,8 @@ export default function About() {
         className="mt-20 grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:mt-28 lg:grid-cols-5 lg:gap-x-6 xl:gap-x-8"
         aria-label="Overview details"
       >
-        <Column title="Talks, Interviews, & Publications">
-          <ul className="m-0 list-none space-y-3 p-0">
-            {talksAndMedia.map((item) => (
-              <li key={item.label}>
-                <a
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={listLink}
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </Column>
-
         <Column title="Recent Work">
-          <ul className="m-0 list-none space-y-3 p-0">
+          <ul className="m-0 list-none space-y-1.5 p-0">
             {recentWork.map((p) => (
               <li key={p.id}>
                 <Link to={getProjectPath(p)} className={listLink}>

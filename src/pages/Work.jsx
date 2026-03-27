@@ -118,7 +118,7 @@ export default function Work({ onNavigateWithTransition }) {
         </div>
       </div>
 
-      {/* Desktop (md+): stacked list + WebGL hover */}
+      {/* Desktop (md+): stacked list */}
       <div className="hidden md:block">
         <div className="flex flex-col items-center select-none">
           {visibleProjects.map((p, i) => {
