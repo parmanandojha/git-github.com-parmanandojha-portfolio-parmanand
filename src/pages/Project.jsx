@@ -55,6 +55,9 @@ export default function Project({ slug, onBackWithTransition }) {
       }
 
       lastScrollRef.current = lenis.scroll
+      if (nextFooterRef.current) {
+        lastFooterTopRef.current = nextFooterRef.current.getBoundingClientRect().top
+      }
 
       unsubscribe = lenis.on('scroll', (l) => {
         if (cancelled || navigatedToNextRef.current) return
@@ -73,7 +76,12 @@ export default function Project({ slug, onBackWithTransition }) {
           prevTop > yLine &&
           top <= yLine
 
-        if (crossedDown) {
+        const nearBottom =
+          scrollDown &&
+          Number.isFinite(l.limit) &&
+          l.scroll >= Math.max(0, l.limit - 6)
+
+        if (crossedDown || nearBottom) {
           navigatedToNextRef.current = true
           navigate(getProjectPath(nextProject))
           return
@@ -169,10 +177,6 @@ export default function Project({ slug, onBackWithTransition }) {
           >
             {nextProject.title}
           </button>
-          <p className="mx-auto mt-4 max-w-sm text-caption leading-relaxed text-neutral-500 md:text-caption-md">
-            Keep scrolling until this section crosses the lower part of the screen to
-            open the next project.
-          </p>
         </footer>
       ) : (
         <footer className="mt-20 border-t border-neutral-200 pt-12 pb-8 text-center md:mt-24 md:pt-16">

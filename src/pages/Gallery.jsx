@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import projects from '../data/projects.json'
 import { getProjectPath } from '../utils/projects.js'
 
-const THUMB_HEIGHT = 96
+const THUMB_HEIGHT = 40
 const MOBILE_THUMB_W = 88
 
 function shuffleArray(list) {
@@ -65,6 +65,7 @@ function GalleryLayer() {
   }, [])
 
   const active = galleryItems[activeIndex] ?? galleryItems[0]
+  const activeCategory = projects.find((p) => p.slug === active?.slug)?.tags?.[0] ?? 'Selected'
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -351,13 +352,13 @@ function GalleryLayer() {
       className={[
         mobile
           ? 'relative h-14 w-[5.5rem] shrink-0 overflow-hidden rounded-md bg-[#e5e4d9] transition-[opacity,filter,ring] duration-300 ease-in-out'
-          : 'relative h-24 w-full shrink-0 overflow-hidden rounded-sm bg-[#e5e4d9] transition-[opacity,filter,ring] duration-300 ease-in-out',
+          : 'relative h-10 w-14 shrink-0 overflow-hidden rounded-sm bg-[#e5e4d9] transition-[opacity,filter,ring] duration-300 ease-in-out',
         mobile
           ? i === activeIndex
             ? 'opacity-100 grayscale ring-1 ring-neutral-400 ring-offset-2 ring-offset-canvas'
             : 'grayscale opacity-[0.85]'
           : i === activeIndex
-            ? 'opacity-100 grayscale-0 ring-2 ring-neutral-900 ring-offset-2 ring-offset-canvas'
+            ? 'opacity-100 grayscale-0 ring-1 ring-neutral-400'
             : 'grayscale opacity-[0.72] hover:opacity-90 hover:grayscale-0',
       ].join(' ')}
       aria-label={`${p.title}. Double-click to open project.`}
@@ -412,23 +413,25 @@ function GalleryLayer() {
         aria-hidden
       />
 
+      {/* Desktop chrome: reference-like framing */}
+      <div className="pointer-events-none fixed inset-0 z-[109] hidden md:block" aria-hidden>
+        <div className="absolute inset-x-0 bottom-28 px-5 md:px-8">
+          <div className="mx-auto w-full max-w-[1800px] text-[11px] uppercase tracking-wide text-neutral-500">
+            <span className="mr-3 text-neutral-400">Category</span>
+            <span className="text-neutral-700">{activeCategory}</span>
+          </div>
+        </div>
+      </div>
+
       {/* Desktop: fixed center main image */}
-      <div className="pointer-events-none h-[100vh] w-[50vw]  fixed  left-[50%] -translate-x-1/2 inset-0 z-[110] hidden flex-col items-center justify-center px-6 pt-20 pb-28 md:flex">
-        <div className="w-full  overflow-hidden rounded-sm bg-[#e5e4d9] shadow-sm">
+      <div className="pointer-events-none fixed inset-0 left-[50%] z-[110] hidden h-[100vh] w-[44vw] -translate-x-1/2 flex-col items-center justify-center px-6 pt-3 pb-3 md:flex">
+        <div className="w-full max-h-[96vh] overflow-hidden rounded-sm bg-[#e5e4d9] shadow-sm">
           <img
             key={active.id}
             src={active.image}
             alt={active.title}
             className="h-full w-full object-cover"
           />
-        </div>
-        <div className="pointer-events-auto mt-4 max-w-[90vw] text-center text-[11px] font-medium uppercase tracking-wide text-neutral-600">
-          <Link
-            to={active?.slug ? getProjectPath(active) : '/catalogued-works'}
-            className="link-underline-ltr mt-2 inline-block text-nav text-neutral-800"
-          >
-            All images
-          </Link>
         </div>
       </div>
 
@@ -452,9 +455,9 @@ function GalleryLayer() {
           data-lenis-prevent
           data-lenis-prevent-wheel
           data-lenis-prevent-touch
-          className="gallery-thumb-scroll fixed left-6 top-20 z-[90] w-[120px] overflow-y-auto overflow-x-hidden overscroll-y-contain sm:w-[140px] md:w-[152px]"
+          className="gallery-thumb-scroll fixed right-5 top-24 z-[120] w-14 overflow-y-auto overflow-x-hidden overscroll-y-contain md:right-8"
           style={{
-            bottom: '7rem',
+            bottom: '6rem',
             paddingTop: edgePad,
             paddingBottom: edgePad,
             scrollbarWidth: 'none',
@@ -486,7 +489,7 @@ function GalleryLayer() {
         </div>
       )}
 
-      {scrubber}
+      {!isDesktop ? scrubber : null}
     </>
   )
 }
