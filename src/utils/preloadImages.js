@@ -1,4 +1,5 @@
 import projects from '../data/projects.json'
+import { getProjectImages } from './projects.js'
 
 /** Resolve a single image URL; failures still resolve so the UI never hangs. */
 function preloadOne(src) {
@@ -31,7 +32,18 @@ export function preloadImages(urls, options = {}) {
   return Promise.all(unique.map((src) => preloadOne(src).then(bump)))
 }
 
-/** Cover thumbnails used on Work / Gallery — safe first-load set. */
+/** Cover thumbnails only (legacy / small sets). */
 export function getProjectCoverImageUrls() {
   return projects.map((p) => p.image).filter(Boolean)
+}
+
+/** Every unique project asset — cover + all `images[]` per project (preloader background load). */
+export function getAllSiteImageUrls() {
+  const set = new Set()
+  for (const p of projects) {
+    for (const url of getProjectImages(p)) {
+      if (url && typeof url === 'string') set.add(url)
+    }
+  }
+  return [...set]
 }

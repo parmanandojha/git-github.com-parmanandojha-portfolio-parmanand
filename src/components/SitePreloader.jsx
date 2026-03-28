@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
-import { getProjectCoverImageUrls, preloadImages } from '../utils/preloadImages.js'
+import { getAllSiteImageUrls, preloadImages } from '../utils/preloadImages.js'
 
 const MAX_WAIT_MS = 15000
 const BG = '#7f7954'
@@ -96,7 +96,7 @@ export default function SitePreloader({ onComplete }) {
   /* ── loading logic ── */
   useEffect(() => {
     let cancelled = false
-    const urls = getProjectCoverImageUrls()
+    const urls = getAllSiteImageUrls()
 
     const finish = () => {
       if (doneRef.current) return
