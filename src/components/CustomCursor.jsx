@@ -108,7 +108,6 @@ export default function CustomCursor() {
           width: dotSize,
           height: dotSize,
           background: ACCENT,
-          mixBlendMode: 'difference',
           opacity: dotSize === 0 ? 0 : 1,
           willChange: 'transform',
         }}
@@ -124,7 +123,6 @@ export default function CustomCursor() {
           height: ringSize,
           border: hover ? `1.5px solid ${ACCENT}` : '0px solid transparent',
           background: hover ? 'transparent' : ACCENT,
-          mixBlendMode: 'difference',
           opacity: 1,
           transform: click ? 'translate(-50%,-50%) scale(0.72)' : undefined,
           transition: click
@@ -136,7 +134,7 @@ export default function CustomCursor() {
         {hover ? (
           <span
             className="select-none text-[6.5px] font-normal uppercase tracking-[0.18em]"
-            style={{ color: ACCENT, mixBlendMode: 'difference' }}
+            style={{ color: ACCENT }}
           >
             View
           </span>

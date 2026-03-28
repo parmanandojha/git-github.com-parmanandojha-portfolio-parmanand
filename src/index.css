@@ -152,6 +152,10 @@
 
 #pixel-grid > div {
   will-change: transform;
+  background-color: #7f7954;
+  /* Promote each block to its own compositor layer for jank-free GSAP scaling */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .gallery-thumb-scroll {
