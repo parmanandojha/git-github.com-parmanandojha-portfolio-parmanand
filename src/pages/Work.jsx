@@ -98,6 +98,7 @@ export default function Work({ onNavigateWithTransition }) {
               <article key={itemKey} className="w-full min-w-0">
                 <button
                   type="button"
+                  data-cursor="view"
                   onClick={() => goToProject(p)}
                   className="w-full text-left"
                 >
@@ -130,8 +131,9 @@ export default function Work({ onNavigateWithTransition }) {
               <button
                 key={itemKey}
                 type="button"
+                data-cursor="view"
                 className={[
-                  'catalogue-project-title m-0 cursor-pointer border-0 bg-transparent p-0',
+                  'catalogue-project-title m-0 border-0 bg-transparent p-0',
                   sizes[i] ?? sizes[sizes.length - 1],
                   'relative text-center uppercase text-[#7f7954] leading-[0.9] tracking-[-0.02em] whitespace-nowrap focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#7f7954]',
                   hoveredKey === itemKey ? 'z-30' : 'z-0',

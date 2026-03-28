@@ -381,6 +381,7 @@ function GalleryLayer({ onNavigateWithTransition }) {
     <button
       key={p.id}
       type="button"
+      data-cursor="view"
       ref={(el) => {
         itemRefs.current[i] = el
       }}

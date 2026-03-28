@@ -22,7 +22,8 @@ export function createPixelGrid() {
 
   for (let i = 0; i < rows * cols; i += 1) {
     const pixel = document.createElement('div')
-    pixel.className = 'bg-black scale-0 origin-center'
+    pixel.style.backgroundColor = '#7f7954'
+    pixel.className = 'scale-0 origin-center'
     grid.appendChild(pixel)
   }
 }

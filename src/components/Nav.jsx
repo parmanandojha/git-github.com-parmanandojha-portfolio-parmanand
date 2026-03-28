@@ -9,6 +9,7 @@ export default function Nav({ onChangePage, isTransitioning }) {
         {onChangePage ? (
           <button
             type="button"
+            data-cursor="view"
             onClick={() => onChangePage('work')}
             disabled={isTransitioning}
             className={`${navText} link-underline-ltr max-w-[min(100%,75%)] shrink text-left no-underline disabled:opacity-70`}

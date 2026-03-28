@@ -118,6 +118,7 @@ export default function Project({ slug, onBackWithTransition, onNavigateWithTran
       <header className="mb-10 max-w-3xl md:mb-14">
         <button
           type="button"
+          data-cursor="view"
           onClick={() => {
             if (onBackWithTransition) {
               onBackWithTransition()
@@ -183,6 +184,7 @@ export default function Project({ slug, onBackWithTransition, onNavigateWithTran
           </p>
           <button
             type="button"
+            data-cursor="view"
             onClick={() => navigateToPath(getProjectPath(nextProject))}
             className="link-underline-ltr mt-3 text-nav font-normal uppercase text-gray-900"
           >
@@ -196,6 +198,7 @@ export default function Project({ slug, onBackWithTransition, onNavigateWithTran
           </p>
           <button
             type="button"
+            data-cursor="view"
             onClick={() => navigateToPath('/catalogued-works')}
             className="link-underline-ltr mt-3 text-nav font-normal uppercase text-gray-900"
           >

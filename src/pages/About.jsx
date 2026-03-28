@@ -61,6 +61,7 @@ export default function About({ onNavigateWithTransition }) {
               <li key={p.id}>
                 <button
                   type="button"
+                  data-cursor="view"
                   onClick={() => goToProject(p)}
                   className={`${listLink} border-0 bg-transparent p-0`}
                 >

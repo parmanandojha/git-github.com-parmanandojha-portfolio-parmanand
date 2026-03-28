@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import Nav from './components/Nav.jsx'
 import Footer from './components/Footer.jsx'
 import SitePreloader from './components/SitePreloader.jsx'
+import CustomCursor from './components/CustomCursor.jsx'
 import { createPixelGrid, runPageTransition } from './utils/pixelTransition.js'
 import { useLocomotiveScroll } from './hooks/useLocomotiveScroll.js'
 import {
@@ -115,7 +116,8 @@ export default function App() {
   }, [page])
 
   return (
-    <div className="flex min-h-screen flex-col bg-canvas font-normal">
+    <div className="flex min-h-screen flex-col bg-canvas font-normal md:[&_*]:cursor-none md:cursor-none">
+      <CustomCursor />
       {!siteImagesReady ? <SitePreloader onComplete={onPreloaderComplete} /> : null}
       {page !== 'book' ? (
         <Nav onChangePage={handlePageChange} isTransitioning={isTransitioning} />

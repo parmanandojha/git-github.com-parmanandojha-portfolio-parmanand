@@ -159,14 +159,15 @@ export default function WebGLHoverPreview({ imageUrl, visible, cursor }) {
     }
     window.addEventListener('scroll', onScroll, { passive: true })
 
-    const clock = new THREE.Clock()
+    const timer = new THREE.Timer()
     let prevCursorX = cursorRef.current.x
     let prevCursorY = cursorRef.current.y
     const animate = () => {
       const s = stateRef.current
       if (!s.renderer || !s.scene || !s.camera || !s.mesh || !s.material) return
 
-      const t = clock.getElapsedTime()
+      timer.update()
+      const t = timer.getElapsed()
       s.material.uniforms.uTime.value = t
 
       const c = cursorRef.current
@@ -204,6 +205,7 @@ export default function WebGLHoverPreview({ imageUrl, visible, cursor }) {
       window.removeEventListener('resize', onResize)
       window.removeEventListener('scroll', onScroll)
       cancelAnimationFrame(stateRef.current.frameId)
+      timer.dispose()
       geometry.dispose()
       material.dispose()
       renderer.dispose()
