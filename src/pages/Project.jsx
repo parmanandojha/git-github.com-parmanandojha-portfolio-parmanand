@@ -21,6 +21,7 @@ export default function Project({ slug, onBackWithTransition, onNavigateWithTran
   const images = project ? getProjectImages(project) : []
   const nextProject = slug ? getNextProjectBySlug(slug) : null
   const nextFooterRef = useRef(null)
+  const figuresWrapRef = useRef(null)
   const navigatedToNextRef = useRef(false)
   const lastFooterTopRef = useRef(null)
   const lastScrollRef = useRef(0)
@@ -38,6 +39,55 @@ export default function Project({ slug, onBackWithTransition, onNavigateWithTran
     const lenis = getLenis()
     lenis?.scrollTo(0, { immediate: true })
   }, [slug, project])
+
+  /* Scroll reveal — CSS transition + IO (double rAF so first paint keeps opacity:0 → transition runs) */
+  useEffect(() => {
+    if (!project) return
+    const wrap = figuresWrapRef.current
+    if (!wrap) return
+    const figs = wrap.querySelectorAll('figure[data-project-scroll-reveal]')
+    if (!figs.length) return
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      figs.forEach((f) => f.classList.add('is-revealed'))
+      return
+    }
+
+    const reveal = (el) => {
+      if (el.classList.contains('is-revealed')) return
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          el.classList.add('is-revealed')
+        })
+      })
+    }
+
+    let io = null
+    const raf = requestAnimationFrame(() => {
+      io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return
+            const t = entry.target
+            io.unobserve(t)
+            reveal(t)
+          })
+        },
+        {
+          root: null,
+          rootMargin: '12% 0px -5% 0px',
+          threshold: [0, 0.02, 0.06, 0.12],
+        }
+      )
+
+      figs.forEach((f) => io.observe(f))
+    })
+
+    return () => {
+      cancelAnimationFrame(raf)
+      io?.disconnect()
+    }
+  }, [slug, project?.id, images.length])
 
   useEffect(() => {
     if (!project || !nextProject) return
@@ -154,11 +204,15 @@ export default function Project({ slug, onBackWithTransition, onNavigateWithTran
         ) : null}
       </header>
 
-      <div className="flex flex-col gap-6 md:gap-8 lg:gap-10">
+      <div
+        ref={figuresWrapRef}
+        className="flex flex-col gap-6 md:gap-8 lg:gap-10"
+      >
         {images.map((src, i) => (
           <figure
             key={`${project.id}-${i}`}
-            className="w-full overflow-hidden bg-[#e8e7de]"
+            data-project-scroll-reveal
+            className="project-figure-reveal w-full overflow-hidden bg-[#e8e7de]"
           >
             <ClothImage
               src={src}

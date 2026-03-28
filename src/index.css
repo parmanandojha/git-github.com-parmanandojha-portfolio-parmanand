@@ -150,3 +150,25 @@
   display: none;
 }
 
+/* Project page — figures fade / lift in on scroll (JS toggles .is-revealed) */
+.project-figure-reveal {
+  opacity: 0;
+  transform: translate3d(0, 2.25rem, 0);
+  transition:
+    opacity 0.88s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.88s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-figure-reveal.is-revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-figure-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
