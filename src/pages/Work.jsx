@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import ProgressivePixelImage from '../components/ProgressivePixelImage.jsx'
 import projects from '../data/projects.json'
 import { getProjectPath } from '../utils/projects.js'
 
@@ -87,28 +88,29 @@ export default function Work({ onNavigateWithTransition }) {
   }
 
   return (
-    <div className="w-full max-w-[1600px] px-4 py-6 mx-auto md:max-w-[980px] md:px-6">
-      {/* Mobile: grid of project cards */}
+    <div className="mx-auto w-full max-w-[1600px] px-4 py-6 md:max-w-[980px] md:px-6">
+      {/* Mobile: single column — full-width image, centered title (reference layout) */}
       <div className="md:hidden">
-        <div className="grid grid-cols-2 gap-3 sm:gap-4">
+        <div className="flex flex-col gap-14 pt-2 pb-4">
           {visibleProjects.map((p, i) => {
             const itemKey = `grid-${p.id}-${i}`
             return (
-              <article key={itemKey} className="min-w-0">
+              <article key={itemKey} className="w-full min-w-0">
                 <button
                   type="button"
                   onClick={() => goToProject(p)}
                   className="w-full text-left"
                 >
-                  <div className="w-full aspect-[4/5] overflow-hidden bg-[#e8e7de]">
-                    <img
+                  <div className="w-full overflow-hidden rounded-none bg-[#e8e7de] shadow-none">
+                    <ProgressivePixelImage
                       src={p.image}
                       alt={`${p.title} cover`}
-                      className="h-full w-full object-cover"
+                      maxPixelDim={46}
+                      imgClassName="h-full w-full object-cover"
                       loading="lazy"
                     />
                   </div>
-                  <p className="catalogue-project-title mt-2 text-center text-[13px] sm:text-[14px] uppercase leading-tight text-[#7f7954] line-clamp-2">
+                  <p className="catalogue-project-title mt-4 text-center text-[15px] font-normal uppercase leading-snug tracking-[0.06em] text-[#8b864e] line-clamp-3">
                     {p.title}
                   </p>
                 </button>
