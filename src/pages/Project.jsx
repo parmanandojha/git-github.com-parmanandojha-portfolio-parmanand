@@ -118,7 +118,6 @@ export default function Project({ slug, onBackWithTransition, onNavigateWithTran
       <header className="mb-10 max-w-3xl md:mb-14">
         <button
           type="button"
-          data-cursor="view"
           onClick={() => {
             if (onBackWithTransition) {
               onBackWithTransition()

@@ -21,10 +21,12 @@ export default function CustomCursor() {
   const [hover, setHover] = useState(false)
   const [click, setClick] = useState(false)
 
-  /* ── track raw pointer ── */
+  /* ── track raw pointer + live hover detection ── */
   useEffect(() => {
     const onMove = (e) => {
       posRef.current = { x: e.clientX, y: e.clientY }
+      // Re-check on every move so stale hover (e.g. after navigation) resets instantly
+      setHover(Boolean(e.target.closest('[data-cursor="view"]')))
     }
     window.addEventListener('pointermove', onMove, { passive: true })
     return () => window.removeEventListener('pointermove', onMove)
@@ -54,21 +56,6 @@ export default function CustomCursor() {
     return () => cancelAnimationFrame(rafRef.current)
   }, [])
 
-  /* ── delegate hover from data-cursor="view" elements ── */
-  useEffect(() => {
-    const enter = (e) => {
-      if (e.target.closest('[data-cursor="view"]')) setHover(true)
-    }
-    const leave = (e) => {
-      if (e.target.closest('[data-cursor="view"]')) setHover(false)
-    }
-    document.addEventListener('pointerover', enter, { passive: true })
-    document.addEventListener('pointerout', leave, { passive: true })
-    return () => {
-      document.removeEventListener('pointerover', enter)
-      document.removeEventListener('pointerout', leave)
-    }
-  }, [])
 
   /* ── click squeeze ── */
   useEffect(() => {
