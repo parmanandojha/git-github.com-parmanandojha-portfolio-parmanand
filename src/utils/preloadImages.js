@@ -1,4 +1,5 @@
 import projects from '../data/projects.json'
+import { registerPreloadedImage } from './imagePreloadCache.js'
 import { getProjectImages } from './projects.js'
 
 /** Resolve a single image URL; failures still resolve so the UI never hangs. */
@@ -6,7 +7,10 @@ function preloadOne(src) {
   if (!src || typeof src !== 'string') return Promise.resolve()
   return new Promise((resolve) => {
     const img = new Image()
-    img.onload = () => resolve()
+    img.onload = () => {
+      registerPreloadedImage(src, img)
+      resolve()
+    }
     img.onerror = () => resolve()
     img.src = src
   })

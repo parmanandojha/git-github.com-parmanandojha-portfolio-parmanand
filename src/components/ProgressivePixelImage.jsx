@@ -1,4 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import {
+  getPreloadedHtmlImage,
+  registerPreloadedImage,
+} from '../utils/imagePreloadCache.js'
 
 /** Neutral checker — stretched with pixelated rendering when the real asset fails (404, etc.). */
 const ERROR_PIXEL_BG = `url("data:image/svg+xml,${encodeURIComponent(
@@ -32,14 +36,15 @@ export default function ProgressivePixelImage({
   const [failed, setFailed] = useState(false)
   const mainImgRef = useRef(null)
 
-  // Cached images often finish before `onLoad` fires — sync from `complete` after src commits.
+  // Cached / preloader images — sync before paint; DOM img may not have fired onLoad yet.
   useLayoutEffect(() => {
     if (!src) return
     setFailed(false)
 
     const img = mainImgRef.current
-    const alreadyDecoded = Boolean(img?.complete && img.naturalHeight > 0)
-    setFullLoaded(alreadyDecoded)
+    const fromDom = Boolean(img?.complete && img.naturalHeight > 0)
+    const fromPreload = Boolean(getPreloadedHtmlImage(src))
+    setFullLoaded(fromDom || fromPreload)
   }, [src])
 
   useEffect(() => {
@@ -47,8 +52,8 @@ export default function ProgressivePixelImage({
     setPixelPreview(null)
 
     let cancelled = false
-    const im = new Image()
-    im.onload = () => {
+
+    const buildPreview = (im) => {
       if (cancelled) return
       try {
         const nw = im.naturalWidth || 1
@@ -76,6 +81,17 @@ export default function ProgressivePixelImage({
         /* CORS-tainted canvas etc. — skip pixel preview */
       }
     }
+
+    const cached = getPreloadedHtmlImage(src)
+    if (cached) {
+      buildPreview(cached)
+      return () => {
+        cancelled = true
+      }
+    }
+
+    const im = new Image()
+    im.onload = () => buildPreview(im)
     im.onerror = () => {}
     im.src = src
 
@@ -130,7 +146,10 @@ export default function ProgressivePixelImage({
           decoding={decoding}
           fetchPriority={fetchPriority}
           draggable={draggable}
-          onLoad={() => setFullLoaded(true)}
+          onLoad={(e) => {
+            registerPreloadedImage(src, e.currentTarget)
+            setFullLoaded(true)
+          }}
           onError={() => {
             setFailed(true)
             setFullLoaded(true)
