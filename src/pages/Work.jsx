@@ -108,7 +108,8 @@ export default function Work({ onNavigateWithTransition }) {
                       alt={`${p.title} cover`}
                       maxPixelDim={46}
                       imgClassName="h-full w-full object-cover"
-                      loading="lazy"
+                      loading={i < 2 ? 'eager' : 'lazy'}
+                      fetchPriority={i === 0 ? 'high' : i === 1 ? 'low' : undefined}
                     />
                   </div>
                   <p className="catalogue-project-title mt-4 text-center text-[15px] font-normal uppercase leading-snug tracking-[0.06em] text-[#8b864e] line-clamp-3">

@@ -19,6 +19,7 @@ export default function ProgressivePixelImage({
   imgClassName = '',
   loading = 'lazy',
   decoding = 'async',
+  fetchPriority,
   draggable,
   /** Longer side of the downscaled canvas — higher = finer “pixels”, slightly larger LQIP. */
   maxPixelDim = 54,
@@ -127,6 +128,7 @@ export default function ProgressivePixelImage({
           alt={alt}
           loading={loading}
           decoding={decoding}
+          fetchPriority={fetchPriority}
           draggable={draggable}
           onLoad={() => setFullLoaded(true)}
           onError={() => {

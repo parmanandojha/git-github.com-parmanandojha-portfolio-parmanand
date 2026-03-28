@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
-import ProgressivePixelImage from '../components/ProgressivePixelImage.jsx'
-import { getLenis } from '../utils/locomotiveBridge.js'
+import ClothImage from '../components/ClothImage.jsx'
+import { getLenis } from '../utils/lenisBridge.js'
 import {
   getNextProjectBySlug,
   getProjectBySlug,
@@ -160,13 +160,14 @@ export default function Project({ slug, onBackWithTransition, onNavigateWithTran
             key={`${project.id}-${i}`}
             className="w-full overflow-hidden bg-[#e8e7de]"
           >
-            <ProgressivePixelImage
+            <ClothImage
               src={src}
               alt={`${project.title} — ${i + 1}`}
               variant="intrinsic"
               maxPixelDim={66}
               imgClassName="h-auto w-full object-cover"
               loading={i < 2 ? 'eager' : 'lazy'}
+              fetchPriority={i === 0 ? 'high' : i === 1 ? 'low' : undefined}
               decoding="async"
             />
           </figure>

@@ -475,6 +475,7 @@ function GalleryLayer({ onNavigateWithTransition }) {
             maxPixelDim={60}
             imgClassName="h-full w-full object-cover"
             loading="eager"
+            fetchPriority="high"
           />
         </div>
       </div>
@@ -489,6 +490,7 @@ function GalleryLayer({ onNavigateWithTransition }) {
             maxPixelDim={60}
             imgClassName="h-full w-full object-cover"
             loading="eager"
+            fetchPriority="high"
           />
         </div>
       </div>

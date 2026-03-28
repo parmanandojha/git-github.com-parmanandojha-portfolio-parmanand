@@ -4,8 +4,9 @@ import Nav from './components/Nav.jsx'
 import Footer from './components/Footer.jsx'
 import SitePreloader from './components/SitePreloader.jsx'
 import CustomCursor from './components/CustomCursor.jsx'
+import WebGLClothScroll from './components/WebGLClothScroll.jsx'
 import { createPixelGrid, runPageTransition } from './utils/pixelTransition.js'
-import { useLocomotiveScroll } from './hooks/useLocomotiveScroll.js'
+import { useLenis } from './hooks/useLenis.js'
 import {
   LEGACY_TO_CANONICAL,
   normalizePathname,
@@ -33,7 +34,7 @@ export default function App() {
   const transitionTimelineRef = useRef(null)
   const pathnameRef = useRef(location.pathname)
   pathnameRef.current = location.pathname
-  const locoRef = useLocomotiveScroll([page, isTransitioning])
+  const lenisRef = useLenis([page, isTransitioning])
 
   useEffect(() => {
     const path = normalizePathname(location.pathname)
@@ -80,13 +81,13 @@ export default function App() {
           setIsTransitioning(false)
           transitionTimelineRef.current = null
           requestAnimationFrame(() => {
-            locoRef.current?.resize()
+            lenisRef.current?.resize()
           })
         },
       })
       return true
     },
-    [isTransitioning, locoRef]
+    [isTransitioning, lenisRef]
   )
 
   const handlePathChange = (nextPath) => {
@@ -110,13 +111,14 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    const loco = locoRef.current
-    if (!loco) return
-    loco.start()
-  }, [page])
+    const lenis = lenisRef.current
+    if (!lenis) return
+    lenis.start()
+  }, [page, lenisRef])
 
   return (
-    <div className="flex min-h-screen flex-col bg-canvas font-normal md:[&_*]:cursor-none md:cursor-none">
+    <div className="flex min-h-screen flex-col bg-transparent font-normal md:[&_*]:cursor-none md:cursor-none">
+      <WebGLClothScroll />
       <CustomCursor />
       {!siteImagesReady ? <SitePreloader onComplete={onPreloaderComplete} /> : null}
       {page !== 'book' ? (
