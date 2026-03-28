@@ -5,7 +5,7 @@
 export default function Book() {
   return (
     <section
-      className="fixed inset-x-0 bottom-[14rem] top-0 z-[95] flex flex-col overflow-y-auto bg-canvas px-5 py-5 text-gray-900 md:bottom-[13.5rem] md:px-8 md:py-6"
+      className="fixed inset-x-0 bottom-[14rem] top-0 z-[95] flex flex-col overflow-y-auto overscroll-y-contain bg-canvas px-5 py-5 text-gray-900 [-webkit-overflow-scrolling:touch] md:bottom-[13.5rem] md:px-8 md:py-6"
       aria-label="Catalogued works"
     >
       <div className="mx-auto flex min-h-full w-full max-w-[1800px] flex-1 flex-col">

@@ -59,6 +59,18 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: var(--color-canvas);
+    /*
+     * Fixed nav + footer: keep scroll targets / focus rings from sitting under chrome.
+     * Nav ~sticky block + footer bar (~pb-44 on main).
+     */
+    scroll-padding-top: 5.75rem;
+    scroll-padding-bottom: 11.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    html {
+      scroll-padding-bottom: 10.5rem;
+    }
   }
 
   body {
@@ -140,6 +152,10 @@
 
 #pixel-grid > div {
   will-change: transform;
+}
+
+.gallery-thumb-scroll {
+  -webkit-overflow-scrolling: touch;
 }
 
 .gallery-thumb-scroll::-webkit-scrollbar {

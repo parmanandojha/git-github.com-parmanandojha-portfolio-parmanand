@@ -94,7 +94,7 @@ export default function WebGLHoverPreview({ imageUrl, visible, cursor }) {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.setSize(window.innerWidth, window.innerHeight)
     /* Match browser / <img> appearance — default ACES tone mapping darkens photos */
-    renderer.outputColorSpace = THREE.SRGBColorSpace
+    renderer.outputColorSpace = THREE.LinearSRGBColorSpace
     renderer.toneMapping = THREE.NoToneMapping
     renderer.toneMappingExposure = 1
     mount.appendChild(renderer.domElement)
@@ -226,7 +226,7 @@ export default function WebGLHoverPreview({ imageUrl, visible, cursor }) {
           texture.dispose()
           return
         }
-        texture.colorSpace = THREE.SRGBColorSpace
+        texture.colorSpace = THREE.LinearSRGBColorSpace
         texture.minFilter = THREE.LinearMipmapLinearFilter
         texture.magFilter = THREE.LinearFilter
         texture.generateMipmaps = true

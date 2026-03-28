@@ -13,12 +13,16 @@ export function useLocomotiveScroll(resizeDeps = []) {
   const instanceRef = useRef(null)
 
   useEffect(() => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
     const loco = new LocomotiveScroll({
       lenisOptions: {
-        lerp: 0.08,
-        smoothWheel: true,
+        lerp: reducedMotion ? 1 : 0.08,
+        smoothWheel: !reducedMotion,
         wheelMultiplier: 1,
-        touchMultiplier: 1.5,
+        touchMultiplier: 1.65,
+        /** Wheel/trackpad over `overflow: auto` regions (e.g. Book, gallery thumbs) scrolls them instead of only the page. */
+        allowNestedScroll: true,
       },
     })
 
