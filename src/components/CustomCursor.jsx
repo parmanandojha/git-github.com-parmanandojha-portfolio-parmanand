@@ -6,11 +6,9 @@ const ACCENT = '#7f7954'
  * Custom cursor — desktop only.
  *
  * States
- *  • default   : 5px filled dot, ACCENT colour
- *  • hover     : 40px ring + "VIEW" label, ACCENT colour
- *  • click     : quick squeeze (scaleX 0.6 → 1)
- *
- * mix-blend-mode: difference so it inverts against both light + dark bg.
+ *  • default : filled dot, ACCENT colour
+ *  • hover   : ring + "VIEW" label (data-cursor="view" elements)
+ *  • click   : quick squeeze animation
  */
 export default function CustomCursor() {
   const dotRef = useRef(null)
@@ -22,7 +20,6 @@ export default function CustomCursor() {
 
   const [hover, setHover] = useState(false)
   const [click, setClick] = useState(false)
-  const hoverRef = useRef(false)
 
   /* ── track raw pointer ── */
   useEffect(() => {
@@ -60,16 +57,10 @@ export default function CustomCursor() {
   /* ── delegate hover from data-cursor="view" elements ── */
   useEffect(() => {
     const enter = (e) => {
-      if (e.target.closest('[data-cursor="view"]')) {
-        hoverRef.current = true
-        setHover(true)
-      }
+      if (e.target.closest('[data-cursor="view"]')) setHover(true)
     }
     const leave = (e) => {
-      if (e.target.closest('[data-cursor="view"]')) {
-        hoverRef.current = false
-        setHover(false)
-      }
+      if (e.target.closest('[data-cursor="view"]')) setHover(false)
     }
     document.addEventListener('pointerover', enter, { passive: true })
     document.addEventListener('pointerout', leave, { passive: true })

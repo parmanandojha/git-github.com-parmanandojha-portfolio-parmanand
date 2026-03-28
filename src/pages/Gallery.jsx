@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import ProgressivePixelImage from '../components/ProgressivePixelImage.jsx'
 import projects from '../data/projects.json'
 import { getProjectPath } from '../utils/projects.js'

@@ -13,16 +13,6 @@ export const LEGACY_TO_CANONICAL = {
   '/about': '/overview',
 }
 
-const KNOWN = new Set([
-  '/',
-  '/catalogued-works',
-  '/selected',
-  '/book',
-  '/overview',
-  '/work',
-  '/gallery',
-  '/about',
-])
 
 export function normalizePathname(pathname) {
   const p = (pathname || '/').replace(/\/+$/, '') || '/'
@@ -47,11 +37,4 @@ export function pathToPage(pathname) {
 
 export function pageToPath(page) {
   return PAGE_PATHS[page] ?? '/catalogued-works'
-}
-
-export function isKnownPath(pathname) {
-  const p = normalizePathname(pathname)
-  if (KNOWN.has(p)) return true
-  if (p.startsWith('/project/') && p.slice('/project/'.length).length > 0) return true
-  return false
 }
