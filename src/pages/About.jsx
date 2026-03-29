@@ -40,8 +40,8 @@ export default function About({ onNavigateWithTransition }) {
   return (
     <div className="mx-auto w-full max-w-[1800px] px-5 pb-28 pt-10 md:px-8 md:pt-14">
       {/* Intro — large serif, reference-style */}
-      <header className="max-w-[min(100%,52rem)]">
-        <div className="space-y-6 font-sans text-[clamp(1.125rem,2.2vw,1.75rem)] font-normal leading-[1.45] tracking-[-0.01em] text-black md:space-y-8 md:leading-[1.5]">
+      <header className="w-full">
+        <div className="space-y-6 uppercase font-sans text-[clamp(1.125rem,2.2vw,1.75rem)] font-normal leading-[1.45] tracking-[-0.01em] text-black md:space-y-8 md:leading-[1.5]">
           {overviewIntro.map((paragraph, i) => (
             <p key={i} className="m-0">
               {paragraph}
@@ -50,9 +50,9 @@ export default function About({ onNavigateWithTransition }) {
         </div>
       </header>
 
-      {/* Five-column grid — stacks on small screens */}
+      {/* Four equal columns on large screens (was 5 cols with 4 children → empty track + uneven look) */}
       <div
-        className="mt-20 grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:mt-28 lg:grid-cols-5 lg:gap-x-6 xl:gap-x-8"
+        className="mt-20 grid w-full grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:mt-28 lg:grid-cols-4 lg:gap-x-8"
         aria-label="Overview details"
       >
         <Column title="Recent Work">

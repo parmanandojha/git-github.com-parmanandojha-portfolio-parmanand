@@ -4,7 +4,7 @@ React (Vite) + Tailwind CSS v4. Local dev: `npm run dev` · production build: `n
 
 ## Typography
 
-All UI type uses **`src/PBold.woff`** via an `@font-face` named **`Site`** in `src/index.css` (`--font-sans`). Vite bundles it from the CSS `url()`.
+All UI type uses **`src/PBold.woff`** as **`Site`** (`--font-sans` / `font-sans`). Vite bundles it from the CSS `url()`.
 
 ## URLs (shareable)
 

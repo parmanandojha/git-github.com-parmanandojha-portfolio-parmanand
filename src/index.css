@@ -1,9 +1,17 @@
 @import "tailwindcss";
 
-/* Single UI face — `src/PBold.woff` only (bundled by Vite). */
+/* Display / default UI — PBold; small type — PMedium */
 @font-face {
   font-family: "Site";
   src: url("./PBold.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Site Text";
+  src: url("./PMedium.woff") format("woff");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -14,16 +22,16 @@
   --color-canvas: #e9e8df;
 
   --font-sans: "Site", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Site Text", "Site", ui-sans-serif, system-ui, sans-serif;
 
   /*
-   * Small type scale (rem, 16px root). 10px = 0.625rem — scales with user font settings.
-   * Use text-caption / md:text-caption-md for responsive steps; text-nav for 12px UI.
+   * Small UI scale — minimum 14px (0.875rem at 16px root) sitewide.
    */
-  --text-caption: 0.625rem;
+  --text-caption: 0.875rem;
   --text-caption--line-height: 1.45;
-  --text-caption-md: 0.6875rem;
+  --text-caption-md: 0.9375rem;
   --text-caption-md--line-height: 1.45;
-  --text-nav: 0.75rem;
+  --text-nav: 0.875rem;
   --text-nav--line-height: 1.35;
 }
 
@@ -68,6 +76,16 @@
     font-weight: 400;
     letter-spacing: -0.02em;
     line-height: 0.9;
+  }
+}
+
+@layer utilities {
+  /* Caption, nav, and Tailwind `text-sm` use PMedium for a lighter small-type voice */
+  .text-caption,
+  .text-caption-md,
+  .text-nav,
+  .text-sm {
+    font-family: var(--font-body);
   }
 }
 

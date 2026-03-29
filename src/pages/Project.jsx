@@ -298,7 +298,7 @@ export default function Project({ slug, onBackWithTransition, onNavigateWithTran
           {project.title}
         </h1>
         {project.description ? (
-          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-neutral-600 md:text-base">
+          <p className="mt-4 max-w-2xl font-body text-sm leading-relaxed text-neutral-600 md:text-base">
             {project.description}
           </p>
         ) : null}

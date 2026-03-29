@@ -2,9 +2,9 @@ export default function Footer({ page, onChangePage, isTransitioning }) {
   const year = new Date().getFullYear()
   const onCatalogue = page === 'work' || page === 'project'
 
-  /** One size for every footer control (matches `text-nav` at lg+, slightly smaller on narrow screens). */
+  /** Footer controls — same minimum size as `text-nav` (14px floor). */
   const footerLabel =
-    'text-[clamp(0.625rem,2.5vw,0.75rem)] font-normal leading-tight text-gray-900 uppercase select-none lg:text-nav'
+    'text-nav font-normal leading-tight text-gray-900 uppercase select-none'
 
   const underlineSpan = (label, isActive) => (
     <span

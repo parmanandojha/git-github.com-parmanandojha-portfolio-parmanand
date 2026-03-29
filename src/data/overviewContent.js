@@ -3,8 +3,9 @@
  */
 
 export const overviewIntro = [
-  'Detail-oriented UI/UX and Graphic Designer with 5+ years of experience creating user-centered digital experiences. Expertise in designing responsive interfaces, conducting user research, and developing brand identities.',
-  'Proven track record of improving conversion rates, reducing user friction, and delivering visually compelling designs that meet business objectives.',
+  'With 4+ years of hands-on experience, I bridge the gap between business goals and user needs — turning complex problems into clean, intuitive digital products. From full-scale design systems to conversion-focused landing pages, I bring both strategic thinking and pixel-perfect execution.',
+  "Currently a Design Specialist at Plethora IT, I've led UI/UX for 15+ websites, built brand identities from scratch, and embedded user-centered design across cross-functional teams. Before that, as a freelance Graphics Consultant, I delivered end-to-end solutions for clients across e-commerce, services, and fintech.",
+  "Whether you're looking to hire a full-time designer who can hit the ground running, or need a sharp freelance partner for your next product sprint — I'm here to make your vision ship.",
 ]
 
 

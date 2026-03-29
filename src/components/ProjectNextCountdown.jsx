@@ -116,7 +116,7 @@ export default function ProjectNextCountdown({ open, progress, x, y, onCancel, n
           </svg>
         </button>
       </div>
-      <p className="pointer-events-none max-w-[14rem] text-center text-[10px] font-normal uppercase tracking-[0.14em] text-neutral-500">
+      <p className="pointer-events-none max-w-[14rem] text-center text-sm font-normal uppercase tracking-[0.14em] text-neutral-500">
         Next · {nextTitle}
       </p>
     </div>

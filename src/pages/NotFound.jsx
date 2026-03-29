@@ -18,7 +18,7 @@ export default function NotFound({ onNavigateWithTransition }) {
       <h1 className="mt-3 display-condensed text-[clamp(3rem,12vw,7rem)] uppercase leading-none tracking-tight text-gray-900">
         404
       </h1>
-      <p className="mt-3 max-w-xl text-sm text-neutral-600 md:text-base">
+      <p className="mt-3 max-w-xl font-body text-sm text-neutral-600 md:text-base">
         The page you are looking for does not exist or has moved.
       </p>
       <button

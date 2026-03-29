@@ -454,7 +454,7 @@ function GalleryLayer({ onNavigateWithTransition }) {
       {/* Desktop chrome: reference-like framing */}
       <div className="pointer-events-none fixed inset-0 z-[109] hidden md:block" aria-hidden>
         <div className="absolute inset-x-0 bottom-28 px-5 md:px-8">
-          <div className="mx-auto w-full max-w-[1800px] text-[11px] uppercase tracking-wide text-neutral-500">
+          <div className="mx-auto w-full max-w-[1800px] text-sm uppercase tracking-wide text-neutral-500">
             <span className="mr-3 text-neutral-400">Category</span>
             <span className="text-neutral-700">{activeCategory}</span>
           </div>
