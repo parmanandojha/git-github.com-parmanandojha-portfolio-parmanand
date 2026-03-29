@@ -1,2 +1,5 @@
+# Set Sitemap to your live site origin (must match <loc> base in sitemap.xml)
 User-agent: *
 Allow: /
+
+Sitemap: https://parmanandojha.com/sitemap.xml
