@@ -15,6 +15,8 @@ import {
  * When the Next Project block’s top crosses this line while scrolling down → next route.
  */
 const NEXT_TRIGGER_FROM_BOTTOM_RATIO = 0.6
+/** Same breakpoint as Tailwind `md:` — countdown + cancel ring only on desktop. */
+const MD_UP = '(min-width: 768px)'
 
 export default function Project({ slug, onBackWithTransition, onNavigateWithTransition }) {
   const navigate = useNavigate()
@@ -37,6 +39,9 @@ export default function Project({ slug, onBackWithTransition, onNavigateWithTran
   const [countdownStart, setCountdownStartState] = useState(null)
   const [countdownProgress, setCountdownProgress] = useState(0)
   const [countdownPos, setCountdownPos] = useState({ x: 0, y: 0 })
+  const [isMdUp, setIsMdUp] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia(MD_UP).matches
+  )
 
   nextProjectRef.current = nextProject
 
@@ -69,6 +74,20 @@ export default function Project({ slug, onBackWithTransition, onNavigateWithTran
     const lenis = getLenis()
     lenis?.scrollTo(0, { immediate: true })
   }, [slug, project])
+
+  useEffect(() => {
+    const mq = window.matchMedia(MD_UP)
+    const sync = () => setIsMdUp(mq.matches)
+    sync()
+    mq.addEventListener('change', sync)
+    return () => mq.removeEventListener('change', sync)
+  }, [])
+
+  useEffect(() => {
+    if (isMdUp) return
+    setCountdownStart(null)
+    setCountdownProgress(0)
+  }, [isMdUp, setCountdownStart])
 
   useEffect(() => {
     const onMove = (e) => {
@@ -211,6 +230,10 @@ export default function Project({ slug, onBackWithTransition, onNavigateWithTran
         lastScrollRef.current = l.scroll
 
         if (countdownStartRef.current != null) {
+          if (!window.matchMedia(MD_UP).matches) {
+            lastFooterTopRef.current = top
+            return
+          }
           if (top > yLine + 50) {
             setCountdownStart(null)
           }
@@ -230,6 +253,13 @@ export default function Project({ slug, onBackWithTransition, onNavigateWithTran
           l.scroll >= Math.max(0, l.limit - 6)
 
         if (crossedDown || nearBottom) {
+          if (!window.matchMedia(MD_UP).matches) {
+            navigatedToNextRef.current = true
+            const np = nextProjectRef.current
+            if (np) navigateToPathRef.current?.(getProjectPath(np))
+            lastFooterTopRef.current = top
+            return
+          }
           setCountdownPos({ ...pointerRef.current })
           setCountdownStart(performance.now())
           lastFooterTopRef.current = top
@@ -356,7 +386,7 @@ export default function Project({ slug, onBackWithTransition, onNavigateWithTran
         </footer>
       )}
     </article>
-    {nextProject ? (
+    {nextProject && isMdUp ? (
       <ProjectNextCountdown
         open={countdownStart != null}
         progress={countdownProgress}
