@@ -1,11 +1,12 @@
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import ClothImage from '../components/ClothImage.jsx'
+import ProjectNextCountdown from '../components/ProjectNextCountdown.jsx'
 import { getLenis } from '../utils/lenisBridge.js'
 import {
   getNextProjectBySlug,
   getProjectBySlug,
-  getProjectImages,
+  getProjectImageEntries,
   getProjectPath,
 } from '../utils/projects.js'
 
@@ -18,27 +19,105 @@ const NEXT_TRIGGER_FROM_BOTTOM_RATIO = 0.6
 export default function Project({ slug, onBackWithTransition, onNavigateWithTransition }) {
   const navigate = useNavigate()
   const project = slug ? getProjectBySlug(slug) : null
-  const images = project ? getProjectImages(project) : []
+  const imageEntries = project ? getProjectImageEntries(project) : []
   const nextProject = slug ? getNextProjectBySlug(slug) : null
   const nextFooterRef = useRef(null)
   const figuresWrapRef = useRef(null)
   const navigatedToNextRef = useRef(false)
   const lastFooterTopRef = useRef(null)
   const lastScrollRef = useRef(0)
-  const navigateToPath = (path) => {
-    if (!path) return
-    if (onNavigateWithTransition) {
-      onNavigateWithTransition(path)
-      return
-    }
-    navigate(path)
-  }
+  const countdownStartRef = useRef(null)
+  const pointerRef = useRef({
+    x: typeof window !== 'undefined' ? window.innerWidth / 2 : 0,
+    y: typeof window !== 'undefined' ? window.innerHeight / 2 : 0,
+  })
+  const nextProjectRef = useRef(nextProject)
+  const navigateToPathRef = useRef(null)
+
+  const [countdownStart, setCountdownStartState] = useState(null)
+  const [countdownProgress, setCountdownProgress] = useState(0)
+  const [countdownPos, setCountdownPos] = useState({ x: 0, y: 0 })
+
+  nextProjectRef.current = nextProject
+
+  const navigateToPath = useCallback(
+    (path) => {
+      if (!path) return
+      if (onNavigateWithTransition) {
+        onNavigateWithTransition(path)
+        return
+      }
+      navigate(path)
+    },
+    [navigate, onNavigateWithTransition]
+  )
+
+  navigateToPathRef.current = navigateToPath
+
+  const setCountdownStart = useCallback((ts) => {
+    countdownStartRef.current = ts
+    setCountdownStartState(ts)
+  }, [])
+
+  const cancelNextCountdown = useCallback(() => {
+    setCountdownStart(null)
+    setCountdownProgress(0)
+  }, [setCountdownStart])
 
   useEffect(() => {
     if (!project) return
     const lenis = getLenis()
     lenis?.scrollTo(0, { immediate: true })
   }, [slug, project])
+
+  useEffect(() => {
+    const onMove = (e) => {
+      pointerRef.current = { x: e.clientX, y: e.clientY }
+      if (countdownStartRef.current != null) {
+        setCountdownPos({ x: e.clientX, y: e.clientY })
+      }
+    }
+    window.addEventListener('pointermove', onMove, { passive: true })
+    return () => window.removeEventListener('pointermove', onMove)
+  }, [])
+
+  useEffect(() => {
+    if (countdownStart == null) {
+      setCountdownProgress(0)
+      return
+    }
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const durationMs = reduced ? 900 : 2800
+    const start = countdownStart
+    let rafId = 0
+
+    const tick = (now) => {
+      const t = Math.min(1, (now - start) / durationMs)
+      setCountdownProgress(t)
+      if (t >= 1) {
+        const np = nextProjectRef.current
+        if (np) {
+          navigatedToNextRef.current = true
+          navigateToPathRef.current?.(getProjectPath(np))
+        }
+        setCountdownStart(null)
+        return
+      }
+      rafId = requestAnimationFrame(tick)
+    }
+    rafId = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(rafId)
+  }, [countdownStart, setCountdownStart])
+
+  useEffect(() => {
+    const root = document.documentElement
+    if (countdownStart != null) {
+      root.setAttribute('data-project-next-countdown', 'true')
+    } else {
+      root.removeAttribute('data-project-next-countdown')
+    }
+    return () => root.removeAttribute('data-project-next-countdown')
+  }, [countdownStart])
 
   /* Scroll reveal — CSS transition + IO (double rAF so first paint keeps opacity:0 → transition runs) */
   useEffect(() => {
@@ -87,7 +166,7 @@ export default function Project({ slug, onBackWithTransition, onNavigateWithTran
       cancelAnimationFrame(raf)
       io?.disconnect()
     }
-  }, [slug, project?.id, images.length])
+  }, [slug, project?.id, imageEntries.length])
 
   useEffect(() => {
     if (!project || !nextProject) return
@@ -95,6 +174,8 @@ export default function Project({ slug, onBackWithTransition, onNavigateWithTran
     navigatedToNextRef.current = false
     lastFooterTopRef.current = null
     lastScrollRef.current = 0
+    setCountdownStart(null)
+    setCountdownProgress(0)
 
     let cancelled = false
     let unsubscribe = null
@@ -129,6 +210,14 @@ export default function Project({ slug, onBackWithTransition, onNavigateWithTran
         const scrollDown = l.scroll > lastScrollRef.current + 0.25
         lastScrollRef.current = l.scroll
 
+        if (countdownStartRef.current != null) {
+          if (top > yLine + 50) {
+            setCountdownStart(null)
+          }
+          lastFooterTopRef.current = top
+          return
+        }
+
         const crossedDown =
           scrollDown &&
           prevTop != null &&
@@ -141,8 +230,9 @@ export default function Project({ slug, onBackWithTransition, onNavigateWithTran
           l.scroll >= Math.max(0, l.limit - 6)
 
         if (crossedDown || nearBottom) {
-          navigatedToNextRef.current = true
-          navigateToPath(getProjectPath(nextProject))
+          setCountdownPos({ ...pointerRef.current })
+          setCountdownStart(performance.now())
+          lastFooterTopRef.current = top
           return
         }
 
@@ -157,13 +247,14 @@ export default function Project({ slug, onBackWithTransition, onNavigateWithTran
       cancelAnimationFrame(rafId)
       unsubscribe?.()
     }
-  }, [slug, project, nextProject, navigate, onNavigateWithTransition])
+  }, [slug, project, nextProject, setCountdownStart])
 
   if (!slug || !project) {
     return <Navigate to="/catalogued-works" replace />
   }
 
   return (
+    <>
     <article className="mx-auto w-full max-w-[1800px] px-5 pb-24 pt-8 md:px-8 md:pb-32 md:pt-12">
       <header className="mb-10 max-w-3xl md:mb-14">
         <button
@@ -208,15 +299,15 @@ export default function Project({ slug, onBackWithTransition, onNavigateWithTran
         ref={figuresWrapRef}
         className="flex flex-col gap-6 md:gap-8 lg:gap-10"
       >
-        {images.map((src, i) => (
+        {imageEntries.map((entry, i) => (
           <figure
             key={`${project.id}-${i}`}
             data-project-scroll-reveal
             className="project-figure-reveal w-full overflow-hidden bg-[#e8e7de]"
           >
             <ClothImage
-              src={src}
-              alt={`${project.title} — ${i + 1}`}
+              src={entry.src}
+              alt={entry.alt}
               variant="intrinsic"
               maxPixelDim={66}
               imgClassName="h-auto w-full object-cover"
@@ -239,7 +330,11 @@ export default function Project({ slug, onBackWithTransition, onNavigateWithTran
           <button
             type="button"
             data-cursor="view"
-            onClick={() => navigateToPath(getProjectPath(nextProject))}
+            onClick={() => {
+              cancelNextCountdown()
+              navigatedToNextRef.current = true
+              navigateToPath(getProjectPath(nextProject))
+            }}
             className="link-underline-ltr mt-3 text-nav font-normal uppercase text-gray-900"
           >
             {nextProject.title}
@@ -261,5 +356,16 @@ export default function Project({ slug, onBackWithTransition, onNavigateWithTran
         </footer>
       )}
     </article>
+    {nextProject ? (
+      <ProjectNextCountdown
+        open={countdownStart != null}
+        progress={countdownProgress}
+        x={countdownPos.x}
+        y={countdownPos.y}
+        onCancel={cancelNextCountdown}
+        nextTitle={nextProject.title}
+      />
+    ) : null}
+    </>
   )
 }

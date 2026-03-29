@@ -1,15 +1,42 @@
 import projects from '../data/projects.json'
 
+function normalizeImageItem(item, project, index) {
+  if (typeof item === 'string') {
+    return {
+      src: item,
+      alt: `${project.title} — image ${index + 1}`,
+    }
+  }
+  return {
+    src: item.src,
+    alt: item.alt ?? `${project.title} — image ${index + 1}`,
+  }
+}
+
 /**
- * All gallery images for a project — uses `images[]` when set, otherwise `[image]`.
+ * All gallery images with alt text — `images[]` entries or `[image]` fallback.
  */
-export function getProjectImages(project) {
+export function getProjectImageEntries(project) {
   if (!project) return []
   if (Array.isArray(project.images) && project.images.length > 0) {
-    return project.images
+    return project.images.map((item, i) => normalizeImageItem(item, project, i))
   }
-  if (project.image) return [project.image]
+  if (project.image) {
+    return [
+      {
+        src: project.image,
+        alt:
+          project.imageAlt ??
+          `${project.title} — cover`,
+      },
+    ]
+  }
   return []
+}
+
+/** URL list only — preloader, etc. */
+export function getProjectImages(project) {
+  return getProjectImageEntries(project).map((e) => e.src)
 }
 
 export function getProjectBySlug(slug) {

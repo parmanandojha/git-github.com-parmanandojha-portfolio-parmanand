@@ -8,15 +8,42 @@
     "tags": ["Branding", "Identity", "Web Design", "Development"],
     "image": "/plethorait/project-plethorait-1.png",
     "images": [
-      "/plethorait/project-plethorait-1.png",
-      "/plethorait/project-plethorait-2.png",
-      "/plethorait/project-plethorait-3.png",
-      "/plethorait/project-plethorait-4.png",
-      "/plethorait/project-plethorait-5.png",
-      "/plethorait/project-plethorait-6.png",
-      "/plethorait/project-plethorait-7.png",
-      "/plethorait/project-plethorait-8.png",
-      "/plethorait/project-plethorait-9.png"
+      {
+        "src": "/plethorait/project-plethorait-1.png",
+        "alt": "Plethora IT — Hero brand lockup and headline on a dark performance-themed backdrop"
+      },
+      {
+        "src": "/plethorait/project-plethorait-2.png",
+        "alt": "Plethora IT — Logo grid and primary colour system on charcoal"
+      },
+      {
+        "src": "/plethorait/project-plethorait-3.png",
+        "alt": "Plethora IT — Typography scale and UI type pairing samples"
+      },
+      {
+        "src": "/plethorait/project-plethorait-4.png",
+        "alt": "Plethora IT — Business card and print collateral mockups"
+      },
+      {
+        "src": "/plethorait/project-plethorait-5.png",
+        "alt": "Plethora IT — Website hero and navigation treatment"
+      },
+      {
+        "src": "/plethorait/project-plethorait-6.png",
+        "alt": "Plethora IT — Case study layout with metrics and pull quotes"
+      },
+      {
+        "src": "/plethorait/project-plethorait-7.png",
+        "alt": "Plethora IT — Icon set and graphic elements on brand background"
+      },
+      {
+        "src": "/plethorait/project-plethorait-8.png",
+        "alt": "Plethora IT — Social and digital ad templates"
+      },
+      {
+        "src": "/plethorait/project-plethorait-9.png",
+        "alt": "Plethora IT — Full brand guidelines spread and usage rules"
+      }
     ]
   },
   {
@@ -28,12 +55,30 @@
     "tags": ["UI", "Design System", "Web Design", "Development"],
     "image": "/narasha/project-narasha-1.png",
     "images": [
-      "/narasha/project-narasha-1.png",
-      "/narasha/project-narasha-2.png",
-      "/narasha/project-narasha-3.png",
-      "/narasha/project-narasha-4.png",
-      "/narasha/project-narasha-5.png",
-      "/narasha/project-narasha-6.png"
+      {
+        "src": "/narasha/project-narasha-1.png",
+        "alt": "Narasha — Landing hero with minimal headline and single CTA"
+      },
+      {
+        "src": "/narasha/project-narasha-2.png",
+        "alt": "Narasha — Modular feature section with icon row and copy blocks"
+      },
+      {
+        "src": "/narasha/project-narasha-3.png",
+        "alt": "Narasha — Product showcase grid and alternating text bands"
+      },
+      {
+        "src": "/narasha/project-narasha-4.png",
+        "alt": "Narasha — Testimonials and logo strip on light background"
+      },
+      {
+        "src": "/narasha/project-narasha-5.png",
+        "alt": "Narasha — Pricing or comparison table layout variant"
+      },
+      {
+        "src": "/narasha/project-narasha-6.png",
+        "alt": "Narasha — Footer, contact block, and secondary navigation system"
+      }
     ]
   },
   {
@@ -45,13 +90,34 @@
     "tags": ["Content", "Layout", "Marketing", "Magzine Design", "Typography"],
     "image": "/flora/project-flora-1.png",
     "images": [
-      "/flora/project-flora-1.png",
-      "/flora/project-flora-2.png",
-      "/flora/project-flora-3.png",
-      "/flora/project-flora-4.png",
-      "/flora/project-flora-5.png",
-      "/flora/project-flora-6.png",
-      "/flora/project-flora-7.png"
+      {
+        "src": "/flora/project-flora-1.png",
+        "alt": "Flora — Magazine cover with bold masthead and botanical photography"
+      },
+      {
+        "src": "/flora/project-flora-2.png",
+        "alt": "Flora — Editorial spread opening story with large display type"
+      },
+      {
+        "src": "/flora/project-flora-3.png",
+        "alt": "Flora — Product story page with pull quote and inset images"
+      },
+      {
+        "src": "/flora/project-flora-4.png",
+        "alt": "Flora — Multi-column article layout and chapter divider"
+      },
+      {
+        "src": "/flora/project-flora-5.png",
+        "alt": "Flora — Lifestyle photography sequence across a two-page spread"
+      },
+      {
+        "src": "/flora/project-flora-6.png",
+        "alt": "Flora — Infographic and data callouts in editorial style"
+      },
+      {
+        "src": "/flora/project-flora-7.png",
+        "alt": "Flora — Closing spread and back matter with brand credits"
+      }
     ]
   },
   {
@@ -63,11 +129,26 @@
     "tags": ["Typography", "Website Design", "Motion", "Development"],
     "image": "/smarttek/project-smarttek-1.png",
     "images": [
-      "/smarttek/project-smarttek-1.png",
-      "/smarttek/project-smarttek-2.png",
-      "/smarttek/project-smarttek-3.png",
-      "/smarttek/project-smarttek-4.png",
-      "/smarttek/project-smarttek-5.png"
+      {
+        "src": "/smarttek/project-smarttek-1.png",
+        "alt": "SmartTek — Oversized display type and kinetic headline treatment"
+      },
+      {
+        "src": "/smarttek/project-smarttek-2.png",
+        "alt": "SmartTek — Type specimen with weights, spacing, and hierarchy"
+      },
+      {
+        "src": "/smarttek/project-smarttek-3.png",
+        "alt": "SmartTek — Responsive component cards and button states"
+      },
+      {
+        "src": "/smarttek/project-smarttek-4.png",
+        "alt": "SmartTek — Grid system and breakpoint behaviour overview"
+      },
+      {
+        "src": "/smarttek/project-smarttek-5.png",
+        "alt": "SmartTek — Motion frames and micro-interaction storyboard"
+      }
     ]
   },
   {
@@ -79,14 +160,38 @@
     "tags": ["Branding", "Visual Identity"],
     "image": "/ila/project-ila-1.png",
     "images": [
-      "/ila/project-ila-1.png",
-      "/ila/project-ila-2.png",
-      "/ila/project-ila-3.png",
-      "/ila/project-ila-4.png",
-      "/ila/project-ila-5.png",
-      "/ila/project-ila-6.png",
-      "/ila/project-ila-7.png",
-      "/ila/project-ila-8.png"
+      {
+        "src": "/ila/project-ila-1.png",
+        "alt": "Ila — Brand mark and wordmark on neutral studio background"
+      },
+      {
+        "src": "/ila/project-ila-2.png",
+        "alt": "Ila — Colour palette swatches and gradient applications"
+      },
+      {
+        "src": "/ila/project-ila-3.png",
+        "alt": "Ila — Stationery suite: letterhead, envelope, and notecard"
+      },
+      {
+        "src": "/ila/project-ila-4.png",
+        "alt": "Ila — Packaging or product label concepts"
+      },
+      {
+        "src": "/ila/project-ila-5.png",
+        "alt": "Ila — Social profile templates and avatar crops"
+      },
+      {
+        "src": "/ila/project-ila-6.png",
+        "alt": "Ila — Lookbook spread with photography and logo placement"
+      },
+      {
+        "src": "/ila/project-ila-7.png",
+        "alt": "Ila — Brand pattern and texture library"
+      },
+      {
+        "src": "/ila/project-ila-8.png",
+        "alt": "Ila — Guidelines summary and do-not examples"
+      }
     ]
   },
   {
@@ -98,16 +203,46 @@
     "tags": ["Web", "Strategy", "Wix"],
     "image": "/exponify/project-exponify-1.png",
     "images": [
-      "/exponify/project-exponify-1.png",
-      "/exponify/project-exponify-2.png",
-      "/exponify/project-exponify-3.png",
-      "/exponify/project-exponify-4.png",
-      "/exponify/project-exponify-5.png",
-      "/exponify/project-exponify-6.png",
-      "/exponify/project-exponify-7.png",
-      "/exponify/project-exponify-8.png",
-      "/exponify/project-exponify-9.png",
-      "/exponify/project-exponify-10.png"
+      {
+        "src": "/exponify/project-exponify-1.png",
+        "alt": "Exponify — Homepage hero with value proposition and primary navigation"
+      },
+      {
+        "src": "/exponify/project-exponify-2.png",
+        "alt": "Exponify — Services or offerings section with icon cards"
+      },
+      {
+        "src": "/exponify/project-exponify-3.png",
+        "alt": "Exponify — Portfolio or case study grid on Wix-built layout"
+      },
+      {
+        "src": "/exponify/project-exponify-4.png",
+        "alt": "Exponify — Team or about page with portraits and bios"
+      },
+      {
+        "src": "/exponify/project-exponify-5.png",
+        "alt": "Exponify — Client logos and trust indicators strip"
+      },
+      {
+        "src": "/exponify/project-exponify-6.png",
+        "alt": "Exponify — Blog or resources listing template"
+      },
+      {
+        "src": "/exponify/project-exponify-7.png",
+        "alt": "Exponify — Contact page with form and map embed"
+      },
+      {
+        "src": "/exponify/project-exponify-8.png",
+        "alt": "Exponify — Mobile navigation and responsive breakpoints"
+      },
+      {
+        "src": "/exponify/project-exponify-9.png",
+        "alt": "Exponify — Secondary landing page variant for campaigns"
+      },
+      {
+        "src": "/exponify/project-exponify-10.png",
+        "alt": "Exponify — Site footer with links, newsletter, and legal"
+      }
     ]
   },
   {
@@ -119,14 +254,38 @@
     "tags": ["Prototyping", "Components", "R&D"],
     "image": "/svapn/project-svapn-1.png",
     "images": [
-      "/svapn/project-svapn-1.png",
-      "/svapn/project-svapn-2.png",
-      "/svapn/project-svapn-3.png",
-      "/svapn/project-svapn-4.png",
-      "/svapn/project-svapn-5.png",
-      "/svapn/project-svapn-6.png",
-      "/svapn/project-svapn-7.png",
-      "/svapn/project-svapn-8.png"
+      {
+        "src": "/svapn/project-svapn-1.png",
+        "alt": "Svapn — Experiment index cover and project codename"
+      },
+      {
+        "src": "/svapn/project-svapn-2.png",
+        "alt": "Svapn — UI component exploration: inputs and toggles"
+      },
+      {
+        "src": "/svapn/project-svapn-3.png",
+        "alt": "Svapn — Layout study with asymmetric grid"
+      },
+      {
+        "src": "/svapn/project-svapn-4.png",
+        "alt": "Svapn — Dark-mode variant and contrast tests"
+      },
+      {
+        "src": "/svapn/project-svapn-5.png",
+        "alt": "Svapn — Data visualisation and chart style tests"
+      },
+      {
+        "src": "/svapn/project-svapn-6.png",
+        "alt": "Svapn — Mobile flow wireframes and gesture notes"
+      },
+      {
+        "src": "/svapn/project-svapn-7.png",
+        "alt": "Svapn — 3D or illustration integration mockup"
+      },
+      {
+        "src": "/svapn/project-svapn-8.png",
+        "alt": "Svapn — Lab notes and iteration comparison sheet"
+      }
     ]
   }
 ]

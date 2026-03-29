@@ -1,2 +1,5 @@
+# Sitemap must use the same origin as <loc> entries in public/sitemap.xml
 User-agent: *
 Allow: /
+
+Sitemap: https://parmanandojha.com/sitemap.xml

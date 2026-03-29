@@ -2,7 +2,7 @@ import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ProgressivePixelImage from '../components/ProgressivePixelImage.jsx'
 import projects from '../data/projects.json'
-import { getProjectPath } from '../utils/projects.js'
+import { getProjectImageEntries, getProjectPath } from '../utils/projects.js'
 
 const WebGLHoverPreview = lazy(() => import('../components/WebGLHoverPreview.jsx'))
 
@@ -94,6 +94,7 @@ export default function Work({ onNavigateWithTransition }) {
         <div className="flex flex-col gap-14 pt-2 pb-4">
           {visibleProjects.map((p, i) => {
             const itemKey = `grid-${p.id}-${i}`
+            const cover = getProjectImageEntries(p)[0]
             return (
               <article key={itemKey} className="w-full min-w-0">
                 <button
@@ -104,8 +105,8 @@ export default function Work({ onNavigateWithTransition }) {
                 >
                   <div className="w-full overflow-hidden rounded-none bg-[#e8e7de] shadow-none">
                     <ProgressivePixelImage
-                      src={p.image}
-                      alt={`${p.title} cover`}
+                      src={cover?.src ?? p.image}
+                      alt={cover?.alt ?? `${p.title} cover`}
                       maxPixelDim={46}
                       imgClassName="h-full w-full object-cover"
                       loading={i < 2 ? 'eager' : 'lazy'}

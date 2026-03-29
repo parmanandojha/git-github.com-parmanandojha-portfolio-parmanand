@@ -1,4 +1,4 @@
-# Set Sitemap to your live site origin (must match <loc> base in sitemap.xml)
+# Sitemap must use the same origin as <loc> entries in public/sitemap.xml
 User-agent: *
 Allow: /
 

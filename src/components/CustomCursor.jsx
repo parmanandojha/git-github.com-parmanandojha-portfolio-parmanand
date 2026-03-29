@@ -22,6 +22,18 @@ export default function CustomCursor() {
   /** 'default' | 'hover' | 'view' */
   const [mode, setMode] = useState('default')
   const [click, setClick] = useState(false)
+  const [hideForProjectCountdown, setHideForProjectCountdown] = useState(false)
+
+  /* Project page “next” ring — hide default cursor so only the loader shows */
+  useEffect(() => {
+    const el = document.documentElement
+    const sync = () =>
+      setHideForProjectCountdown(el.getAttribute('data-project-next-countdown') === 'true')
+    const mo = new MutationObserver(sync)
+    mo.observe(el, { attributes: true, attributeFilter: ['data-project-next-countdown'] })
+    sync()
+    return () => mo.disconnect()
+  }, [])
 
   /* ── track raw pointer + live mode detection ── */
   useEffect(() => {
@@ -72,6 +84,8 @@ export default function CustomCursor() {
 
   /* Mobile / touch: nothing rendered */
   if (typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches) return null
+
+  if (hideForProjectCountdown) return null
 
   const expanded = mode === 'hover' || mode === 'view'
   const ringSize = expanded ? 58 : 13

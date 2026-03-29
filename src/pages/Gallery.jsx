@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom'
 import { useNavigate } from 'react-router-dom'
 import ProgressivePixelImage from '../components/ProgressivePixelImage.jsx'
 import projects from '../data/projects.json'
-import { getProjectPath } from '../utils/projects.js'
+import { getProjectImageEntries, getProjectPath } from '../utils/projects.js'
 
 const THUMB_HEIGHT = 40
 const MOBILE_THUMB_W = 88
@@ -49,17 +49,13 @@ function GalleryLayer({ onNavigateWithTransition }) {
   const [scrollProgress, setScrollProgress] = useState(0)
   const galleryItems = useMemo(() => {
     const all = projects.flatMap((project) => {
-      const images = Array.isArray(project.images) && project.images.length > 0
-        ? project.images
-        : project.image
-          ? [project.image]
-          : []
-      return images.map((src, imageIndex) => ({
+      return getProjectImageEntries(project).map((entry, imageIndex) => ({
         id: `${project.id}-${imageIndex}`,
         slug: project.slug,
         title: project.title,
         year: project.year,
-        image: src,
+        image: entry.src,
+        imageAlt: entry.alt,
       }))
     })
     return shuffleArray(all)
@@ -407,7 +403,7 @@ function GalleryLayer({ onNavigateWithTransition }) {
     >
       <ProgressivePixelImage
         src={p.image}
-        alt={`${p.title} thumbnail`}
+        alt={p.imageAlt ?? `${p.title} thumbnail`}
         maxPixelDim={mobile ? 36 : 28}
         imgClassName="h-full w-full object-cover"
         loading="lazy"
@@ -471,7 +467,7 @@ function GalleryLayer({ onNavigateWithTransition }) {
           <ProgressivePixelImage
             key={active.id}
             src={active.image}
-            alt={active.title}
+            alt={active.imageAlt ?? active.title}
             maxPixelDim={60}
             imgClassName="h-full w-full object-cover"
             loading="eager"
@@ -486,7 +482,7 @@ function GalleryLayer({ onNavigateWithTransition }) {
           <ProgressivePixelImage
             key={`mob-${active.id}`}
             src={active.image}
-            alt={active.title}
+            alt={active.imageAlt ?? active.title}
             maxPixelDim={60}
             imgClassName="h-full w-full object-cover"
             loading="eager"
