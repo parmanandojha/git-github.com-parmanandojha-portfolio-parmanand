@@ -12,7 +12,8 @@ import {
 
 /**
  * Horizontal threshold line: this many viewport-heights up from the bottom edge.
- * When the Next Project block’s top crosses this line while scrolling down → next route.
+ * When the Next Project block’s top crosses this line while scrolling down (md+ only)
+ * → countdown then next route. Mobile: no scroll/swipe auto-advance; use footer link.
  */
 const NEXT_TRIGGER_FROM_BOTTOM_RATIO = 0.6
 /** Same breakpoint as Tailwind `md:` — countdown + cancel ring only on desktop. */
@@ -230,10 +231,6 @@ export default function Project({ slug, onBackWithTransition, onNavigateWithTran
         lastScrollRef.current = l.scroll
 
         if (countdownStartRef.current != null) {
-          if (!window.matchMedia(MD_UP).matches) {
-            lastFooterTopRef.current = top
-            return
-          }
           if (top > yLine + 50) {
             setCountdownStart(null)
           }
@@ -252,14 +249,8 @@ export default function Project({ slug, onBackWithTransition, onNavigateWithTran
           Number.isFinite(l.limit) &&
           l.scroll >= Math.max(0, l.limit - 6)
 
-        if (crossedDown || nearBottom) {
-          if (!window.matchMedia(MD_UP).matches) {
-            navigatedToNextRef.current = true
-            const np = nextProjectRef.current
-            if (np) navigateToPathRef.current?.(getProjectPath(np))
-            lastFooterTopRef.current = top
-            return
-          }
+        /* Scroll / swipe → next project: desktop only (footer “Next project” still works on mobile). */
+        if ((crossedDown || nearBottom) && window.matchMedia(MD_UP).matches) {
           setCountdownPos({ ...pointerRef.current })
           setCountdownStart(performance.now())
           lastFooterTopRef.current = top
