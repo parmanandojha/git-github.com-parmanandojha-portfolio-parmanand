@@ -1,69 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Canonical routes — project /project/* slugs mirror src/data/projects.json -->
-  <!-- Production origin: https://parmanandojha.com -->
+  <!-- Production origin: https://parmanandojha.vercel.app -->
   <url>
-    <loc>https://parmanandojha.com/catalogued-works</loc>
+    <loc>https://parmanandojha.vercel.app/catalogued-works</loc>
     <lastmod>2026-03-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1</priority>
   </url>
   <url>
-    <loc>https://parmanandojha.com/selected</loc>
+    <loc>https://parmanandojha.vercel.app/selected</loc>
     <lastmod>2026-03-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://parmanandojha.com/overview</loc>
+    <loc>https://parmanandojha.vercel.app/overview</loc>
     <lastmod>2026-03-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://parmanandojha.com/book</loc>
+    <loc>https://parmanandojha.vercel.app/book</loc>
     <lastmod>2026-03-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://parmanandojha.com/project/plethorait</loc>
+    <loc>https://parmanandojha.vercel.app/project/plethorait</loc>
     <lastmod>2026-03-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://parmanandojha.com/project/narasha</loc>
+    <loc>https://parmanandojha.vercel.app/project/narasha</loc>
     <lastmod>2026-03-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://parmanandojha.com/project/flora</loc>
+    <loc>https://parmanandojha.vercel.app/project/flora</loc>
     <lastmod>2026-03-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://parmanandojha.com/project/smarttek</loc>
+    <loc>https://parmanandojha.vercel.app/project/smarttek</loc>
     <lastmod>2026-03-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://parmanandojha.com/project/ila</loc>
+    <loc>https://parmanandojha.vercel.app/project/ila</loc>
     <lastmod>2026-03-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://parmanandojha.com/project/exponify</loc>
+    <loc>https://parmanandojha.vercel.app/project/exponify</loc>
     <lastmod>2026-03-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://parmanandojha.com/project/svapn</loc>
+    <loc>https://parmanandojha.vercel.app/project/svapn</loc>
     <lastmod>2026-03-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

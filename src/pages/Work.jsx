@@ -130,7 +130,7 @@ export default function Work({ onNavigateWithTransition }) {
                       fetchPriority={i === 0 ? 'high' : i === 1 ? 'low' : undefined}
                     />
                   </div>
-                  <p className="mt-4 text-center font-body text-[15px] font-normal uppercase leading-snug tracking-[0.06em] text-[#8b864e] line-clamp-3">
+                  <p className="mt-4 text-center font-body text-[10px] font-normal uppercase leading-snug tracking-[0.06em] text-[#8b864e] line-clamp-3 sm:text-[14px]">
                     {p.title}
                   </p>
                 </button>

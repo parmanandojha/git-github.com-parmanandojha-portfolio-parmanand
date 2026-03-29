@@ -2,4 +2,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://parmanandojha.com/sitemap.xml
+Sitemap: https://parmanandojha.vercel.app/sitemap.xml

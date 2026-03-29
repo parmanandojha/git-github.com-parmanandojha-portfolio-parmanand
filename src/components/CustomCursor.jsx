@@ -127,7 +127,7 @@ export default function CustomCursor() {
       >
         {mode === 'view' ? (
           <span
-            className="select-none font-body text-[12px] font-normal uppercase tracking-[0.18em]"
+            className="select-none font-body text-[10px] font-normal uppercase tracking-[0.18em] sm:text-[14px]"
             style={{ color: ACCENT }}
           >
             View

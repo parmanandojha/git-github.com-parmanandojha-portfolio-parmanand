@@ -2,7 +2,7 @@ export default function Footer({ page, onChangePage, isTransitioning }) {
   const year = new Date().getFullYear()
   const onCatalogue = page === 'work' || page === 'project'
 
-  /** Footer controls — same minimum size as `text-nav` (14px floor). */
+  /** Footer controls — same scale as `text-nav` (10px below sm, 14px from sm up). */
   const footerLabel =
     'text-nav font-normal leading-tight text-gray-900 uppercase select-none'
 

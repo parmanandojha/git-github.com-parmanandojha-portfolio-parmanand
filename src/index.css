@@ -25,7 +25,7 @@
   --font-body: "Site Text", "Site", ui-sans-serif, system-ui, sans-serif;
 
   /*
-   * Small UI scale — minimum 14px (0.875rem at 16px root) sitewide.
+   * Small UI: 10px below `sm` (see @layer utilities); from tablet up, 14px+ here.
    */
   --text-caption: 0.875rem;
   --text-caption--line-height: 1.45;
@@ -86,6 +86,24 @@
   .text-nav,
   .text-sm {
     font-family: var(--font-body);
+  }
+
+  /* Narrow viewports: 10px; from `sm` (640px) tablet/desktop keeps theme sizes (≥14px). */
+  @media (max-width: 639px) {
+    .text-caption,
+    .text-nav,
+    .text-sm {
+      font-size: 0.625rem;
+    }
+
+    .text-caption,
+    .text-sm {
+      line-height: 1.45;
+    }
+
+    .text-nav {
+      line-height: 1.35;
+    }
   }
 }
 
