@@ -1,17 +1,8 @@
 @import "tailwindcss";
 
-/* Primary typeface — `src/P.woff` (bundled by Vite). */
+/* Single UI face — `src/PBold.woff` only (bundled by Vite). */
 @font-face {
-  font-family: "Neue Montreal";
-  src: url("./P.woff") format("woff");
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* Catalogue page titles only — dedicated bold master */
-@font-face {
-  font-family: "Neue Montreal Catalogue Bold";
+  font-family: "Site";
   src: url("./PBold.woff") format("woff");
   font-weight: 400;
   font-style: normal;
@@ -22,7 +13,7 @@
   /* Site background — matches WebGL cloth base */
   --color-canvas: #e9e8df;
 
-  --font-sans: "Neue Montreal", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Site", ui-sans-serif, system-ui, sans-serif;
 
   /*
    * Small type scale (rem, 16px root). 10px = 0.625rem — scales with user font settings.
@@ -81,13 +72,6 @@
 }
 
 @layer components {
-  /* Catalogued works — project names use PBold.woff */
-  .catalogue-project-title {
-    font-family: 'Neue Montreal Catalogue Bold', 'Neue Montreal', ui-sans-serif, system-ui,
-      sans-serif;
-    font-weight: 400;
-  }
-
   /*
    * Underline draws left → right on hover/focus; use .link-underline-ltr--active for “current” state.
    */

@@ -19,6 +19,7 @@ export default function Work({ onNavigateWithTransition }) {
     y: typeof window !== 'undefined' ? window.innerHeight / 2 : 0,
   })
   const sentinelRef = useRef(null)
+  const catalogueHoverRootRef = useRef(null)
   const [canShowHoverPreview, setCanShowHoverPreview] = useState(false)
 
   const visibleProjects = useMemo(() => {
@@ -64,6 +65,22 @@ export default function Work({ onNavigateWithTransition }) {
     io.observe(el)
     return () => io.disconnect()
   }, [isLoading])
+
+  const clearCatalogueHover = () => {
+    setHoveredKey(null)
+    setHoveredProject(null)
+  }
+
+  /** WebGL preview is pointer-events-none, so hit-test still “sees” titles under it — use mouseout + relatedTarget instead of document.contains(target). */
+  const onProjectTitleMouseOut = (e) => {
+    const next = e.nativeEvent.relatedTarget
+    if (next instanceof Node && e.currentTarget.contains(next)) return
+    if (next instanceof Element) {
+      const enterTitle = next.closest('[data-catalogue-project]')
+      if (enterTitle && catalogueHoverRootRef.current?.contains(enterTitle)) return
+    }
+    clearCatalogueHover()
+  }
 
   const sizes = [
     'text-[clamp(42px,6.5vw,96px)]',
@@ -113,7 +130,7 @@ export default function Work({ onNavigateWithTransition }) {
                       fetchPriority={i === 0 ? 'high' : i === 1 ? 'low' : undefined}
                     />
                   </div>
-                  <p className="catalogue-project-title mt-4 text-center text-[15px] font-normal uppercase leading-snug tracking-[0.06em] text-[#8b864e] line-clamp-3">
+                  <p className="mt-4 text-center text-[15px] font-normal uppercase leading-snug tracking-[0.06em] text-[#8b864e] line-clamp-3">
                     {p.title}
                   </p>
                 </button>
@@ -123,38 +140,41 @@ export default function Work({ onNavigateWithTransition }) {
         </div>
       </div>
 
-      {/* Desktop (md+): stacked list */}
+      {/* Desktop (md+): stacked list — hover/blur zone is shrink-wrapped to titles only */}
       <div className="hidden md:block">
-        <div className="flex flex-col items-center select-none">
-          {visibleProjects.map((p, i) => {
-            const itemKey = `${p.id}-${i}`
+        <div ref={catalogueHoverRootRef} className="mx-auto w-fit max-w-full">
+          <div className="flex flex-col items-center select-none">
+            {visibleProjects.map((p, i) => {
+              const itemKey = `${p.id}-${i}`
+              const isHoverTarget = hoveredKey === itemKey
+              const blurNonTarget = hoveredKey != null && !isHoverTarget
 
-            return (
-              <button
-                key={itemKey}
-                type="button"
-                data-cursor="view"
-                className={[
-                  'catalogue-project-title m-0 border-0 bg-transparent p-0',
-                  sizes[i] ?? sizes[sizes.length - 1],
-                  'relative text-center uppercase text-[#7f7954] leading-[0.9] tracking-[-0.02em] whitespace-nowrap focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#7f7954]',
-                  hoveredKey === itemKey ? 'z-30' : 'z-0',
-                ].join(' ')}
-                onMouseEnter={() => {
-                  setHoveredKey(itemKey)
-                  setHoveredProject(p)
-                }}
-                onMouseLeave={() => {
-                  setHoveredKey(null)
-                  setHoveredProject(null)
-                }}
-                onMouseMove={(e) => setCursor({ x: e.clientX, y: e.clientY })}
-                onClick={() => goToProject(p)}
-              >
-                {p.title}
-              </button>
-            )
-          })}
+              return (
+                <button
+                  key={itemKey}
+                  type="button"
+                  data-cursor="view"
+                  data-catalogue-project
+                  className={[
+                    'm-0 border-0 bg-transparent p-0',
+                    sizes[i] ?? sizes[sizes.length - 1],
+                    'relative text-center uppercase text-[#7f7954] leading-[0.9] tracking-[-0.02em] whitespace-nowrap transition-[filter] duration-300 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#7f7954]',
+                    blurNonTarget ? 'blur-[5px] motion-reduce:blur-none' : 'blur-none',
+                    isHoverTarget ? 'z-30' : 'z-0',
+                  ].join(' ')}
+                  onMouseEnter={() => {
+                    setHoveredKey(itemKey)
+                    setHoveredProject(p)
+                  }}
+                  onMouseOut={onProjectTitleMouseOut}
+                  onMouseMove={(e) => setCursor({ x: e.clientX, y: e.clientY })}
+                  onClick={() => goToProject(p)}
+                >
+                  {p.title}
+                </button>
+              )
+            })}
+          </div>
         </div>
       </div>
 
