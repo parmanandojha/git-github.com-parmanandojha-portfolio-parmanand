@@ -1,6 +1,5 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import ProgressivePixelImage from '../components/ProgressivePixelImage.jsx'
 import projects from '../data/projects.json'
 import { getProjectImageEntries, getProjectPath } from '../utils/projects.js'
 
@@ -121,11 +120,10 @@ export default function Work({ onNavigateWithTransition }) {
                   className="w-full text-left"
                 >
                   <div className="w-full overflow-hidden rounded-none bg-[#e8e7de] shadow-none">
-                    <ProgressivePixelImage
+                    <img
                       src={cover?.src ?? p.image}
                       alt={cover?.alt ?? `${p.title} cover`}
-                      maxPixelDim={46}
-                      imgClassName="h-full w-full object-cover"
+                      className="block h-full w-full object-cover"
                       loading={i < 2 ? 'eager' : 'lazy'}
                       fetchPriority={i === 0 ? 'high' : i === 1 ? 'low' : undefined}
                     />

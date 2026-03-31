@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { getPreloadedHtmlImage } from '../utils/imagePreloadCache.js'
 import { getLenis } from '../utils/lenisBridge.js'
-import ProgressivePixelImage from './ProgressivePixelImage.jsx'
 
 /*
  * UV-only distortion — zero vertex displacement, so nothing ever leaves the canvas.
@@ -53,7 +52,6 @@ export default function ClothImage({
   fetchPriority,
   decoding,
   draggable,
-  maxPixelDim,
   variant,
 }) {
   const wrapRef = useRef(null)
@@ -182,17 +180,18 @@ export default function ClothImage({
   return (
     <div ref={wrapRef} className={`relative w-full overflow-hidden ${className}`}>
       {/* Always in DOM — provides layout height + screen-reader alt */}
-      <ProgressivePixelImage
+      <img
         src={src}
         alt={alt}
-        variant={variant}
-        maxPixelDim={maxPixelDim}
-        imgClassName={imgClassName}
+        className={[
+          imgClassName,
+          variant === 'intrinsic' ? 'relative block w-full' : 'h-full w-full',
+          glActive ? 'opacity-0' : '',
+        ].filter(Boolean).join(' ')}
         loading={loading}
         fetchPriority={fetchPriority}
         decoding={decoding}
         draggable={draggable}
-        className={glActive ? 'opacity-0' : ''}
       />
     </div>
   )

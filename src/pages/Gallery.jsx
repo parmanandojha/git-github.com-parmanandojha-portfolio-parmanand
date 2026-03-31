@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useNavigate } from 'react-router-dom'
-import ProgressivePixelImage from '../components/ProgressivePixelImage.jsx'
 import projects from '../data/projects.json'
 import { getProjectImageEntries, getProjectPath } from '../utils/projects.js'
 
@@ -401,11 +400,10 @@ function GalleryLayer({ onNavigateWithTransition }) {
       aria-label={`${p.title}. Double-click to open project.`}
       aria-current={i === activeIndex ? 'true' : undefined}
     >
-      <ProgressivePixelImage
+      <img
         src={p.image}
         alt={p.imageAlt ?? `${p.title} thumbnail`}
-        maxPixelDim={mobile ? 36 : 28}
-        imgClassName="h-full w-full object-cover"
+        className="h-full w-full object-cover"
         loading="lazy"
         draggable={false}
       />
@@ -464,12 +462,11 @@ function GalleryLayer({ onNavigateWithTransition }) {
       {/* Desktop: fixed center main image */}
       <div className="pointer-events-none fixed inset-0 left-[50%] z-[110] hidden h-[100vh] w-[44vw] -translate-x-1/2 flex-col items-center justify-center px-6 pt-3 pb-3 md:flex">
         <div className="w-full max-h-[96vh] overflow-hidden bg-[#e5e4d9] shadow-sm">
-          <ProgressivePixelImage
+          <img
             key={active.id}
             src={active.image}
             alt={active.imageAlt ?? active.title}
-            maxPixelDim={60}
-            imgClassName="h-full w-full object-cover"
+            className="h-full w-full object-cover"
             loading="eager"
             fetchPriority="high"
           />
@@ -479,12 +476,11 @@ function GalleryLayer({ onNavigateWithTransition }) {
       {/* Mobile: main image below scrubber */}
       <div className="fixed inset-x-0 top-[13.5rem] bottom-24 z-[108] flex flex-col items-center justify-center px-6 pb-4 pt-2 md:hidden">
         <div className="w-full max-w-[min(88vw,320px)] overflow-hidden bg-[#e5e4d9] aspect-none sm:aspect-[2/4] max-h-[min(52vh,480px)] shadow-sm">
-          <ProgressivePixelImage
+          <img
             key={`mob-${active.id}`}
             src={active.image}
             alt={active.imageAlt ?? active.title}
-            maxPixelDim={60}
-            imgClassName="h-full w-full object-cover"
+            className="h-full w-full object-cover"
             loading="eager"
             fetchPriority="high"
           />
