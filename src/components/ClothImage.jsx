@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
-import { getPreloadedHtmlImage } from '../utils/imagePreloadCache.js'
 import { getLenis } from '../utils/lenisBridge.js'
 
 /*
@@ -102,7 +101,7 @@ export default function ClothImage({
     })
     scene.add(new THREE.Mesh(geo, mat))
 
-    /* ── texture (preloader cache → Texture, else loader) ─────── */
+    /* ── texture ───────────────────────────────────────────────── */
     let loaded = false
     const applyTex = (tex) => {
       tex.colorSpace = THREE.LinearSRGBColorSpace
@@ -114,14 +113,9 @@ export default function ClothImage({
       setGlActive(true)
     }
 
-    const cachedImg = getPreloadedHtmlImage(src)
-    if (cachedImg) {
-      applyTex(new THREE.Texture(cachedImg))
-    } else {
-      new THREE.TextureLoader().load(src, (tex) => {
-        applyTex(tex)
-      })
-    }
+    new THREE.TextureLoader().load(src, (tex) => {
+      applyTex(tex)
+    })
 
     /* ── scroll velocity ────────────────────────────────────────── */
     let targetVel = 0, smoothVel = 0

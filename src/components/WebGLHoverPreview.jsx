@@ -1,7 +1,5 @@
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
-import { getPreloadedHtmlImage } from '../utils/imagePreloadCache.js'
-
 const vertexShader = `
 uniform float uTime;
 uniform vec2 uMouseNorm;
@@ -235,14 +233,6 @@ export default function WebGLHoverPreview({ imageUrl, visible, cursor }) {
         prevTex.dispose()
       }
       s.material.uniforms.uTexture.value = texture
-    }
-
-    const cached = getPreloadedHtmlImage(imageUrl)
-    if (cached) {
-      applyTexture(new THREE.Texture(cached))
-      return () => {
-        cancelled = true
-      }
     }
 
     const loader = new THREE.TextureLoader()
